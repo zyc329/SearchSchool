@@ -3,6 +3,7 @@ package com.zyc.cloud.search.text.controller;
 import com.github.pagehelper.PageInfo;
 import com.zyc.cloud.search.text.model.Text;
 import com.zyc.cloud.search.text.service.TextService;
+import com.zyc.cloud.search.utils.PageResult;
 import com.zyc.cloud.search.utils.ResultUtil;
 import com.zyc.cloud.search.utils.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,11 @@ public class TextController {
      * 条件+分页查询实现
      */
     @PostMapping("/findPage/{page}/{size}")
-    public ResultUtil<PageInfo<Text>> findPage(@RequestBody Text text,
+    public ResultUtil<PageResult<Text>> findPage(@RequestBody Text text,
                                                @PathVariable(value = "page")Integer page,
                                                @PathVariable(value = "size")Integer size){
-        PageInfo<Text> pageInfo =textService.findPage(text,page, size);
-        return new ResultUtil<PageInfo<Text>>(true, StatusCode.OK, "条件+分页查询成功",pageInfo);
+        PageResult<Text> pageResult =textService.findPage(text,page, size);
+        return new ResultUtil<PageResult<Text>>(true, StatusCode.OK, "条件+分页查询成功",pageResult);
     }
 
     /**

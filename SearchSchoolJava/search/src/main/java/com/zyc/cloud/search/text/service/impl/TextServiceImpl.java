@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.zyc.cloud.search.text.mapper.TextMapper;
 import com.zyc.cloud.search.text.model.Text;
 import com.zyc.cloud.search.text.service.TextService;
+import com.zyc.cloud.search.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -25,14 +26,14 @@ public class TextServiceImpl implements TextService {
 
 
     @Override
-    public PageInfo<Text> findPage(Text text, Integer page, Integer size) {
+    public PageResult<Text> findPage(Text text, Integer page, Integer size) {
         //分页
         PageHelper.startPage(page,size);
         //搜索数据
         Example example =createExample(text);
         List<Text> texts = textMapper.selectByExample(example);
         //封装PageInfo
-        return new PageInfo<Text>(texts);
+        return new PageResult<Text>(texts);
     }
 
     /**

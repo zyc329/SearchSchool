@@ -2,6 +2,7 @@ package com.zyc.cloud.search.text.service;
 
 import com.github.pagehelper.PageInfo;
 import com.zyc.cloud.search.text.model.Text;
+import com.zyc.cloud.search.utils.PageResult;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface TextService {
      * @param page:当前页
      * @param size:每页显示的条数
      */
-    PageInfo<Text> findPage(Text text, Integer page, Integer size);
+    PageResult<Text> findPage(Text text, Integer page, Integer size);
 
     /**
      * 条件搜索
