@@ -26,7 +26,6 @@ router.beforeEach((to, from, next) => {
 
   // 请求带有 redirect 重定向时，登录自动重定向到该地址
   const redirect = decodeURIComponent(from.query.redirect || to.path)
-
   if (Vue.ls.get(TOKEN_NAME)) {
     if (to.path === '/user/login') {
       next({ path: defaultRootRoutePath })

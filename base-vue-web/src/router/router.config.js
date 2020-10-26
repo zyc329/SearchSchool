@@ -1,9 +1,8 @@
 // eslint-disable-next-line
-import { UserLayout, BasicLayout, RouteLayout } from '@/layouts'
-import { openPermission } from '@/config/index'
+import {UserLayout, BasicLayout, RouteLayout} from '@/layouts'
+import {openPermission} from '@/config/index'
 
-import exampleModle from '@/router/modules/example'
-import linkModle from '@/router/modules/link'
+import exampleModule from '@/router/modules/example'
 
 // 自定义 icon引入
 // import { bxAnaalyse } from '@/core/icons'
@@ -48,7 +47,7 @@ let syncRouterMap = [
     path: '/',
     name: 'index',
     component: BasicLayout,
-    meta: { title: '首页' },
+    meta: {title: '首页'},
     redirect: `${defaultRootRoutePath}/analysis`,
     children: [
       // 默认页
@@ -57,18 +56,84 @@ let syncRouterMap = [
         name: 'dashboard',
         redirect: `${defaultRootRoutePath}/analysis`,
         component: RouteLayout,
-        meta: { title: '工作台', keepAlive: true, icon: 'dashboard', permission: ['dashboard'] },
+        meta: {title: '工作台', keepAlive: true, icon: 'dashboard', permission: ['dashboard']},
         children: [
           {
             path: `${defaultRootRoutePath}/analysis`,
             name: 'analysis',
             component: () => import('@/views/dashboard/Analysis'),
-            meta: { title: 'hello', keepAlive: true, permission: ['dashboard'] },
+            meta: {title: 'hello', keepAlive: true, permission: ['dashboard']},
           },
         ],
       },
-      exampleModle,
-      linkModle,
+      exampleModule,
+      {
+        path: '/admin-school',
+        name: 'school',
+        component: RouteLayout,
+        meta: {title: '学校资料管理', keepAlive: true, icon: 'thunderbolt'},
+        children: [
+          {
+            path: '/school-index',
+            name: 'SchoolIndex',
+            component: () => import('@/views/admin/school/SchoolIndex'),
+            meta: {title: '学校列表', keepAlive: true, permission: ['dashboard']},
+          },
+          {
+            path: '/fraction-index',
+            name: 'FractionIndex',
+            component: () => import('@/views/admin/school/fractionModules/FractionIndex'),
+            meta: {title: '历年分数线管理', keepAlive: true, permission: ['dashboard']},
+          },
+          {
+            path: '/teacher-index',
+            name: 'TeacherIndex',
+            component: () => import('@/views/admin/school/teacherModules/TeacherIndex'),
+            meta: {title: '学校老师信息管理', keepAlive: true, permission: ['dashboard']},
+          }
+          ,
+          {
+            path: '/college-index',
+            name: 'CollegeIndex',
+            component: () => import('@/views/admin/school/college/CollegeIndex'),
+            meta: {title: '学院管理', keepAlive: true, permission: ['dashboard']},
+          }
+        ],
+      },
+      {
+        path: '/admin-user',
+        name: 'user',
+        component: RouteLayout,
+        meta: {title: '用户管理', keepAlive: true, icon: 'thunderbolt'},
+        children: [
+          {
+            path: '/user-manage',
+            name: 'UserManage',
+            component: () => import('@/views/admin/user/UserManage'),
+            meta: {title: '用户列表', keepAlive: true, permission: ['dashboard']},
+          },
+          {
+            path: '/admin-manage',
+            name: 'AdminManage',
+            component: () => import('@/views/admin/user/AdminManage'),
+            meta: {title: '管理员列表', keepAlive: true, permission: ['dashboard']},
+          }
+        ],
+      },
+      {
+        path: '/message-index',
+        name: 'message',
+        component: RouteLayout,
+        meta: {title: '消息通知', keepAlive: true, icon: 'thunderbolt'},
+        children: [
+          {
+            path: '/message-index',
+            name: 'MessageIndex',
+            component: () => import('@/views/admin/message/MessageIndex'),
+            meta: {title: '举报处理', keepAlive: true, permission: ['dashboard']},
+          }
+        ],
+      },
     ],
   },
 ]
@@ -77,4 +142,4 @@ if (!openPermission) {
   syncRouterMap.push(notFoundRouter)
 }
 
-export { syncRouterMap }
+export {syncRouterMap}

@@ -16,6 +16,8 @@ import '@/core/lazy_use'
 import '@/permission' // permission control
 import '@/utils/filter' // global filter
 import '@/style/global.less'
+import '@/assets/styles/index.css'
+
 
 // 给 axios Promise 扩展 finally
 import promiseFinally from 'promise.prototype.finally'

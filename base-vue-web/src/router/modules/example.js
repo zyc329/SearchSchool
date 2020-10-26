@@ -1,6 +1,6 @@
 import { RouteLayout } from '@/layouts'
 
-const exampleModle = {
+const exampleModule = {
   path: '/example',
   name: 'example',
   redirect: '/example/table',
@@ -22,4 +22,4 @@ const exampleModle = {
   ],
 }
 
-export default exampleModle
+export default exampleModule

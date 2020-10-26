@@ -51,7 +51,7 @@
   import md5 from 'md5'
   import {timeFix} from '@/utils/util'
   import {mapActions} from 'vuex'
-  import LoginFooter from "@views/system/modules/LoginFooter";
+  import LoginFooter from "@/views/system/modules/LoginFooter";
 
   export default {
     components: {LoginFooter},
