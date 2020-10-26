@@ -7,12 +7,12 @@ import getters from "@/store/getters";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: {},
-    mutations: {},
-    actions: {},
-    modules: {
-        app,
-        user
-    },
-    getters
+  state: {},
+  mutations: {},
+  actions: {},
+  modules: {
+    app,
+    user
+  },
+  getters
 });

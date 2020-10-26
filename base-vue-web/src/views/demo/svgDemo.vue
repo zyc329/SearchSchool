@@ -1,25 +1,25 @@
 <template>
-    <div>
-        <svg-icon class-name="svg-text-class" icon-class="text-svg"></svg-icon>
-    </div>
+  <div>
+    <svg-icon class-name="svg-text-class" icon-class="text-svg"></svg-icon>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "svgModule",
-        data() {
-            return {}
-        },
-        mounted() {
+  export default {
+    name: "svgModule",
+    data() {
+      return {}
+    },
+    mounted() {
 
-        },
-        methods: {}
-    }
+    },
+    methods: {}
+  }
 </script>
 
 <style scoped>
-    .svg-text-class{
-        width: 120em;
-        height: 120em;
-    }
+  .svg-text-class {
+    width: 120em;
+    height: 120em;
+  }
 </style>

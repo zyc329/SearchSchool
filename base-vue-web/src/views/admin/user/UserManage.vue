@@ -3,16 +3,16 @@
 </template>
 
 <script>
-    export default {
-        name: "UserManage",
-        data() {
-            return {}
-        },
-        mounted() {
+  export default {
+    name: "UserManage",
+    data() {
+      return {}
+    },
+    mounted() {
 
-        },
-        methods: {}
-    }
+    },
+    methods: {}
+  }
 </script>
 
 <style scoped>
