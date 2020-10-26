@@ -1,18 +1,20 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import Vue from 'vue'
+import Vuex from 'vuex'
+
 import app from './modules/app'
 import user from './modules/user'
-import getters from "@/store/getters";
+import multiTab from './modules/multi-tab'
+import permission from './modules/permission'
+import getters from './getters'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
+  getters,
   modules: {
     app,
-    user
+    user,
+    permission,
+    multiTab,
   },
-  getters
-});
+})

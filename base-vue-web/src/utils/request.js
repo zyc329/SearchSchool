@@ -1,41 +1,64 @@
 import Vue from 'vue'
 import axios from 'axios'
 import store from '@/store'
-import nprogress from './nprogress'
 import notification from 'ant-design-vue/es/notification'
-import storage from 'store'
+import { VueAxios } from './axios'
+import { TOKEN_NAME, prodUseMock } from '@/config/index'
 
-notification.config({
-    placement: 'bottomRight'
-})
+let baseURL = prodUseMock ? '/api' : process.env.VUE_APP_API_BASE_URL
 
-// 请求超时最多重试3次
-axios.defaults.retry = 3
-axios.defaults.retryDelay = 1000
-
+// 创建 axios 实例
 const service = axios.create({
-    // 请求超时时间
-    timeout: 20000,
-    // 允许携带cookie
-    withCredentials: true
+  baseURL, // api base_url
+  timeout: 6000, // 请求超时时间
 })
 
-const err = (error)=>{
-    nprogress.done()
-
-    if (!error.response){
-        notification.error({
-            message:'请检查网络连接'
-        })
-        return Promise.reject(error)
+const err = (error) => {
+  if (error.response) {
+    const data = error.response.data
+    const token = Vue.ls.get(TOKEN_NAME)
+    if (error.response.status === 403) {
+      notification.error({
+        message: '被禁用的',
+        description: data.message,
+      })
     }
-
-    const data =error.response.data
-    const token = storage.get('ACCESS_TOKEN')
+    if (error.response.status === 401 && !(data.result && data.result.isLoginRequest)) {
+      notification.error({
+        message: '非法访问',
+        description: '授权验证失败',
+      })
+      if (token) {
+        store.dispatch('Logout').then(() => {
+          setTimeout(() => {
+            window.location.reload()
+          }, 1500)
+        })
+      }
+    }
+  }
+  return Promise.reject(error)
 }
 
+// request interceptor
+service.interceptors.request.use((config) => {
+  const token = Vue.ls.get(TOKEN_NAME)
+  if (token) {
+    config.headers['Access-Token'] = token // 让每个请求携带自定义 token 请根据实际情况自行修改
+  }
+  return config
+}, err)
 
+// response interceptor
+service.interceptors.response.use((response) => {
+  return response.data
+}, err)
 
-export default service
+const installer = {
+  vm: {},
+  install(Vue) {
+    Vue.use(VueAxios, service)
+  },
+}
 
-
+export { installer as VueAxios, service as axios }
