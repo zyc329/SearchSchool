@@ -42,7 +42,11 @@
       :pagination="pagination"
       @change="handleTableChange"
     >
+      <a slot="schoolUrl" slot-scope="text,record">
+        {{text}}
+      </a>
       <span slot="action" slot-scope="text, record">
+        <a-button type="link" @click="lookItem(record)">查看</a-button>
         <a-button type="link" @click="editItem(record)">编辑</a-button>
         <a-button type="link " @click="deleteItem(record)">删除</a-button>
       </span>
@@ -53,59 +57,103 @@
 
 <script>
   import SchoolModule from "@/views/admin/school/modules/SchoolModule"
+  import moment from 'moment'
   export default {
     components:{
       SchoolModule
     },
     data() {
       return {
+        moment,
         form: this.$form.createForm(this),
         columns: [
           {
-            title: 'name',
-            dataIndex: 'name',
+            title: '学校名称',
+            dataIndex: 'schoolName',
             align: 'center'
           },
           {
-            title: 'Age',
-            dataIndex: 'age',
+            title: '学校具体地址',
+            dataIndex: 'schoolSrc',
             align: 'center'
           },
           {
-            title: 'Address',
-            dataIndex: 'address',
+            title: '学校类型',
+            dataIndex: 'schoolType',
+            align: 'center',
+            scopedSlots: {customRender: 'schoolType'}
+          },
+          {
+            title: '学校官网网址',
+            dataIndex: 'schoolUrl',
+            align: 'center',
+            scopedSlots: {customRender: 'schoolUrl'}
+          },
+          {
+            title: '招生热线',
+            dataIndex: 'schoolTel',
             align: 'center'
           },
           {
-            title: 'Tags',
-            dataIndex: 'tags',
+            title: '招生办负责人',
+            dataIndex: 'schoolHead',
             align: 'center'
+          },
+          {
+            title: '创校时间',
+            dataIndex: 'schoolTime',
+            align: 'center',
+            customRender: function (text, record, index) {
+              if (!text) {
+                return '-'
+              } else {
+                return moment(text).format('YYYY-MM-DD')
+              }
+            }
           },
           {
             title: '操作',
             align: 'center',
             dataIndex: 'action',
-            scopedSlots: {customRender: 'action'},
+            scopedSlots: {customRender: 'action'}
           }
         ],
         tableData: [
           {
             key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park, New York No. 1 Lake Park',
+            schoolName: '福建工程学院',
+            schoolSrc: '福建省福州市闽侯县大学城福建工程学院',
+            schoolType: 0,
+            schoolUrl:'https://www.ceshi.com',
+            schoolTel:'13799365050',
+            schoolHead:'吴老师'
           },
           {
             key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 2 Lake Park, London No. 2 Lake Park',
+            schoolName: '福州大学',
+            schoolSrc: '福建省福州市闽侯县大学城福州大学',
+            schoolType: 1,
+            schoolUrl:'https://www.ceshi1.com',
+            schoolTel:'13799365052',
+            schoolHead:'林老师'
           },
           {
             key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park, Sidney No. 1 Lake Park',
+            schoolName: '农林大学',
+            schoolSrc: '福建省福州市闽侯县大学城农林大学',
+            schoolType: 0,
+            schoolUrl:'https://www.ceshi2.com',
+            schoolTel:'13799365058',
+            schoolHead:'刘老师'
+          },
+          {
+            key: '4',
+            schoolName: '福州师范',
+            schoolSrc: '福建省福州市闽侯县大学城福州师范',
+            schoolType: 1,
+            schoolUrl:'https://www.ceshi3.com',
+            schoolTel:'13799365059',
+            schoolHead:'张老师'
           },
         ],
         pagination: {
@@ -159,6 +207,9 @@
 
       },
       deleteItem(data) {
+
+      },
+      lookItem(data) {
 
       }
     }

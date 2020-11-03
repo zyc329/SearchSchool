@@ -80,7 +80,7 @@ let syncRouterMap = [
             meta: {title: '学校列表', keepAlive: true, permission: ['dashboard']},
           },
           {
-            path: '/fraction-index',
+            path: '/fractionModules-index',
             name: 'FractionIndex',
             component: () => import('@/views/admin/school/fractionModules/FractionIndex'),
             meta: {title: '历年分数线管理', keepAlive: true, permission: ['dashboard']},
