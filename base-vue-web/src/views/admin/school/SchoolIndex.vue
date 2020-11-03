@@ -5,17 +5,17 @@
         <a-col :span="8">
           <a-form-item label="学校名称">
             <a-input
-              v-decorator="['']"
+              v-decorator="['schoolId']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
           <a-form-item label="学校类型">
-            <a-select default-value="lucy" @change="handleChange">
-              <a-select-option value="jack" >
+            <a-select v-decorator="['schoolType']">
+              <a-select-option value="0" >
                 专科
               </a-select-option>
-              <a-select-option value="lucy">
+              <a-select-option value="1">
                 本科
               </a-select-option>
             </a-select>
@@ -23,12 +23,12 @@
         </a-col>
         <a-col :span="8">
           <a-form-item label="创校时间">
-            <a-date-picker v-decorator="['']" />
+            <a-date-picker v-decorator="['schoolTime']" />
           </a-form-item>
         </a-col>
         <a-col :span="16">
           <a-form-item>
-            <a-button class="ml30" type="primary" @click="">新增</a-button>
+            <a-button class="ml30" type="primary" @click="$refs.schoolModule.showModule(undefined,10)">新增</a-button>
             <a-button class="ml30" type="primary" @click="queryAll()">查询</a-button>
             <a-button class="ml30" @click="resetFieldsQueryAll()">清空条件</a-button>
           </a-form-item>
@@ -47,11 +47,16 @@
         <a-button type="link " @click="deleteItem(record)">删除</a-button>
       </span>
     </a-table>
+    <school-module ref="schoolModule" @closeModule="queryAll"></school-module>
   </div>
 </template>
 
 <script>
+  import SchoolModule from "@/views/admin/school/modules/SchoolModule"
   export default {
+    components:{
+      SchoolModule
+    },
     data() {
       return {
         form: this.$form.createForm(this),
@@ -137,7 +142,6 @@
           //   this.$message.error(res.description)
           // }
           // this.pagination = pagination
-
         })
       },
       resetFieldsQueryAll() {

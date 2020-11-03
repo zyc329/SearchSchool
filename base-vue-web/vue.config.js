@@ -92,7 +92,7 @@ const vueConfig = {
     },
   },
   devServer: {
-    port: 18081,
+    port: 8899,
     // 如果您想启用代理，请删除 mockjs /src/main.jsL11
     // proxy: {
     //   '/api': {

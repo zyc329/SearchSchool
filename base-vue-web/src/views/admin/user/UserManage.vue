@@ -3,34 +3,38 @@
     <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
       <a-row>
         <a-col :span="8">
-          <a-form-item label="用户账号">
+          <a-form-item label="管理员账号">
             <a-input
-              v-decorator="['']"
+              v-decorator="['account']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label="用户名">
+          <a-form-item label="管理员用户名">
             <a-input
-              v-decorator="['']"
+              v-decorator="['userName']"
+            />
+          </a-form-item>
+        </a-col>
+        <a-col :span="8">
+          <a-form-item label="年龄">
+            <a-input
+              v-decorator="['age']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
           <a-form-item label="性别">
-            <a-select default-value="lucy" @change="handleChange">
-              <a-select-option value="jack">
-                男
-              </a-select-option>
-              <a-select-option value="lucy">
-                女
+            <a-select style="width: 100%">
+              <a-select-option v-for="item in []" :key="item" :value="item" v-decorator="['sex']">
+                {{}}
               </a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
         <a-col :span="16">
           <a-form-item>
-            <a-button class="ml20" type="primary" @click="">新增</a-button>
+            <a-button class="ml20" type="primary" @click="$refs.userModule.showModule(undefined,10)">新增</a-button>
             <a-button class="ml20" type="primary" @click="queryAll()">查询</a-button>
             <a-button class="ml20" @click="resetFieldsQueryAll()">清空条件</a-button>
           </a-form-item>
@@ -46,36 +50,48 @@
     >
       <span slot="action" slot-scope="text, record">
         <a-button type="link" @click="editItem(record)">编辑</a-button>
+        <a-button type="link" @click="">重置密码</a-button>
+        <a-button type="link" @click="">{{record.state===0?'冻结':'解冻'}}</a-button>
         <a-button type="link " @click="deleteItem(record)">删除</a-button>
       </span>
     </a-table>
+    <user-module ref="userModule" @closeModule="queryAll"></user-module>
   </div>
 </template>
 
 <script>
+  import UserModule from "@/views/admin/user/module/UserModule"
   export default {
+    components:{
+      UserModule
+    },
     data() {
       return {
         form: this.$form.createForm(this),
         columns: [
           {
-            title: 'name',
-            dataIndex: 'name',
+            title: '账号',
+            dataIndex: 'account',
             align: 'center'
           },
           {
-            title: 'Age',
+            title: '用户名',
+            dataIndex: 'userName',
+            align: 'center'
+          },
+          {
+            title: '性别',
+            dataIndex: 'sex',
+            align: 'center'
+          },
+          {
+            title: '年龄',
             dataIndex: 'age',
             align: 'center'
           },
           {
-            title: 'Address',
-            dataIndex: 'address',
-            align: 'center'
-          },
-          {
-            title: 'Tags',
-            dataIndex: 'tags',
+            title: '状态',
+            dataIndex: 'state',
             align: 'center'
           },
           {
@@ -87,23 +103,23 @@
         ],
         tableData: [
           {
-            key: '1',
-            name: 'John Brown',
+            account: '1',
+            userName: 'John Brown',
             age: 32,
-            address: 'New York No. 1 Lake Park, New York No. 1 Lake Park',
+            state: 0,
           },
           {
-            key: '2',
-            name: 'Jim Green',
+            account: '2',
+            userName: 'Jim Green',
             age: 42,
-            address: 'London No. 2 Lake Park, London No. 2 Lake Park',
+            state: 0,
           },
           {
-            key: '3',
-            name: 'Joe Black',
+            account: '3',
+            userName: 'Joe Black',
             age: 32,
-            address: 'Sidney No. 1 Lake Park, Sidney No. 1 Lake Park',
-          },
+            state: 1,
+          }
         ],
         pagination: {
           current: 1,
