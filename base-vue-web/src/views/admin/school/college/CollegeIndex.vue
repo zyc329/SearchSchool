@@ -9,20 +9,6 @@
             />
           </a-form-item>
         </a-col>
-<!--        <a-col :span="8">-->
-<!--          <a-form-item label="学校类型">-->
-<!--            <a-input-->
-<!--              v-decorator="['']"-->
-<!--            />-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
-<!--        <a-col :span="8">-->
-<!--          <a-form-item label="创校时间">-->
-<!--            <a-input-->
-<!--              v-decorator="['']"-->
-<!--            />-->
-<!--          </a-form-item>-->
-<!--        </a-col>-->
         <a-col :span="16">
           <a-form-item>
             <a-button class="ml30" type="primary" @click="">新增</a-button>

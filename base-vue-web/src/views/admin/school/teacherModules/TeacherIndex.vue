@@ -5,28 +5,28 @@
         <a-col :span="8">
           <a-form-item label="老师名字">
             <a-input
-              v-decorator="['']"
+              v-decorator="['teacherName']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
           <a-form-item label="所处学校">
             <a-input
-              v-decorator="['']"
+              v-decorator="['schoolName']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
           <a-form-item label="所处学院">
             <a-input
-              v-decorator="['']"
+              v-decorator="['collegeName']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
           <a-form-item label="专业">
             <a-input
-              v-decorator="['']"
+              v-decorator="['professionalName']"
             />
           </a-form-item>
         </a-col>
@@ -47,6 +47,7 @@
       @change="handleTableChange"
     >
       <span slot="action" slot-scope="text, record">
+        <a-button type="link" @click="lookItem(record)">查看</a-button>
         <a-button type="link" @click="editItem(record)">编辑</a-button>
         <a-button type="link " @click="deleteItem(record)">删除</a-button>
       </span>
@@ -61,23 +62,33 @@
         form: this.$form.createForm(this),
         columns: [
           {
-            title: 'name',
-            dataIndex: 'name',
+            title: '教师姓名',
+            dataIndex: 'teacherName',
             align: 'center'
           },
           {
-            title: 'Age',
-            dataIndex: 'age',
+            title: '授课专业',
+            dataIndex: 'teachingProfessional',
             align: 'center'
           },
           {
-            title: 'Address',
-            dataIndex: 'address',
+            title: '职称',
+            dataIndex: 'title',
             align: 'center'
           },
           {
-            title: 'Tags',
-            dataIndex: 'tags',
+            title: '教学工龄',
+            dataIndex: 'teachingAge',
+            align: 'center'
+          },
+          {
+            title: '学校名称',
+            dataIndex: 'schoolName',
+            align: 'center'
+          },
+          {
+            title: '学院名称',
+            dataIndex: 'collegeName',
             align: 'center'
           },
           {
@@ -90,21 +101,35 @@
         tableData: [
           {
             key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park, New York No. 1 Lake Park',
+            teacherName: '林老师',
+            teachingAge: 4,
+            collegeName: '软件学院',
+            schoolName:'福建工程学院',
+            title:'副教授'
           },
           {
             key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 2 Lake Park, London No. 2 Lake Park',
+            teacherName: '林老师',
+            teachingAge: 2,
+            collegeName: '信息学院',
+            schoolName:'福建工程学院',
+            title:'副教授'
           },
           {
             key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park, Sidney No. 1 Lake Park',
+            teacherName: '吴老师',
+            teachingAge: 5,
+            collegeName: '电子学院',
+            schoolName:'福建工程学院',
+            title:'副教授'
+          },
+          {
+            key: '4',
+            teacherName: '曾老师',
+            teachingAge: 10,
+            collegeName: '软件学院',
+            schoolName:'福建工程学院',
+            title:'副教授'
           },
         ],
         pagination: {
@@ -159,6 +184,9 @@
 
       },
       deleteItem(data){
+
+      },
+      lookItem(data){
 
       }
     }
