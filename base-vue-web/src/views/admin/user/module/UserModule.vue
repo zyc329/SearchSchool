@@ -70,6 +70,8 @@
         form: this.$form.createForm(this),
         rules:[
 
+        ],
+        dirs:[
         ]
       }
     },

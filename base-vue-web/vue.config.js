@@ -94,13 +94,13 @@ const vueConfig = {
   devServer: {
     port: 8899,
     // 如果您想启用代理，请删除 mockjs /src/main.jsL11
-    // proxy: {
-    //   '/api': {
-    //     target: 'https://mock.ihx.me/mock/5baf3052f7da7e07e04a5116/antd-pro',
-    //     ws: false,
-    //     changeOrigin: true
-    //   }
-    // }
+    proxy: {
+      '/': {
+        target: '127.0.0.1',
+        ws: false,
+        changeOrigin: true
+      }
+    }
   },
 }
 

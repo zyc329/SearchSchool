@@ -9,8 +9,8 @@ spring:
     username: root
     password: root
 #使用通用mapper可以不用配置
-#mybatis:
-#  configuration:
-#    map-underscore-to-camel-case: true
-#  mapper-locations: classpath:mapper/*Mapper.xml
-#  type-aliases-package: com.changgou.goods.pojo
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.zyc.cloud.search.*.mapper

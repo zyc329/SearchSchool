@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyc.cloud.search.admin.user.mapper.UserMapper">
+    <resultMap id="columnMap" type="com.zyc.cloud.search.admin.user.model.UserDo">
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="account" property="account"/>
+        <result column="password" property="userName"/>
+        <result column="user_name" property="password"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="salt_value" property="saltValue"/>
+        <result column="role" property="role"/>
+        <result column="state" property="state"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="operator" property="operator"/>
+    </resultMap>
+</mapper>
+

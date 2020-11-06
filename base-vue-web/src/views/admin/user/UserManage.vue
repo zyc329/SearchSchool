@@ -3,14 +3,14 @@
     <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
       <a-row>
         <a-col :span="8">
-          <a-form-item label="管理员账号">
+          <a-form-item label="账号">
             <a-input
               v-decorator="['account']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label="管理员用户名">
+          <a-form-item label="用户名">
             <a-input
               v-decorator="['userName']"
             />
