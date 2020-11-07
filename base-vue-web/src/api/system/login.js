@@ -1,16 +1,16 @@
 import request from '@/utils/request' // 引入封装好的 axios 请求
 const userApi = {
-    demo: '/text',
-    Login: '/auth/login',
-    Logout: '/auth/logout',
-    ForgePassword: '/auth/forge-password',
-    Register: '/auth/register',
-    twoStepCode: '/auth/2step-code',
-    SendSms: '/account/sms',
-    SendSmsErr: '/account/sms_err',
+    demo: '/api/text',
+    Login: '/api/auth/login',
+    Logout: '/api/auth/logout',
+    ForgePassword: '/api/auth/forge-password',
+    Register: '/api/auth/register',
+    twoStepCode: '/api/auth/2step-code',
+    SendSms: '/api/account/sms',
+    SendSmsErr: '/api/account/sms_err',
     // get my info
-    UserInfo: '/user/info',
-    UserMenu: '/user/nav'
+    UserInfo: '/api/user/info',
+    UserMenu: '/api/user/nav'
 }
 
 export function loginText(params) { // 测试

@@ -1,12 +1,12 @@
 import { axios } from '@/utils/request'
 
 const api = {
-  user: '/user',
-  role: '/role',
-  service: '/service',
-  permission: '/permission',
-  permissionNoPager: '/permission/no-pager',
-  orgTree: '/org/tree',
+  user: '/api/user',
+  role: '/api/role',
+  service: '/api/service',
+  permission: '/api/permission',
+  permissionNoPager: '/api/permission/no-pager',
+  orgTree: '/api/org/tree',
 }
 
 export default api

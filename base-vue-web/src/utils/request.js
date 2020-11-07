@@ -9,7 +9,7 @@ let baseURL = prodUseMock ? '/api' : process.env.VUE_APP_API_BASE_URL
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL, // api base_url
+  // baseURL, // api base_url
   timeout: 6000, // 请求超时时间
 })
 
@@ -46,6 +46,25 @@ service.interceptors.request.use((config) => {
   if (token) {
     config.headers['Access-Token'] = token // 让每个请求携带自定义 token 请根据实际情况自行修改
   }
+  let timestamp = Date.now()
+
+  let dataStr = '{}';
+  if (config.dataType==='json'){
+    if(config.params){
+      dataStr = JSON.stringify(config.params)
+    } else {
+      if(config.data){
+        dataStr = JSON.stringify(config.data)
+      }
+    }
+    dataStr=dataStr.replace(/\"/g, "");
+    let sign ='Timestamp'+ timestamp + dataStr;
+
+    // console.log(md5('Timestamp1564126422{"password":"123","username":"abc"}').toUpperCase())
+    config.headers['X-Ca-Timestamp'] = timestamp
+    return config
+  }
+
   return config
 }, err)
 

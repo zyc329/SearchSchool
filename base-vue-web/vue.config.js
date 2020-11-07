@@ -92,11 +92,12 @@ const vueConfig = {
     },
   },
   devServer: {
+    disableHostCheck: true,
     port: 8899,
     // 如果您想启用代理，请删除 mockjs /src/main.jsL11
     proxy: {
       '/': {
-        target: '127.0.0.1',
+        target: 'http://seachjava.free.idcfengye.com',
         ws: false,
         changeOrigin: true
       }

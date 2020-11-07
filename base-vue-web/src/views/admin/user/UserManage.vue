@@ -1,68 +1,71 @@
 <template>
-  <div class="TableList">
-    <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-      <a-row>
-        <a-col :span="8">
-          <a-form-item label="账号">
-            <a-input
-              v-decorator="['account']"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="8">
-          <a-form-item label="用户名">
-            <a-input
-              v-decorator="['userName']"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="8">
-          <a-form-item label="年龄">
-            <a-input
-              v-decorator="['age']"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="8">
-          <a-form-item label="性别">
-            <a-select style="width: 100%">
-              <a-select-option v-for="item in []" :key="item" :value="item" v-decorator="['sex']">
-                {{}}
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-        <a-col :span="16">
-          <a-form-item>
-            <a-button class="ml20" type="primary" @click="$refs.userModule.showModule(undefined,10)">新增</a-button>
-            <a-button class="ml20" type="primary" @click="queryAll()">查询</a-button>
-            <a-button class="ml20" @click="resetFieldsQueryAll()">清空条件</a-button>
-          </a-form-item>
-        </a-col>
-      </a-row>
-    </a-form>
+    <div class="TableList">
+        <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+            <a-row>
+                <a-col :span="8">
+                    <a-form-item label="账号">
+                        <a-input
+                                v-decorator="['account']"
+                        />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="8">
+                    <a-form-item label="用户名">
+                        <a-input
+                                v-decorator="['userName']"
+                        />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="8">
+                    <a-form-item label="年龄">
+                        <a-input
+                                v-decorator="['age']"
+                        />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="8">
+                    <a-form-item label="性别">
+                        <a-select style="width: 100%">
+                            <a-select-option v-for="item in []" :key="item" :value="item" v-decorator="['sex']">
+                                {{}}
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                </a-col>
+                <a-col :span="16">
+                    <a-form-item>
+                        <a-button class="ml20" type="primary" @click="$refs.userModule.showModule(undefined,10)">新增
+                        </a-button>
+                        <a-button class="ml20" type="primary" @click="queryAll()">查询</a-button>
+                        <a-button class="ml20" @click="resetFieldsQueryAll()">清空条件</a-button>
+                    </a-form-item>
+                </a-col>
+            </a-row>
+        </a-form>
 
-    <a-table
-      :columns="columns"
-      :data-source="tableData"
-      :pagination="pagination"
-      @change="handleTableChange"
-    >
+        <a-table
+                :columns="columns"
+                :data-source="tableData"
+                :pagination="pagination"
+                @change="handleTableChange"
+        >
       <span slot="action" slot-scope="text, record">
         <a-button type="link" @click="editItem(record)">编辑</a-button>
         <a-button type="link" @click="">重置密码</a-button>
-        <a-button type="link" @click="">{{record.state===0?'冻结':'解冻'}}</a-button>
+        <a-button type="link" @click="">{{record.state===0?'封号':'解封'}}</a-button>
         <a-button type="link " @click="deleteItem(record)">删除</a-button>
       </span>
-    </a-table>
-    <user-module ref="userModule" @closeModule="queryAll"></user-module>
-  </div>
+        </a-table>
+        <user-module ref="userModule" @closeModule="queryAll"></user-module>
+    </div>
 </template>
 
 <script>
   import UserModule from "@/views/admin/user/module/UserModule"
+  import {userFindPage} from '@/api/admin/user/index'
+
   export default {
-    components:{
+    components: {
       UserModule
     },
     data() {
@@ -101,26 +104,7 @@
             scopedSlots: {customRender: 'action'},
           }
         ],
-        tableData: [
-          {
-            account: '1',
-            userName: 'John Brown',
-            age: 32,
-            state: 0,
-          },
-          {
-            account: '2',
-            userName: 'Jim Green',
-            age: 42,
-            state: 0,
-          },
-          {
-            account: '3',
-            userName: 'Joe Black',
-            age: 32,
-            state: 1,
-          }
-        ],
+        tableData: [],
         pagination: {
           current: 1,
           showTotal: (total) => {
@@ -136,13 +120,18 @@
     },
     methods: {
       queryAll() {
-        const queryParam = {}
+        let params={}
         const {form: {validateFields}} = this
         validateFields((errors, values) => {
           if (!errors) {
-            Object.assign(queryParam, values, {page: this.pagination.current, size: this.pagination.pageSize})
+            params = Object.assign(values, {page: this.pagination.current, size: this.pagination.pageSize})
+            userFindPage(params).then(res => {
+              this.tableData = res.data.list
+            })
           }
           //api请求
+
+
           // const pagination = { ...this.pagination }
           // pagination.total = res.data.total
           // const pagination = { ...this.pagination }
