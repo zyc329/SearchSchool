@@ -1,10 +1,9 @@
-package com.zyc.cloud.search.utils.model;
+package com.zyc.cloud.search.utils.base;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Column;
-import javax.persistence.Transient;
 import java.util.Date;
 
 /**

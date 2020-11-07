@@ -8,9 +8,11 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/zyc_base?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: root
-#使用通用mapper可以不用配置
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.zyc.cloud.search.*.mapper
+  mapper-locations: classpath:com/zyc/cloud/search/*/*Mapper.xml
+  type-aliases-package: com.zyc.cloud.search.*.model
+#mapper:
+#  mappers: com.zyc.cloud.search.utils.base.MyBaseMapper
+#  identity: mysql
