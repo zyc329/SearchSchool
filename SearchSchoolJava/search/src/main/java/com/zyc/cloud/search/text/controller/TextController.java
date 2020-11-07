@@ -1,6 +1,7 @@
 package com.zyc.cloud.search.text.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.zyc.cloud.search.admin.user.model.UserDo;
 import com.zyc.cloud.search.text.model.Text;
 import com.zyc.cloud.search.text.service.TextService;
 import com.zyc.cloud.search.utils.PageResult;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author ZengYc
@@ -136,5 +138,11 @@ public class TextController {
         // 调用Service实现查询
         Text text = textService.findById(id);
         return new ResultUtil<Text>(true, StatusCode.OK, "查询成功", text);
+    }
+
+    @PostMapping("textText")
+    public ResultUtil textText(@RequestBody UserDo userDo,Text text){
+        System.out.println("进入测试！");
+        return new ResultUtil(true, StatusCode.OK, "新增成功！");
     }
 }
