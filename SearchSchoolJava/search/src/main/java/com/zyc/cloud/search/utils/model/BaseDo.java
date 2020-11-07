@@ -24,9 +24,4 @@ public class BaseDo {
     @Column(name="operator")
     private String operator;
 
-    @Transient
-    private Integer page;
-
-    @Transient
-    private Integer size;
 }

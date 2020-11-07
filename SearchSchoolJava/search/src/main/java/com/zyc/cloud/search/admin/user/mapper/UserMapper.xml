@@ -15,5 +15,18 @@
         <result column="update_time" property="updateTime"/>
         <result column="operator" property="operator"/>
     </resultMap>
+
+    <sql id="Base_Table">
+		TB_USER
+	</sql>
+
+    <update id="resetPW" parameterType="java.lang.String">
+        update
+        <include refid="Base_Table" />
+        SET
+        <if test="restPw != null and restPw != ''">password = #{restPw}</if>
+        WHERE user_id = #{userId}
+    </update>
+
 </mapper>
 

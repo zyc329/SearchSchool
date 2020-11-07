@@ -50,6 +50,10 @@ public interface UserService {
     /**
      * 分页+条件搜索
      */
-    PageResult<UserDo> findPage(UserDo userDo);
+    PageResult<UserDo> findPage(UserDo userDo,int page,int size);
 
+    /**
+     * 密码重置
+     */
+    void resetPW(String userId);
 }

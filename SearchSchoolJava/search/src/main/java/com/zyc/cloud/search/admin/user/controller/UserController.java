@@ -56,6 +56,11 @@ public class UserController {
      */
     @PostMapping("userAdd")
     public ResultUtil userAdd(@RequestBody UserDo userDo) {
+        UserDo item = new UserDo();
+        item.setAccount(userDo.getAccount());
+        if (userService.findList(item).size() > 0){
+            return new ResultUtil(false, StatusCode.ERROR, "用户已存在！");
+        }
         userService.add(userDo);
         return new ResultUtil(true, StatusCode.OK, "新增成功！");
     }
@@ -97,9 +102,19 @@ public class UserController {
      * 条件+分页查询实现
      */
     @PostMapping("/userFindPage")
-    public ResultUtil<PageResult<UserDo>> userFindPage(@RequestBody UserDo userDo){
-        PageResult<UserDo> pageResult =userService.findPage(userDo);
+    public ResultUtil<PageResult<UserDo>> userFindPage(@RequestBody(required = false) UserDo userDo,
+                                                       @RequestParam(required = false, defaultValue = "1") int page,
+                                                       @RequestParam(required = false, defaultValue = "10") int size){
+        PageResult<UserDo> pageResult =userService.findPage(userDo,page,size);
         return new ResultUtil<PageResult<UserDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
     }
 
+    /**
+     * 重置密码
+     */
+    @PostMapping("resetPW")
+    public ResultUtil resetPW(@RequestParam(value = "userId") String userId) {
+        userService.resetPW(userId);
+        return new ResultUtil(true, StatusCode.OK, "重置密码成功！");
+    }
 }

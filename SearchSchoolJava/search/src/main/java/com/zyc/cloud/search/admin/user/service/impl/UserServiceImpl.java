@@ -7,11 +7,9 @@ import com.github.pagehelper.PageHelper;
 import com.zyc.cloud.search.admin.user.mapper.UserMapper;
 import com.zyc.cloud.search.admin.user.model.UserDo;
 import com.zyc.cloud.search.admin.user.service.UserService;
-import com.zyc.cloud.search.text.model.Text;
 import com.zyc.cloud.search.utils.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
@@ -25,12 +23,11 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    private static final  String PW  = "123456" ;
+
     @Override
     public void add(UserDo userDo) {
         userDo.setUserId(IdUtil.objectId());
-        if (StrUtil.isEmpty(userDo.getState().toString())) {
-            userDo.setState(0);
-        }
         userMapper.insertSelective(userDo);
     }
 
@@ -84,15 +81,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageResult<UserDo> findPage(UserDo userDo) {
-        Integer page;
-        Integer size;
-        page = userDo.getPage() != null ? userDo.getPage() : 1;
-        size = userDo.getSize() != null ? userDo.getSize() : 10;
+    public PageResult<UserDo> findPage(UserDo userDo,int page,int size) {
         PageHelper.startPage(page, size);
         Example example = createExample(userDo);
         List<UserDo> userDos = userMapper.selectByExample(example);
         return new PageResult<UserDo>(userDos);
+    }
+
+    /**
+     * 重置密码
+     *
+     */
+    @Override
+    public void resetPW(String userId) {
+
+        String restPw = PW;
+        userMapper.resetPW(userId,restPw);
     }
 
     public Example createExample(UserDo userDo) {
