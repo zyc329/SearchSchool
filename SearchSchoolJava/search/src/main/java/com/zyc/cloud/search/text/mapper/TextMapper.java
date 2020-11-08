@@ -1,7 +1,11 @@
 package com.zyc.cloud.search.text.mapper;
 
 import com.zyc.cloud.search.text.model.Text;
-import tk.mybatis.mapper.common.Mapper;
+import com.zyc.cloud.search.utils.base.MyBaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.junit.Test;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * @Author ZengYc
@@ -16,7 +20,9 @@ import tk.mybatis.mapper.common.Mapper;
  *      查询数据，根据ID查询:Mapper.selectByPrimaryKey(ID)
  *      查询数据，根据条件查询:Mapper.select(T)
  */
-@org.apache.ibatis.annotations.Mapper
-public interface TextMapper extends Mapper<Text> {
-
+@Mapper
+@Repository
+@Component
+public interface TextMapper extends MyBaseMapper<Text> {
+    Text textXml();
 }

@@ -16,3 +16,4 @@ mybatis:
 #mapper:
 #  mappers: com.zyc.cloud.search.utils.base.MyBaseMapper
 #  identity: mysql
+#  not-empty: false
