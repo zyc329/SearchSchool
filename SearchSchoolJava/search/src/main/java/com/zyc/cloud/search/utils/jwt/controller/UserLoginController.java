@@ -1,6 +1,7 @@
 package com.zyc.cloud.search.utils.jwt.controller;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.zyc.cloud.search.admin.user.service.UserService;
 import com.zyc.cloud.search.utils.jwt.JwtUtils;
 import com.zyc.cloud.search.utils.jwt.model.UserLoginModel;
 import com.zyc.cloud.search.utils.jwt.service.UserLoginService;
@@ -28,13 +29,7 @@ public class UserLoginController {
             //认证成功后，生成JWT令牌
             Map<String,String> payload = new HashMap<>();
             payload.put("account",userDB.getAccount());
-            payload.put("password",userDB.getPassword());
-            payload.put("userName",userDB.getUserName());
-            payload.put("imgSrc",userDB.getImgSrc());
-            payload.put("sex",userDB.getSex().toString());
-            payload.put("age",userDB.getAge().toString());
             payload.put("role",userDB.getRole());
-            payload.put("state",userDB.getState().toString());
             String jwtToken = JwtUtils.createJwtToken(payload);
             map.put("flag",true);
             map.put("message","认证成功");
@@ -53,14 +48,9 @@ public class UserLoginController {
         String token = request.getHeader("Access-Token");
         try{
             DecodedJWT verify = JwtUtils.verify(token);
-            map.put("account",verify.getClaim("account").asString());
-            map.put("password",verify.getClaim("password").asString());
-            map.put("userName",verify.getClaim("userName").asString());
-            map.put("imgSrc",verify.getClaim("imgSrc").asString());
-            map.put("sex",verify.getClaim("sex").asString());
-            map.put("age",verify.getClaim("age").asString());
-            map.put("role",verify.getClaim("role").asString());
-            map.put("state",verify.getClaim("state").asString());
+            String account = verify.getClaim("account").asString();
+            UserLoginModel userLoginModel = userLoginService.gerUserInfo(account);
+            map.put("userInfo",userLoginModel);
             map.put("flag",true);
             map.put("message","请求成功");
             return map;

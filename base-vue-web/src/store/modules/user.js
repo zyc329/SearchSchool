@@ -55,7 +55,7 @@ const user = {
         const token = Vue.ls.get(TOKEN_NAME)
         getInfo({token})
           .then((response) => {
-            const result = response
+            const result = response.userInfo
 
             if (result) {
               commit('SET_INFO', result)

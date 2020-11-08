@@ -6,4 +6,9 @@
         where account=#{account} and password =#{password}
     </select>
 
+    <select id="getUserInfo" parameterType="com.zyc.cloud.search.utils.jwt.model.UserLoginModel" resultType="com.zyc.cloud.search.utils.jwt.model.UserLoginModel">
+        select * from tb_user
+        where account=#{account}
+    </select>
+
 </mapper>

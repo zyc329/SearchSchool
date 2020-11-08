@@ -4,4 +4,6 @@ import com.zyc.cloud.search.utils.jwt.model.UserLoginModel;
 
 public interface UserLoginService {
     UserLoginModel login(UserLoginModel userLoginModel);
+
+    UserLoginModel gerUserInfo(String account);
 }

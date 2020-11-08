@@ -15,4 +15,9 @@ public class UserLoginServiceImpl implements UserLoginService {
     public UserLoginModel login(UserLoginModel userLoginModel) {
         return userLoginMapper.login(userLoginModel);
     }
+
+    @Override
+    public UserLoginModel gerUserInfo(String account) {
+        return userLoginMapper.getUserInfo(account);
+    }
 }

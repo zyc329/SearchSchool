@@ -36,7 +36,7 @@
             </a-form-item>
             <a-form-item label="年龄">
                 <a-input
-                        v-decorator="['age',{rules:rules}]"
+                        v-decorator="['age',{rules:rules.age}]"
                 />
             </a-form-item>
             <a-form-item label="角色" v-if="operationType!==10">
@@ -127,6 +127,7 @@
           if (!errors) {
             values.role = this.pageType !== 200 ? 'user' : 'admin'
             userAdd(values).then(res=>{
+              this.close()
               this.$message.success('用户添加成功');
             }).catch(err=>{
               this.$message.error(err.message)
@@ -142,6 +143,7 @@
         this.lineData = {}
         this.operationId = ''
         this.operationType = ''
+        this.pageType=''
         this.visible = false
       }
     }
