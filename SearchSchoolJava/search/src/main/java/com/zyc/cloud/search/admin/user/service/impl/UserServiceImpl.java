@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateById(UserDo userDo) {
-        userMapper.updateByPrimaryKeySelective(userDo);
+        userMapper.updateByPrimaryKey(userDo);
     }
 
     @Override
@@ -93,10 +93,20 @@ public class UserServiceImpl implements UserService {
      *
      */
     @Override
-    public void resetPW(String userId) {
+    public Integer resetPW(String userId) {
 
         String restPw = PW;
-        userMapper.resetPW(userId,restPw);
+        return userMapper.resetPW(userId,restPw);
+    }
+
+    /**
+     * 修改密码
+     *
+     */
+    @Override
+    public Integer updatePW(String userId,String newPw) {
+
+        return userMapper.resetPW(userId,newPw);
     }
 
     public Example createExample(UserDo userDo) {

@@ -75,7 +75,7 @@ public class UserController {
     }
 
     /**
-     * 根绝ID删除
+     * 根据ID删除
      */
     @PostMapping("userDelete")
     public ResultUtil userDelete(@RequestBody UserDo userDo) {
@@ -114,7 +114,29 @@ public class UserController {
      */
     @PostMapping("resetPW")
     public ResultUtil resetPW(@RequestParam(value = "userId") String userId) {
-        userService.resetPW(userId);
-        return new ResultUtil(true, StatusCode.OK, "重置密码成功！");
+        Integer flag = userService.resetPW(userId);
+        String message = "";
+        if (flag != 1){
+            message="重置密码失败！";
+        }else{
+            message="重置密码成功！";
+        }
+        return new ResultUtil(true, StatusCode.OK, message);
+    }
+
+    /**
+     * 重置密码
+     */
+    @PostMapping("updatePW")
+    public ResultUtil updatePW(@RequestParam(value = "userId") String userId,
+                               @RequestParam(value = "newPw") String newPw) {
+        Integer flag = userService.updatePW(userId,newPw);
+        String message = "";
+        if (flag != 1){
+            message="修改密码失败！";
+        }else{
+            message="修改密码成功！";
+        }
+        return new ResultUtil(true, StatusCode.OK, message);
     }
 }

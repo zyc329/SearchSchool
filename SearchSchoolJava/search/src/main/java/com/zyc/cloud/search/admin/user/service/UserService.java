@@ -55,5 +55,10 @@ public interface UserService {
     /**
      * 密码重置
      */
-    void resetPW(String userId);
+    Integer resetPW(String userId);
+
+    /**
+     * 密码修改
+     */
+    Integer updatePW(String userId,String newPw);
 }

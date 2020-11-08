@@ -19,6 +19,6 @@ public interface UserMapper extends MyBaseMapper<UserDo> {
     /**
      * 重置密码
      */
-    void resetPW(@Param("userId") String userId, @Param("restPw") String restPw);
+    Integer resetPW(@Param("userId") String userId, @Param("restPw") String restPw);
 
 }
