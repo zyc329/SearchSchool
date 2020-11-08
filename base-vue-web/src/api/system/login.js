@@ -14,7 +14,6 @@ const userApi = {
 }
 
 export function loginText(params) { // 测试
-    debugger
     return request({
         url: userApi.demo,
         method: 'get',

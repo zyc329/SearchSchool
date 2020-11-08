@@ -13,14 +13,14 @@ public class JwtInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Map<String,Object> map=new HashMap<>();
         //获取请求头中的令牌
-        String token = request.getHeader("token");
+        String token = request.getHeader("Access-Token");
         try{
             JwtUtils.verify(token);//验证令牌
             return true;
         }catch(Exception e){
             e.printStackTrace();
             map.put("flag",false);
-            map.put("message","请求失败");
+            map.put("message","token验证失败，请重新登录！");
         }
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(JSON.toJSON(map).toString());

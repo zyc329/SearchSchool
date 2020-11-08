@@ -47,14 +47,20 @@ public class UserLoginController {
         return map;
     }
 
-    @PostMapping("test")
+    @PostMapping("getUserInfo")
     public Map<String,Object> test(HttpServletRequest request){
         Map<String,Object> map = new HashMap<>();
-        String token = request.getHeader("token");
+        String token = request.getHeader("Access-Token");
         try{
             DecodedJWT verify = JwtUtils.verify(token);
-            log.info("用户id:[{}]",verify.getClaim("userId").asString());
-            log.info("用户账号:[{}]",verify.getClaim("account").asString());
+            map.put("account",verify.getClaim("account").asString());
+            map.put("password",verify.getClaim("password").asString());
+            map.put("userName",verify.getClaim("userName").asString());
+            map.put("imgSrc",verify.getClaim("imgSrc").asString());
+            map.put("sex",verify.getClaim("sex").asString());
+            map.put("age",verify.getClaim("age").asString());
+            map.put("role",verify.getClaim("role").asString());
+            map.put("state",verify.getClaim("state").asString());
             map.put("flag",true);
             map.put("message","请求成功");
             return map;

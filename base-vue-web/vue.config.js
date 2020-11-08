@@ -97,7 +97,8 @@ const vueConfig = {
     // 如果您想启用代理，请删除 mockjs /src/main.jsL11
     proxy: {
       '/': {
-        target: 'http://seachjava.free.idcfengye.com',
+        // target: 'http://seachjava.free.idcfengye.com',
+        target: 'http://127.0.0.1:8081',
         ws: false,
         changeOrigin: true
       }

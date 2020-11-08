@@ -38,28 +38,29 @@ router.beforeEach((to, from, next) => {
           .dispatch('GetInfo')
           .then((res) => {
             // 开启了权限控制 走动态添加路由逻辑
-            if (openPermission) {
-              const token = res.result && res.result.id
-              store.dispatch('GenerateRoutesSync', { token }).then(() => {
-                // 动态添加可访问路由表
-                router.addRoutes(store.getters.addRouters)
-                if (to.path === redirect) {
-                  // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-                  next({ ...to, replace: true })
-                } else {
-                  // 跳转到目的路由
-                  next({ path: redirect })
-                }
-              })
-            } else {
-              if (to.path === redirect) {
-                // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
-                next({ ...to, replace: true })
-              } else {
-                // 跳转到目的路由
-                next({ path: redirect })
-              }
-            }
+            // if (openPermission) {
+            //   const token = res
+            //   store.dispatch('GenerateRoutesSync', { token }).then(() => {
+            //     // 动态添加可访问路由表
+            //     router.addRoutes(store.getters.addRouters)
+            //     if (to.path === redirect) {
+            //       // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+            //       next({ ...to, replace: true })
+            //     } else {
+            //       // 跳转到目的路由
+            //       next({ path: redirect })
+            //     }
+            //   })
+            // } else {
+            //   if (to.path === redirect) {
+            //     // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+            //     next({ ...to, replace: true })
+            //   } else {
+            //     // 跳转到目的路由
+            //     next({ path: redirect })
+            //   }
+            // }
+            next()
           })
           .catch(() => {
             notification.error({

@@ -23,7 +23,6 @@
             },
             svgClass() {
                 if (this.className) {
-                    debugger
                     return "svg-icon" + this.className;
                 } else {
                     return "svg-icon";

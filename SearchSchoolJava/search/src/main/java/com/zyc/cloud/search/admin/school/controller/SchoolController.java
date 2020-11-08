@@ -30,8 +30,8 @@ public class SchoolController {
 	/**
 	 * 新增学校
 	 */
-	@PostMapping("shcoolAdd")
-	public ResultUtil shcoolAdd(@RequestBody SchoolDo schoolDo) {
+	@PostMapping("schoolAdd")
+	public ResultUtil schoolAdd(@RequestBody SchoolDo schoolDo) {
 		SchoolDo item = new SchoolDo();
 		item.setSchoolName(schoolDo.getSchoolName());
 		if (schoolService.findList(item).size() > 0){

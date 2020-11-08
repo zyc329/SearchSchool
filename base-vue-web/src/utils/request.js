@@ -68,9 +68,24 @@ service.interceptors.request.use((config) => {
   return config
 }, err)
 
+
+function checkStatus(response) {
+  // 请求成功，返回
+  let res = response.data
+  // 后端返回的状态找到对应的文字说明
+  if (response.data.code===200 && response.data.flag ===true){
+    return response.data
+  }
+  if (res){
+    if (res.code===200 || res.flag ===true){
+      return res
+    }
+    return Promise.reject(res)
+  }
+}
 // response interceptor
 service.interceptors.response.use((response) => {
-  return response.data
+  return checkStatus(response)
 }, err)
 
 const installer = {

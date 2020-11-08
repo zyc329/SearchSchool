@@ -1,55 +1,50 @@
 <template>
-  <div class="main">
-    <a-form id="formLogin" class="user-layout-login" ref="formLogin" :form="form" @submit="handleSubmit">
-      <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px" message="账户或密码错误"/>
-      <a-form-item>
-        <a-input
-          size="large"
-          type="text"
-          placeholder="账户: admin or super"
-          v-decorator="[
-                'username',
-                { rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change' },
+    <div class="main">
+        <a-form id="formLogin" class="user-layout-login" ref="formLogin" :form="form" @submit="handleSubmit">
+            <a-alert v-if="isLoginError" type="error" showIcon style="margin-bottom: 24px" message="账户或密码错误"/>
+            <a-form-item>
+                <a-input
+                        size="large"
+                        type="text"
+                        placeholder="账户: admin or super"
+                        v-decorator="[
+                'account',
+                { rules: [{ required: true, message: '请输入账号/手机号/邮箱号' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change' },
               ]"
-        >
-          <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-        </a-input>
-      </a-form-item>
+                >
+                    <a-icon slot="prefix" type="username" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+                </a-input>
+            </a-form-item>
 
-      <a-form-item>
-        <a-input
-          size="large"
-          type="password"
-          autocomplete="false"
-          placeholder="密码: 和账户名一致"
-          v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur' }]"
-        >
-          <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-        </a-input>
-      </a-form-item>
+            <a-form-item>
+                <a-input
+                        size="large"
+                        type="password"
+                        autocomplete="false"
+                        placeholder="密码: 和账户名一致"
+                        v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur' }]"
+                >
+                    <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+                </a-input>
+            </a-form-item>
 
-      <a-form-item>
-        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]" class="user-select-none">自动登录
-        </a-checkbox>
-                <a class="forge-password" style="float: right">注册账号</a>
-      </a-form-item>
+            <a-form-item>
+                <!--        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]" class="user-select-none">自动登录-->
+                <!--        </a-checkbox>-->
+                <a class="forge-password" style="float: right" @click="$refs.userModule.showModule(undefined,10,100)">注册账号</a>
+            </a-form-item>
 
-      <a-form-item style="margin-top: 24px">
-        <a-button size="large" type="primary" htmlType="submit" class="login-button" :loading="state.loginBtn"
-                  :disabled="state.loginBtn"
-        >确定
-        </a-button
-        >
-      </a-form-item>
-    </a-form>
+            <a-form-item style="margin-top: 24px">
+                <a-button size="large" type="primary" htmlType="submit" class="login-button" :loading="state.loginBtn"
+                          :disabled="state.loginBtn"
+                >确定
+                </a-button
+                >
+            </a-form-item>
+        </a-form>
 
-    <!--    <two-step-captcha-->
-    <!--      v-if="requiredTwoStepCaptcha"-->
-    <!--      :visible="stepCaptchaVisible"-->
-    <!--      @success="stepCaptchaSuccess"-->
-    <!--      @cancel="stepCaptchaCancel"-->
-    <!--    ></two-step-captcha>-->
-  </div>
+        <user-module ref="userModule"></user-module>
+    </div>
 </template>
 
 <script>
@@ -58,16 +53,16 @@
   import {mapActions} from 'vuex'
   import {timeFix} from '@/utils/util'
   import {getSmsCaptcha, get2step} from '@/api/user'
+  import UserModule from "@/views/admin/user/module/UserModule"
 
   export default {
     name: 'userLogin',
     components: {
-      // TwoStepCaptcha,
+      UserModule
     },
     data() {
       return {
         rememberMe: true,
-        customActiveKey: 'tab1',
         loginBtn: false,
         // login type: 0 email, 1 username, 2 telephone
         loginType: 0,
@@ -107,30 +102,21 @@
         }
         callback()
       },
-      handleTabClick(key) {
-        this.customActiveKey = key
-        // this.form.resetFields()
-      },
       handleSubmit(e) {
         e.preventDefault()
         const {
           form: {validateFields},
           state,
-          customActiveKey,
           Login,
         } = this
 
         state.loginBtn = true
 
-        const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha']
+        const validateFieldsKey = ['account', 'password']
 
         validateFields(validateFieldsKey, {force: true}, (err, values) => {
           if (!err) {
-            console.log('login form', values)
             const loginParams = {...values}
-            delete loginParams.username
-            loginParams[!state.loginType ? 'email' : 'username'] = values.username
-            loginParams.password = md5(values.password)
             Login(loginParams)
               .then((res) => this.loginSuccess(res))
               .catch((err) => this.requestFailed(err))
@@ -144,66 +130,7 @@
           }
         })
       },
-      getCaptcha(e) {
-        e.preventDefault()
-        const {
-          form: {validateFields},
-          state,
-        } = this
-
-        validateFields(['mobile'], {force: true}, (err, values) => {
-          if (!err) {
-            state.smsSendBtn = true
-
-            const interval = window.setInterval(() => {
-              if (state.time-- <= 0) {
-                state.time = 60
-                state.smsSendBtn = false
-                window.clearInterval(interval)
-              }
-            }, 1000)
-
-            const hide = this.$message.loading('验证码发送中..', 0)
-            getSmsCaptcha({mobile: values.mobile})
-              .then((res) => {
-                setTimeout(hide, 2500)
-                this.$notification['success']({
-                  message: '提示',
-                  description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-                  duration: 8,
-                })
-              })
-              .catch((err) => {
-                setTimeout(hide, 1)
-                clearInterval(interval)
-                state.time = 60
-                state.smsSendBtn = false
-                this.requestFailed(err)
-              })
-          }
-        })
-      },
-      stepCaptchaSuccess() {
-        this.loginSuccess()
-      },
-      stepCaptchaCancel() {
-        this.Logout().then(() => {
-          this.loginBtn = false
-          this.stepCaptchaVisible = false
-        })
-      },
       loginSuccess(res) {
-        // check res.homePage define, set $router.push name res.homePage
-        // Why not enter onComplete
-        /*
-        this.$router.push({ name: 'analysis' }, () => {
-          console.log('onComplete')
-          this.$notification.success({
-            message: '欢迎',
-            description: `${timeFix()}，欢迎回来`
-          })
-        })
-        */
         this.$router.push({path: '/'})
         // 延迟 1 秒显示欢迎信息
         setTimeout(() => {
@@ -227,30 +154,30 @@
 </script>
 
 <style lang="less" scoped>
-  .user-layout-login {
-    label {
-      font-size: 14px;
-    }
+    .user-layout-login {
+        label {
+            font-size: 14px;
+        }
 
-    .getCaptcha {
-      display: block;
-      width: 100%;
-      height: 40px;
-    }
+        .getCaptcha {
+            display: block;
+            width: 100%;
+            height: 40px;
+        }
 
-    .forge-password {
-      font-size: 14px;
-    }
+        .forge-password {
+            font-size: 14px;
+        }
 
-    button.login-button {
-      padding: 0 15px;
-      font-size: 16px;
-      height: 40px;
-      width: 100%;
-    }
+        button.login-button {
+            padding: 0 15px;
+            font-size: 16px;
+            height: 40px;
+            width: 100%;
+        }
 
-    .user-select-none {
-      user-select: none;
+        .user-select-none {
+            user-select: none;
+        }
     }
-  }
 </style>
