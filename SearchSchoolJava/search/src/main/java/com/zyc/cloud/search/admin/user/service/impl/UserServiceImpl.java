@@ -105,7 +105,6 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Integer updatePW(String userId,String newPw) {
-
         return userMapper.resetPW(userId,newPw);
     }
 

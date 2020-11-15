@@ -1,11 +1,13 @@
 <template>
   <div id="userLayout" :class="['user-layout-wrapper', device]">
     <div class="container">
-      <div class="top">
-        <h1 class="title">榕城查</h1>
-        <p class="desc">欢迎注册榕城查账号</p>
+      <div style="padding: 120px;background: rgba(255,255,255,0.6);border-radius: 20px;">
+        <div class="top">
+          <h1 class="title" style="font-size: 38px;">榕城查</h1>
+          <p class="desc" style="color: red;">新用户请点击注册账号</p>
+        </div>
+        <route-layout />
       </div>
-      <route-layout />
     </div>
   </div>
 </template>
@@ -44,7 +46,7 @@ export default {
   .container {
     width: 100%;
     min-height: 100%;
-    background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
+    background: #f0f2f5 url(~@/assets/img/xx1.jpg) no-repeat 50%;
     background-size: 100%;
     padding: 110px 0 144px;
     position: relative;

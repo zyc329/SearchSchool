@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import {UserLayout, BasicLayout, RouteLayout,BlankLayout} from '@/layouts'
+import {UserLayout, BasicLayout, RouteLayout, ZycLayout} from '@/layouts'
 import {openPermission} from '@/config/index'
 
 import exampleModule from '@/router/modules/example'
@@ -32,6 +32,7 @@ export const constantRouterMap = [
         path: 'login',
         name: 'login',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login'),
+        meta: {title: '登录', keepAlive: true},
       },
     ],
   },
@@ -45,7 +46,7 @@ export const constantRouterMap = [
 let syncRouterMap = [
   {
     path: '/userHome',
-    component: BlankLayout,
+    component: ZycLayout,
     redirect: '/user/home',
     hidden: true,
     children: [
@@ -54,6 +55,12 @@ let syncRouterMap = [
         name: 'homeIndex',
         component: () => import('@/views/user/home/homeIndex'),
         meta: {title: '首页', keepAlive: true},
+      },
+      {
+        path: '/searchIndex',
+        name: 'searchIndex',
+        component: () => import('@/views/user/page/searchIndex'),
+        meta: {title: '高级搜索', keepAlive: true},
       },
     ],
   },

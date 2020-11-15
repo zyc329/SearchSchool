@@ -6,7 +6,7 @@
                 <a-input
                         size="large"
                         type="text"
-                        placeholder="账户: admin or super"
+                        placeholder="请输入账号"
                         v-decorator="[
                 'account',
                 { rules: [{ required: true, message: '请输入账号/手机号/邮箱号' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change' },
@@ -21,7 +21,7 @@
                         size="large"
                         type="password"
                         autocomplete="false"
-                        placeholder="密码: 和账户名一致"
+                        placeholder="请输入密码"
                         v-decorator="['password', { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur' }]"
                 >
                     <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -29,8 +29,6 @@
             </a-form-item>
 
             <a-form-item>
-                <!--        <a-checkbox v-decorator="['rememberMe', { valuePropName: 'checked' }]" class="user-select-none">自动登录-->
-                <!--        </a-checkbox>-->
                 <a class="forge-password" style="float: right" @click="$refs.userModule.showModule(undefined,10,100)">注册账号</a>
             </a-form-item>
 
@@ -166,7 +164,9 @@
         }
 
         .forge-password {
-            font-size: 14px;
+            font-size: 16px;
+            font-weight: bolder;
+            color: #1890ff;
         }
 
         button.login-button {

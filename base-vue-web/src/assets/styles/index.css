@@ -1,18 +1,33 @@
 .div-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .ml10 {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 .ml20 {
-  margin-left: 20px;
+    margin-left: 20px;
 }
 
 .ml30 {
-  margin-left: 30px;
+    margin-left: 30px;
+}
+.w100{
+    width: 100%;
+}
+
+.content100 {
+    width: 100%;
+    position: relative;
+    top: 60px;
+}
+
+.bj {
+    width: 100%;
+    height: 100%;
+    background-image: url(~@/assets/img/xx1.jpg);
 }
