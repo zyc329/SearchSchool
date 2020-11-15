@@ -5,7 +5,7 @@
                 <a-col :span="8">
                     <a-form-item label="学校名称">
                         <a-input
-                                v-decorator="['schoolId']"
+                                v-decorator="['schoolName']"
                         />
                     </a-form-item>
                 </a-col>
@@ -73,38 +73,45 @@
         loading: false,
         columns: [
           {
+            key: 'schoolName',
             title: '学校名称',
             dataIndex: 'schoolName',
             align: 'center'
           },
           {
+            key: 'schoolSrc',
             title: '学校具体地址',
             dataIndex: 'schoolSrc',
             align: 'center'
           },
           {
+            key: 'schoolType',
             title: '学校类型',
             dataIndex: 'schoolType',
             align: 'center',
             scopedSlots: {customRender: 'schoolType'}
           },
           {
+            key: 'schoolUrl',
             title: '学校官网网址',
             dataIndex: 'schoolUrl',
             align: 'center',
             scopedSlots: {customRender: 'schoolUrl'}
           },
           {
+            key: 'schoolTel',
             title: '招生热线',
             dataIndex: 'schoolTel',
             align: 'center'
           },
           {
+            key: 'schoolHead',
             title: '招生办负责人',
             dataIndex: 'schoolHead',
             align: 'center'
           },
           {
+            key: 'schoolTime',
             title: '创校时间',
             dataIndex: 'schoolTime',
             align: 'center',
@@ -117,6 +124,7 @@
             }
           },
           {
+            key: '',
             title: '操作',
             align: 'center',
             dataIndex: 'action',
@@ -145,6 +153,7 @@
         validateFields((errors, values) => {
           if (!errors) {
             this.loading = true
+            values.schoolTime && this.moment(values.schoolTime).format('yyyy-MM-DD')
             queryParam = Object.assign(values, queryParam)
             schoolFindPage(queryParam).then(res => {
               this.tableData = res.data.list

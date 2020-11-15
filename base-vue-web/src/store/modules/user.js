@@ -56,14 +56,13 @@ const user = {
         getInfo({token})
           .then((response) => {
             const result = response.userInfo
-
             if (result) {
               commit('SET_INFO', result)
+              commit('SET_ROLES',result.role)
             } else {
               reject(new Error('获取用户失败!'))
             }
             commit('SET_NAME', {name: result.userName, welcome: welcome()})
-
             commit('SET_AVATAR', 'https://gw.alipayobjects.com/zos/rmsportal/jZUIxmJycoymBprLOUbT.png')
             // commit('SET_AVATAR', result.imgSrc)
             resolve(response)

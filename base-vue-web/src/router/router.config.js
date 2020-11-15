@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import {UserLayout, BasicLayout, RouteLayout} from '@/layouts'
+import {UserLayout, BasicLayout, RouteLayout,BlankLayout} from '@/layouts'
 import {openPermission} from '@/config/index'
 
 import exampleModule from '@/router/modules/example'
@@ -44,6 +44,20 @@ export const constantRouterMap = [
 // 同步路由 一般为前端写死的路由不通过接口获取
 let syncRouterMap = [
   {
+    path: '/userHome',
+    component: BlankLayout,
+    redirect: '/user/home',
+    hidden: true,
+    children: [
+      {
+        path: '/homeIndex',
+        name: 'homeIndex',
+        component: () => import('@/views/user/home/homeIndex'),
+        meta: {title: '首页', keepAlive: true},
+      },
+    ],
+  },
+  {
     path: '/',
     name: 'index',
     component: BasicLayout,
@@ -66,7 +80,6 @@ let syncRouterMap = [
           },
         ],
       },
-      exampleModule,
       {
         path: '/admin-school',
         name: 'school',

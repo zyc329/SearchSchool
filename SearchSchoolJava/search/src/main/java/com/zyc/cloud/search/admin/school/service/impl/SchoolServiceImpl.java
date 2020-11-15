@@ -111,12 +111,8 @@ public class SchoolServiceImpl  implements SchoolService {
 				criteria.andEqualTo("schoolName", schoolDo.getSchoolName());
 			}
 			if (StrUtil.isNotEmpty(schoolDo.getSchoolType())) {
-				criteria.andEqualTo("schoolName", schoolDo.getSchoolName());
+				criteria.andEqualTo("schoolType", schoolDo.getSchoolType());
 			}
-			if (StrUtil.isNotEmpty(schoolDo.getSchoolType())) {
-				criteria.andEqualTo("schoolName", schoolDo.getSchoolName());
-			}
-
 			if (null != schoolDo.getSchoolTime()){
 				Date date = schoolDo.getSchoolTime();
 				criteria.setAndOr("date_format(" + date + ",'%Y') = date_format(school_time,'%Y')");
