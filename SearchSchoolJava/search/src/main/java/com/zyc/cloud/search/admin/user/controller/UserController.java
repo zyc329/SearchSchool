@@ -125,7 +125,7 @@ public class UserController {
     }
 
     /**
-     * 重置密码
+     * 修改密码
      */
     @PostMapping("updatePW")
     public ResultUtil updatePW(@RequestParam(value = "userId") String userId,

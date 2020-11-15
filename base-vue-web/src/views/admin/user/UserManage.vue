@@ -25,44 +25,54 @@
                 </a-col>
                 <a-col :span="8">
                     <a-form-item label="性别">
-                        <a-select style="width: 100%">
-                            <a-select-option v-for="item in []" :key="item" :value="item" v-decorator="['sex']">
-                                {{}}
+                        <a-select style="width: 100%" v-decorator="['sex']">
+                            <a-select-option v-for="item in dict.sex" :key="item.value" :value="item.value">
+                                {{item.text}}
                             </a-select-option>
                         </a-select>
                     </a-form-item>
                 </a-col>
                 <a-col :span="16">
                     <a-form-item>
-                        <a-button class="ml20" type="primary" @click="$refs.userModule.showModule(undefined,10)">新增
+                        <a-button class="ml20" type="primary" @click="$refs.userModule.showModule(undefined,10,300)">新增
                         </a-button>
-                        <a-button class="ml20" type="primary" @click="queryAll()">查询</a-button>
-                        <a-button class="ml20" @click="resetFieldsQueryAll()">清空条件</a-button>
+                        <a-button class="ml20" type="primary" @click="queryAll">查询</a-button>
+                        <a-button class="ml20" @click="resetFieldsQueryAll">清空条件</a-button>
                     </a-form-item>
                 </a-col>
             </a-row>
         </a-form>
-
-        <a-table
-                :columns="columns"
-                :data-source="tableData"
-                :pagination="pagination"
-                @change="handleTableChange"
-        >
-      <span slot="action" slot-scope="text, record">
-        <a-button type="link" @click="editItem(record)">编辑</a-button>
-        <a-button type="link" @click="">重置密码</a-button>
-        <a-button type="link" @click="">{{record.state===0?'封号':'解封'}}</a-button>
-        <a-button type="link " @click="deleteItem(record)">删除</a-button>
-      </span>
-        </a-table>
+        <a-spin :spinning="loading">
+            <a-table
+                    :columns="columns"
+                    :data-source="tableData"
+                    :pagination="pagination"
+                    @change="handleTableChange"
+            >
+                 <span slot="sex" slot-scope="text,record">
+                    {{utils.parse_str(text,dict.sex)}}
+                </span>
+                <span slot="state" slot-scope="text,record">
+                    {{utils.parse_str(text,dict.state)}}
+                </span>
+                <span slot="action" slot-scope="text, record">
+                <a-button type="link" @click="editItem(record)">编辑</a-button>
+                <a-button type="link" @click="resetPW(record.userId)">重置密码</a-button>
+                <a-button type="link" @click="editState(record)">{{record.state===0?'封号':'解封'}}</a-button>
+                <a-button type="link " @click="deleteItem(record)">删除</a-button>
+              </span>
+            </a-table>
+        </a-spin>
         <user-module ref="userModule" @closeModule="queryAll"></user-module>
     </div>
 </template>
 
 <script>
   import UserModule from "@/views/admin/user/module/UserModule"
-  import {userFindPage} from '@/api/admin/user/index'
+  import {userFindPage, userUpdateStatus, resetPW, userDelete} from '@/api/admin/user/index'
+  import * as utils from '@/utils/utilZengh'
+  import moment from 'moment'
+  import {Dict} from "@/utils/dict";
 
   export default {
     components: {
@@ -70,41 +80,56 @@
     },
     data() {
       return {
+        utils,
+        moment,
+        loading: false,
         form: this.$form.createForm(this),
         columns: [
           {
+            key: 'account',
             title: '账号',
             dataIndex: 'account',
             align: 'center'
           },
           {
+            key: 'userName',
             title: '用户名',
             dataIndex: 'userName',
             align: 'center'
           },
           {
+            key: 'sex',
             title: '性别',
             dataIndex: 'sex',
-            align: 'center'
+            align: 'center',
+            scopedSlots: {customRender: 'sex'},
           },
           {
+            key: 'age',
             title: '年龄',
             dataIndex: 'age',
             align: 'center'
           },
           {
+            key: 'state',
             title: '状态',
             dataIndex: 'state',
-            align: 'center'
+            align: 'center',
+            scopedSlots: {customRender: 'state'}
           },
           {
+            key: 'action',
             title: '操作',
             align: 'center',
             dataIndex: 'action',
-            scopedSlots: {customRender: 'action'},
+            scopedSlots: {customRender: 'action'}
           }
         ],
         tableData: [],
+        dict: {
+          sex: Dict.SEX,
+          state: Dict.STATE
+        },
         pagination: {
           current: 1,
           showTotal: (total) => {
@@ -116,35 +141,22 @@
       }
     },
     mounted() {
+      this.form = this.$form.createForm(this)
       this.queryAll()
     },
     methods: {
       queryAll() {
-        let params={}
+        let params = {}
         const {form: {validateFields}} = this
         validateFields((errors, values) => {
           if (!errors) {
-            params = Object.assign(values, {page: this.pagination.current, size: this.pagination.pageSize})
+            this.loading = true
+            params = Object.assign(values, {role:'user',page: this.pagination.current, size: this.pagination.pageSize})
             userFindPage(params).then(res => {
               this.tableData = res.data.list
+              this.loading = false
             })
           }
-          //api请求
-
-
-          // const pagination = { ...this.pagination }
-          // pagination.total = res.data.total
-          // const pagination = { ...this.pagination }
-          // if (!res.code) {
-          //   this.tableData = res.data.rows
-          //   pagination.total = res.data.total
-          // } else {
-          //   this.tableData = []
-          //   pagination.total = 0
-          //   this.$message.error(res.description)
-          // }
-          // this.pagination = pagination
-
         })
       },
       resetFieldsQueryAll() {
@@ -159,10 +171,54 @@
         this.queryAll()
       },
       editItem(data) {
-
+        this.$refs.userModule.showModule(data, 20, 300)
       },
       deleteItem(data) {
-
+        let _this = this
+        _this.loading = true
+        this.$confirm({
+          title: '提示',
+          content:'是否确定删除该数据',
+          onOk() {
+            userDelete(data).then(() => {
+              _this.$message.success('删除成功！')
+              _this.queryAll()
+              _this.loading = false
+            }).catch(err => {
+              _this.$message.error(err.message)
+              _this.loading = false
+            }).finally(() => {
+              _this.loading = false
+            })
+          },
+          onCancel() {
+            _this.queryAll()
+            _this.loading = false
+          },
+        })
+      },
+      editState(data) {
+        this.loading = true
+        userUpdateStatus(data).then(() => {
+          this.$message.success('状态修改成功！')
+          this.queryAll()
+          this.loading = false
+        }).catch(err => {
+          this.$message.error(err.message)
+          this.loading = false
+        })
+      },
+      resetPW(id) {
+        debugger
+        this.loading = true
+        resetPW({userId: id}).then(() => {
+          this.$message.success('重置密码成功！')
+          this.queryAll()
+          this.loading = false
+        }).catch(err => {
+          this.$message.error(err.message)
+          this.loading = false
+        })
       }
     }
   }

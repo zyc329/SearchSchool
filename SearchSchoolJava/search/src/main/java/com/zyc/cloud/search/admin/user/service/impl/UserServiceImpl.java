@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateById(UserDo userDo) {
-        userMapper.updateByPrimaryKey(userDo);
+        userMapper.updateByPrimaryKeySelective(userDo);
     }
 
     @Override
@@ -124,6 +124,9 @@ public class UserServiceImpl implements UserService {
             }
             if (userDo.getSex() != null) {
                 criteria.andEqualTo("sex", userDo.getSex());
+            }
+            if (userDo.getRole() != null) {
+                criteria.andEqualTo("role", userDo.getRole());
             }
         }
         return example;

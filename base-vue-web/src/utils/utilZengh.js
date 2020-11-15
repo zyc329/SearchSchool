@@ -127,3 +127,14 @@ export const strLength = (str, len = 10, isShow = true) => {
     }
     return resultStr
 }
+
+export const parse_str = (val, dir) => {
+    let name = ''
+    for (let i = 0, j = dir.length; i < j; i++) {
+        if ('' + dir[i].value === '' + val) {
+            name = dir[i].text
+            break
+        }
+    }
+    return name
+}

@@ -1,71 +1,76 @@
 <template>
-  <div class="TableList">
-    <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-      <a-row>
-        <a-col :span="8">
-          <a-form-item label="学校名称">
-            <a-input
-              v-decorator="['schoolId']"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="8">
-          <a-form-item label="学校类型">
-            <a-select v-decorator="['schoolType']">
-              <a-select-option value="0" >
-                专科
-              </a-select-option>
-              <a-select-option value="1">
-                本科
-              </a-select-option>
-            </a-select>
-          </a-form-item>
-        </a-col>
-        <a-col :span="8">
-          <a-form-item label="创校时间">
-            <a-date-picker v-decorator="['schoolTime']" />
-          </a-form-item>
-        </a-col>
-        <a-col :span="16">
-          <a-form-item>
-            <a-button class="ml30" type="primary" @click="$refs.schoolModule.showModule(undefined,10)">新增</a-button>
-            <a-button class="ml30" type="primary" @click="queryAll()">查询</a-button>
-            <a-button class="ml30" @click="resetFieldsQueryAll()">清空条件</a-button>
-          </a-form-item>
-        </a-col>
-      </a-row>
-    </a-form>
-
-    <a-table
-      :columns="columns"
-      :data-source="tableData"
-      :pagination="pagination"
-      @change="handleTableChange"
-    >
-      <a slot="schoolUrl" slot-scope="text,record">
-        {{text}}
-      </a>
-      <span slot="action" slot-scope="text, record">
+    <div class="TableList">
+        <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+            <a-row>
+                <a-col :span="8">
+                    <a-form-item label="学校名称">
+                        <a-input
+                                v-decorator="['schoolId']"
+                        />
+                    </a-form-item>
+                </a-col>
+                <a-col :span="8">
+                    <a-form-item label="学校类型">
+                        <a-select v-decorator="['schoolType']">
+                            <a-select-option value="0">
+                                专科
+                            </a-select-option>
+                            <a-select-option value="1">
+                                本科
+                            </a-select-option>
+                        </a-select>
+                    </a-form-item>
+                </a-col>
+                <a-col :span="8">
+                    <a-form-item label="创校时间">
+                        <a-date-picker v-decorator="['schoolTime']"/>
+                    </a-form-item>
+                </a-col>
+                <a-col :span="16">
+                    <a-form-item>
+                        <a-button class="ml30" type="primary" @click="$refs.schoolModule.showModule(undefined,10)">新增
+                        </a-button>
+                        <a-button class="ml30" type="primary" @click="queryAll()">查询</a-button>
+                        <a-button class="ml30" @click="resetFieldsQueryAll()">清空条件</a-button>
+                    </a-form-item>
+                </a-col>
+            </a-row>
+        </a-form>
+        <a-spin :spinning="loading">
+            <a-table
+                    :columns="columns"
+                    :data-source="tableData"
+                    :pagination="pagination"
+                    @change="handleTableChange"
+            >
+                <a slot="schoolUrl" slot-scope="text,record">
+                    {{text}}
+                </a>
+                <span slot="action" slot-scope="text, record">
         <a-button type="link" @click="lookItem(record)">查看</a-button>
         <a-button type="link" @click="editItem(record)">编辑</a-button>
         <a-button type="link " @click="deleteItem(record)">删除</a-button>
       </span>
-    </a-table>
-    <school-module ref="schoolModule" @closeModule="queryAll"></school-module>
-  </div>
+            </a-table>
+        </a-spin>
+        <school-module ref="schoolModule" @closeModule="queryAll"></school-module>
+    </div>
 </template>
 
 <script>
   import SchoolModule from "@/views/admin/school/modules/SchoolModule"
   import moment from 'moment'
+  import {schoolFindPage} from '@/api/admin/school'
+
   export default {
-    components:{
+    components: {
       SchoolModule
     },
     data() {
       return {
         moment,
         form: this.$form.createForm(this),
+        loading: false,
         columns: [
           {
             title: '学校名称',
@@ -118,44 +123,7 @@
             scopedSlots: {customRender: 'action'}
           }
         ],
-        tableData: [
-          {
-            key: '1',
-            schoolName: '福建工程学院',
-            schoolSrc: '福建省福州市闽侯县大学城福建工程学院',
-            schoolType: 0,
-            schoolUrl:'https://www.ceshi.com',
-            schoolTel:'13799365050',
-            schoolHead:'吴老师'
-          },
-          {
-            key: '2',
-            schoolName: '福州大学',
-            schoolSrc: '福建省福州市闽侯县大学城福州大学',
-            schoolType: 1,
-            schoolUrl:'https://www.ceshi1.com',
-            schoolTel:'13799365052',
-            schoolHead:'林老师'
-          },
-          {
-            key: '3',
-            schoolName: '农林大学',
-            schoolSrc: '福建省福州市闽侯县大学城农林大学',
-            schoolType: 0,
-            schoolUrl:'https://www.ceshi2.com',
-            schoolTel:'13799365058',
-            schoolHead:'刘老师'
-          },
-          {
-            key: '4',
-            schoolName: '福州师范',
-            schoolSrc: '福建省福州市闽侯县大学城福州师范',
-            schoolType: 1,
-            schoolUrl:'https://www.ceshi3.com',
-            schoolTel:'13799365059',
-            schoolHead:'张老师'
-          },
-        ],
+        tableData: [],
         pagination: {
           current: 1,
           showTotal: (total) => {
@@ -167,29 +135,24 @@
       }
     },
     mounted() {
+      this.form = this.$form.createForm(this)
       this.queryAll()
     },
     methods: {
       queryAll() {
-        const queryParam = {}
+        let queryParam = {page: this.pagination.current, size: this.pagination.pageSize}
         const {form: {validateFields}} = this
         validateFields((errors, values) => {
           if (!errors) {
-            Object.assign(queryParam, values, {page: this.pagination.current, size: this.pagination.pageSize})
+            this.loading = true
+            queryParam = Object.assign(values, queryParam)
+            schoolFindPage(queryParam).then(res => {
+              this.tableData = res.data.list
+              this.loading = false
+            }).catch(err => {
+              this.$message.error(err.message)
+            })
           }
-          //api请求
-          // const pagination = { ...this.pagination }
-          // pagination.total = res.data.total
-          // const pagination = { ...this.pagination }
-          // if (!res.code) {
-          //   this.tableData = res.data.rows
-          //   pagination.total = res.data.total
-          // } else {
-          //   this.tableData = []
-          //   pagination.total = 0
-          //   this.$message.error(res.description)
-          // }
-          // this.pagination = pagination
         })
       },
       resetFieldsQueryAll() {

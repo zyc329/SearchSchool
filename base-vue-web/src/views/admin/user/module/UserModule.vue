@@ -40,8 +40,8 @@
                 />
             </a-form-item>
             <a-form-item label="角色" v-if="operationType!==10">
-                <a-select style="width: 100%">
-                    <a-select-option v-for="item in dirs.roleDirs" :key="item.code" :value="item.code" v-decorator="['role',{rules:rules.role}]">
+                <a-select style="width: 100%" disabled  v-decorator="['role',{rules:rules.role}]">
+                    <a-select-option v-for="item in dirs.roleDirs" :key="item.code" :value="item.code">
                         {{item.text}}
                     </a-select-option>
                 </a-select>
@@ -57,7 +57,7 @@
 </template>
 
 <script>
-  import {userAdd} from '@/api/admin/user/index'
+  import {userAdd,userUpdate} from '@/api/admin/user/index'
   export default {
     data() {
       return {
@@ -116,7 +116,10 @@
         } else {
           this.title = '修改'
           this.lineData = {...data}
-          this.operationId = data.IIIIDDDD
+          this.operationId = data.userId
+          this.$nextTick(() => {
+            this.form.setFieldsValue({ ...data })
+          })
         }
         this.pageType ===100 && (this.title = '注册')
       },
@@ -126,13 +129,24 @@
         validateFields((errors, values) => {
           if (!errors) {
             values.role = this.pageType !== 200 ? 'user' : 'admin'
-            userAdd(values).then(res=>{
-              this.close()
-              this.$message.success('用户添加成功');
-            }).catch(err=>{
-              this.$message.error(err.message)
-              this.loading=false
-            })
+            if (this.operationType===10){
+              userAdd(values).then(res=>{
+                this.close()
+                this.$message.success('用户添加成功');
+              }).catch(err=>{
+                this.$message.error(err.message)
+                this.loading=false
+              })
+            }else {
+              values.userId = this.operationId
+              userUpdate(values).then(res=>{
+                this.close()
+                this.$message.success('用户修改成功');
+              }).catch(err=>{
+                this.$message.error(err.message)
+                this.loading=false
+              })
+            }
           } else {
             this.loading = false
           }
@@ -140,10 +154,12 @@
       },
       close() {
         this.form.resetFields()
+        this.loading=false
         this.lineData = {}
         this.operationId = ''
         this.operationType = ''
         this.pageType=''
+        this.$emit('closeModule')
         this.visible = false
       }
     }
