@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -108,14 +109,15 @@ public class SchoolServiceImpl  implements SchoolService {
 		Example.Criteria criteria = example.createCriteria();
 		if (ObjectUtil.isNotEmpty(schoolDo)) {
 			if (StrUtil.isNotEmpty(schoolDo.getSchoolName())) {
-				criteria.andEqualTo("schoolName", schoolDo.getSchoolName());
+				criteria.andLike("schoolName","%"+schoolDo.getSchoolName()+"%");
 			}
 			if (StrUtil.isNotEmpty(schoolDo.getSchoolType())) {
 				criteria.andEqualTo("schoolType", schoolDo.getSchoolType());
 			}
 			if (null != schoolDo.getSchoolTime()){
 				Date date = schoolDo.getSchoolTime();
-				criteria.setAndOr("date_format(" + date + ",'%Y') = date_format(school_time,'%Y')");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				criteria.setAndOr("date_format(" + sdf.format(date) + ",'%Y') = date_format(school_time,'%Y')");
 			}
 		}
 
