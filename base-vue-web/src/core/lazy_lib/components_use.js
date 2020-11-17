@@ -15,6 +15,8 @@ import {
   Switch,
   Radio,
   Checkbox,
+  Carousel,
+  Collapse,
   Select,
   Card,
   Form,
@@ -54,6 +56,8 @@ Vue.use(Input)
 Vue.use(InputNumber)
 Vue.use(Button)
 Vue.use(Switch)
+Vue.use(Carousel)
+Vue.use(Collapse)
 Vue.use(Radio)
 Vue.use(Checkbox)
 Vue.use(Select)

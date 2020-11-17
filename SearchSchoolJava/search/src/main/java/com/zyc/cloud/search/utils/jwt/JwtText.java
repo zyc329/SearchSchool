@@ -4,13 +4,13 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import org.junit.Test;
+//import org.junit.Test;
 
 import java.util.Calendar;
 
 
 public class JwtText{
-    @Test
+//    @Test
     public void createJwtToken(){
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.SECOND,60*60*2);
@@ -22,7 +22,7 @@ public class JwtText{
         //输出令牌
         System.out.println(token);
     }
-    @Test
+//    @Test
     public void freeJwt(){
         String token="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDQ3ODMwNzcsInVzZXJuYW1lIjoi5byg5LiJIn0.GO2nnR8V42kuSQC0d37JEpeyIeMXJjGfOyc1XVp296w";
         //创建验证对象

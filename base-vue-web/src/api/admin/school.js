@@ -12,3 +12,11 @@ export function schoolFindPage(parameter) {
     data: parameter,
   })
 }
+
+export function upload(parameter) {
+  return axios({
+    url: 'upload',
+    method: 'post',
+    data: parameter,
+  })
+}

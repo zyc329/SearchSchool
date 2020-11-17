@@ -1,11 +1,12 @@
 package com.zyc.cloud.search.utils.upload.service.impl;
 
+import com.zyc.cloud.search.utils.ResultUtil;
+import com.zyc.cloud.search.utils.StatusCode;
 import com.zyc.cloud.search.utils.upload.service.UploadService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.Random;
 
 /**
  * @author yofu | @create 2020-11-13 14:03
@@ -14,8 +15,10 @@ import java.util.Random;
  **/
 @Service
 public class UploadServiceImpl implements UploadService {
+
+
     @Override
-    public void upload(MultipartFile mFile) throws Exception {
+    public String upload(MultipartFile mFile) throws Exception {
 
         if (mFile == null) {
             throw new Exception("文件不能为空！");
@@ -44,5 +47,6 @@ public class UploadServiceImpl implements UploadService {
             System.out.println("----------" + path + "文件上传失败————————");
             e.printStackTrace();
         }
+        return path;
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="w100">
+    <div class="w100" >
         <img v-if="imgShow===1" src="~@/assets/img/b1.jpg" class="w100" alt="">
         <img v-if="imgShow===2" src="~@/assets/img/b2.jpg" class="w100" alt="">
         <img v-if="imgShow===3" src="~@/assets/img/b3.jpg" class="w100" alt="">
@@ -128,8 +128,8 @@
 
     .footer {
         position: fixed;
-        bottom: 15px;
-        font-size: 18px;
+        bottom: 0;
+        font-size: 16px;
         font-family: 黑体;
         width: 100%;
         text-align: center;

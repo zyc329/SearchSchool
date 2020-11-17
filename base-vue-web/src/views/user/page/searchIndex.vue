@@ -22,14 +22,58 @@
                     <a-button type="primary" icon="search" size="large" @click="">搜索</a-button>
                 </a-col>
             </a-row>
-            <div style="width: 100%;background: red;height: 300px;font-size: 72px;">
-                高级搜索
+            <div style="width: 100%;height: 300px;">
+              <a-collapse v-model="activeKey">
+                <a-collapse-panel key="1" header="筛选">
+                  <div>
+                    <a-row>
+                      <a-col :span="2">
+                        <span>学校类型：</span>
+                      </a-col>
+                      <a-col :span="22" class="mb20">
+                        <a-checkbox-group v-model="checkData" :options="checkShowData" />
+                      </a-col>
+                      <a-col :span="2">
+                        <span>热门专业：</span>
+                      </a-col>
+                      <a-col :span="22" class="mb20">
+                        <a-checkbox-group v-model="checkData2" :options="checkShowData2"/>
+                      </a-col>
+                      <a-col :span="2">
+                      <span>排序：</span>
+                      </a-col>
+                      <a-col :span="22">
+                        <a-radio-group v-model="radioData">
+                          <a-radio-button value="1">
+                            按创效时间排序
+                          </a-radio-button>
+                          <a-radio-button value="2">
+                            按浏览量排序
+                          </a-radio-button>
+                          <a-radio-button value="3">
+                            按热门排名排序
+                          </a-radio-button>
+                        </a-radio-group>
+                      </a-col>
+                    </a-row>
+                  </div>
+
+                </a-collapse-panel>
+              </a-collapse>
             </div>
         </div>
 <!--        查询结果-->
-        <div style="font-size: 72px;padding: 0 10%;background: #1890ff">
-            查询结果
-            <div></div>
+        <div style="padding: 0 10%;background: #1890ff">
+            <div class="w100">
+              <a-row>a
+                <a-col span="8">
+                  <img src="http://localhost:8081/E:/tmp/demo/1605584196038/a.jpg" alt="">
+                </a-col>
+                <a-col span="16">
+
+                </a-col>
+              </a-row>
+            </div>
         </div>
     </div>
 </template>
@@ -47,10 +91,18 @@
         dict: {
           searchType: Dict.SEARCHTYPE
         },
+        activeKey:['1'],
+        checkData:[],
+        checkShowData:['本科','专科'],
+        checkData2:[],
+        checkShowData2:['土木','计算机','文学','数学','英语','物理','考古','医学'],
+        radioData:''
       }
     },
     mounted() {
       this.searchData = {...this.$route.params}
+    },
+    methods:{
     }
   }
 </script>

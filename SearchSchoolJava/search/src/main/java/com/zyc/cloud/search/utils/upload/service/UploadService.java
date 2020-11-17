@@ -12,5 +12,5 @@ public interface UploadService {
      * 文件上传
      * @param file
      */
-    void upload(MultipartFile file) throws Exception;
+    String upload(MultipartFile file) throws Exception;
 }

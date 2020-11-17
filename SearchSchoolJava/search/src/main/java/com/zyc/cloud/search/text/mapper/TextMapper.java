@@ -3,7 +3,6 @@ package com.zyc.cloud.search.text.mapper;
 import com.zyc.cloud.search.text.model.Text;
 import com.zyc.cloud.search.utils.base.MyBaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.junit.Test;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
