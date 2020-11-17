@@ -48,6 +48,7 @@ public class UploadController {
             String fileUrl = picDo.getPicSrc();
             inStream = new FileInputStream(fileUrl);
             response.setContentType("multipart/form-data");
+            response.setHeader("Content-Disposition","attachment;fileName="+picDo.getPicName());
             out = response.getOutputStream();
             // 循环取出流中的数据
             byte[] b = new byte[1024 * 10];

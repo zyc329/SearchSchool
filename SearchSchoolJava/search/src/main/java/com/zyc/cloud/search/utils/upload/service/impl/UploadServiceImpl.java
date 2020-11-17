@@ -68,7 +68,7 @@ public class UploadServiceImpl implements UploadService {
         String picId = IdUtil.objectId();
         HashMap<String,Object> picMap = new HashMap<>();
         picMap.put("picId", picId);
-        picMap.put("picName", fileName.substring(0, fileName.lastIndexOf(".")));
+        picMap.put("picName", fileName);
         picMap.put("picType", type);
         picMap.put("picSrc", filePath);
         PicDo picDo = BeanUtil.toBean(picMap, PicDo.class);

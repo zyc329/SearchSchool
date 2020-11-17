@@ -70,7 +70,7 @@
                   <img src="/download?picId=5fb4014bf100f969991c6a88" alt="">
                 </a-col>
                 <a-col span="16">
-
+                  <a-button @click="aa"></a-button>
                 </a-col>
               </a-row>
             </div>
@@ -103,6 +103,10 @@
       this.searchData = {...this.$route.params}
     },
     methods:{
+      aa(){
+        let u = 'http://' + location.host + '/download?picId=5fb4014bf100f969991c6a88'
+        window.open(encodeURI(u))
+      }
     }
   }
 </script>
