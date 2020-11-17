@@ -65,12 +65,13 @@
 <!--        查询结果-->
         <div style="padding: 0 10%;background: #1890ff">
             <div class="w100">
-              <a-row>a
+              <a-row>
                 <a-col span="8">
-                  <img src="/download?picId=5fb4014bf100f969991c6a88" alt="">
+                  <img style="width: 100px;height: 100px;" src="/download?picId=5fb4014bf100f969991c6a88" alt="">
                 </a-col>
                 <a-col span="16">
-                  <a-button @click="aa"></a-button>
+                  a
+                  <a-button @click="aa">下载图片</a-button>
                 </a-col>
               </a-row>
             </div>
