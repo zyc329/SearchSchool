@@ -48,7 +48,7 @@ public interface SchoolService {
 	/**
 	 * 根据id修改
 	 */
-	void addSchoolSeach(String schoolId);
+	void addSchoolSearch(String schoolId);
 
 	/**
 	 * 根据ID删除

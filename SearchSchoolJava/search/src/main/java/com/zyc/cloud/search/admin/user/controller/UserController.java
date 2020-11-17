@@ -27,7 +27,7 @@ public class UserController {
      * 根据主键ID查询
      */
     @PostMapping("userFindId")
-    public ResultUtil<Text> userFindId(@RequestBody String userId) {
+    public ResultUtil<UserDo> userFindId(@RequestBody String userId) {
         // 调用Service实现查询
         UserDo userDo = userService.findById(userId);
         return ResultUtil.success("查询成功", userDo);

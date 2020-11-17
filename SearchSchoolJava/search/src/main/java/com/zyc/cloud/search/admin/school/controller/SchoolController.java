@@ -90,7 +90,7 @@ public class SchoolController {
 	 * 根据主键ID查询
 	 */
 	@PostMapping("schoolFindId")
-	public ResultUtil<Text> schoolFindId(@RequestParam(value = "schoolId") String schoolId) {
+	public ResultUtil<Map> schoolFindId(@RequestParam(value = "schoolId") String schoolId) {
 		Map<String,Object> item = new HashMap<>();
 		// 调用Service实现查询
 		SchoolDo school = schoolService.findById(schoolId);
@@ -103,9 +103,9 @@ public class SchoolController {
 	/**
 	 * 根据主键ID查询
 	 */
-	@PostMapping("schoolSeach")
-	public ResultUtil<Text> schoolSeach(@RequestParam(value = "schoolId") String schoolId) {
-		schoolService.addSchoolSeach(schoolId);
+	@PostMapping("schoolSearch")
+	public ResultUtil<SchoolDo> schoolSearch(@RequestParam(value = "schoolId") String schoolId) {
+		schoolService.addSchoolSearch(schoolId);
 		return new ResultUtil(true, StatusCode.OK,"预览成功");
 	}
 

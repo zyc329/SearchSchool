@@ -67,7 +67,7 @@
             <div class="w100">
               <a-row>a
                 <a-col span="8">
-                  <img src="http://localhost:8081/E:/tmp/demo/1605584196038/a.jpg" alt="">
+                  <img src="/download?picId=5fb4014bf100f969991c6a88" alt="">
                 </a-col>
                 <a-col span="16">
 

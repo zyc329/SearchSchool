@@ -65,7 +65,7 @@ public class SchoolServiceImpl  implements SchoolService {
 		return schoolMapper.selectByPrimaryKey(id);
 	}
 	@Override
-	public void addSchoolSeach(String schoolId) {
+	public void addSchoolSearch(String schoolId) {
 		SchoolDo item = schoolMapper.selectByPrimaryKey(schoolId);
 		Integer num = 1;
 		String seach = item.getSchoolSeachSize();
@@ -117,7 +117,7 @@ public class SchoolServiceImpl  implements SchoolService {
 			if (null != schoolDo.getSchoolTime()){
 				Date date = schoolDo.getSchoolTime();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				criteria.setAndOr("date_format(" + sdf.format(date) + ",'%Y') = date_format(school_time,'%Y')");
+				criteria.andCondition("date_format('" + sdf.format(date) + "','%Y') = date_format(school_time,'%Y')");
 			}
 		}
 
@@ -129,6 +129,7 @@ public class SchoolServiceImpl  implements SchoolService {
 		Example.Criteria criteria = example.createCriteria();
 		if (ObjectUtil.isNotEmpty(ids)) {
 			criteria.setAndOr("pic_id in "+ids);
+//			criteria.andCondition("pic_id in "+ids);
 		}
 		return example;
 	}

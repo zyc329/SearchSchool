@@ -2,6 +2,7 @@ package com.zyc.cloud.search.admin.school.model;
 
 import com.zyc.cloud.search.utils.base.BaseDo;
 import lombok.Data;
+import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -17,6 +18,7 @@ public class PicDo extends BaseDo {
 
 	/*图片id*/
 	@Id
+	@KeySql(useGeneratedKeys = true)
 	@Column(name = "pic_id")
 	private String picId;
 
@@ -30,6 +32,6 @@ public class PicDo extends BaseDo {
 
 	/*图片地址src*/
 	@Column(name="pic_src")
-	private Integer picSrc;
+	private String picSrc;
 
 }
