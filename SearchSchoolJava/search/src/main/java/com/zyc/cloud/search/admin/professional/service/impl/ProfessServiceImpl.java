@@ -71,8 +71,11 @@ public class ProfessServiceImpl implements ProfessService {
             if (StrUtil.isNotEmpty(professDo.getProfessionalName())) {
                 criteria.andLike("professionalName", "%" + professDo.getProfessionalName() + "%");
             }
-            if (professDo.getSchoolId() != null) {
+            if (professDo.getProfessionalId() != null) {
                 criteria.andEqualTo("professionalId", professDo.getProfessionalId());
+            }
+            if (professDo.getCollegeId() != null) {
+                criteria.andEqualTo("collegeId", professDo.getCollegeId());
             }
         }
         return example;

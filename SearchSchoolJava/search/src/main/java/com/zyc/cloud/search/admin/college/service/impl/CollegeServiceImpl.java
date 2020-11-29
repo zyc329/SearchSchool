@@ -69,10 +69,10 @@ public class CollegeServiceImpl implements CollegeService {
         Example.Criteria criteria = example.createCriteria();
         if (ObjectUtil.isNotEmpty(collegeDo)) {
             if (StrUtil.isNotEmpty(collegeDo.getCollegeName())) {
-                criteria.andLike("account", "%" + collegeDo.getCollegeName() + "%");
+                criteria.andLike("collegeName", "%" + collegeDo.getCollegeName() + "%");
             }
             if (StrUtil.isNotEmpty(collegeDo.getCollegeHead())) {
-                criteria.andLike("userName", "%" + collegeDo.getCollegeHead() + "%");
+                criteria.andLike("collegeHead", "%" + collegeDo.getCollegeHead() + "%");
             }
             if (collegeDo.getSchoolId() != null) {
                 criteria.andEqualTo("schoolId", collegeDo.getSchoolId());

@@ -107,7 +107,7 @@
         validateFields((errors, values) => {
           if (!errors) {
             let params = values
-            this.operationType === 20 && Object.assign(values, {collegeId: this.operationId})
+            this.operationType === 20 && (params=Object.assign(values, {collegeId: this.operationId}))
             api(params).then(res => {
               this.close()
               let message = this.operationId === 20 ? '学院信息修改成功' : '学院信息添加成功'

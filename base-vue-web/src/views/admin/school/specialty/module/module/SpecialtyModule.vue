@@ -64,12 +64,11 @@
           this.title = '新增'
         } else {
           this.title = '修改'
-          this.lineData = {...data}
           this.operationId = data.professionalId
-          this.$nextTick(() => {
-            this.form.setFieldsValue({...data})
-          })
         }
+        this.$nextTick(() => {
+          this.form.setFieldsValue({...data})
+        })
       },
       save() {
         const {form: {validateFields}} = this
@@ -79,7 +78,7 @@
         validateFields((errors, values) => {
           if (!errors) {
             let params = values
-            this.operationType === 20 && Object.assign(values, {professionalId: this.operationId})
+            this.operationType === 20 && (params= Object.assign(values, {professionalId: this.operationId}))
             api(params).then(res => {
               this.close()
               let message = this.operationId === 20 ? '专业修改成功' : '专业信息添加成功'

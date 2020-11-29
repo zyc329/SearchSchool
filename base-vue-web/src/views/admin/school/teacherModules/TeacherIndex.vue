@@ -3,35 +3,51 @@
     <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
       <a-row>
         <a-col :span="8">
-          <a-form-item label="老师名字">
+          <a-form-item label="学校名称">
+            <a-select style="width: 100%" v-decorator="['schoolId']" show-search option-filter-prop="children"
+                      :filter-option="filterOption">
+              <a-select-option v-for="item in dirs.schoolDirs" :key="item.value" :value="item.value">
+                {{item.text}}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+        <a-col :span="8">
+          <a-form-item label="学院名称">
+            <a-select style="width: 100%" v-decorator="['collegeId']" show-search option-filter-prop="children"
+                      :filter-option="filterOption">
+              <a-select-option v-for="item in dirs.collegeDirs" :key="item.value" :value="item.value">
+                {{item.text}}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+        <a-col :span="8">
+          <a-form-item label="授课专业">
+            <a-select style="width: 100%" v-decorator="['professionalId']" show-search option-filter-prop="children"
+                      :filter-option="filterOption">
+              <a-select-option v-for="item in dirs.professionalDirs" :key="item.value" :value="item.value">
+                {{item.text}}
+              </a-select-option>
+            </a-select>
+          </a-form-item>
+        </a-col>
+        <a-col :span="8">
+          <a-form-item label="职称">
             <a-input
-              v-decorator="['teacherName']"
+              v-decorator="['title']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label="所处学校">
+          <a-form-item label="工龄">
             <a-input
-              v-decorator="['schoolName']"
+              v-decorator="['teachingAge']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label="所处学院">
-            <a-input
-              v-decorator="['collegeName']"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="8">
-          <a-form-item label="专业">
-            <a-input
-              v-decorator="['professionalName']"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="16">
-          <a-form-item>
+          <a-form-item :wrapper-col="{ span: 24 }">
             <a-button class="ml30" type="primary" @click="$refs.teacherModule.showModule(undefined,10)">新增</a-button>
             <a-button class="ml30" type="primary" @click="queryAll()">查询</a-button>
             <a-button class="ml30" @click="resetFieldsQueryAll()">清空条件</a-button>
@@ -45,99 +61,93 @@
       :pagination="pagination"
       @change="handleTableChange"
     >
+      <span slot="schoolId" slot-scope="text, record">
+        {{utils.parse_str(text,dirs.schoolDirs)}}
+      </span>
+      <span slot="collegeId" slot-scope="text, record">
+        {{utils.parse_str(text,dirs.collegeDirs)}}
+      </span>
+      <span slot="professionalId" slot-scope="text, record">
+        {{utils.parse_str(text,dirs.professionalDirs)}}
+      </span>
       <span slot="action" slot-scope="text, record">
-        <a-button type="link" @click="lookItem(record)">查看</a-button>
         <a-button type="link" @click="editItem(record)">编辑</a-button>
-        <a-button type="link " @click="deleteItem(record)">删除</a-button>
+        <a-button type="link " @click="deleteItem(record.teacherId)">删除</a-button>
       </span>
     </a-table>
-    <teacher-module ref="teacherModule"></teacher-module>
+    <teacher-module ref="teacherModule" @closeModule="queryAll()"></teacher-module>
   </div>
 </template>
 
 <script>
-  //1、引入组件
   import TeacherModule from "@/views/admin/school/teacherModules/modules/TeacherModule"
+  import {schoolAll, schoolDelete} from "@/api/admin/school";
+  import {professionalFindAll} from "@/api/admin/specialty"
+  import {collegeFindAll} from "@/api/admin/college"
+  import {teacherFindPage, teacherDelete} from "@/api/admin/teacher"
+  import * as utils from "@/utils/utilZengh"
+
   export default {
-    // 2、注册组件
-    components:{
+    components: {
       TeacherModule
     },
     data() {
       return {
+        utils,
         form: this.$form.createForm(this),
+        dirs: {
+          schoolDirs: [],
+          professionalDirs: [],
+          collegeDirs: []
+        },
         columns: [
           {
+            key: 'teacherName',
             title: '教师姓名',
             dataIndex: 'teacherName',
             align: 'center'
           },
           {
+            key: 'professionalId',
             title: '授课专业',
-            dataIndex: 'teachingProfessional',
+            dataIndex: 'professionalId',
+            scopedSlots: {customRender: 'professionalId'},
             align: 'center'
           },
           {
+            key: 'title',
             title: '职称',
             dataIndex: 'title',
             align: 'center'
           },
           {
+            key: 'teachingAge',
             title: '教学工龄',
             dataIndex: 'teachingAge',
             align: 'center'
           },
           {
+            key: 'schoolId',
             title: '学校名称',
-            dataIndex: 'schoolName',
+            dataIndex: 'schoolId',
+            scopedSlots: {customRender: 'schoolId'},
             align: 'center'
           },
           {
+            key: 'collegeId',
             title: '学院名称',
-            dataIndex: 'collegeName',
+            dataIndex: 'collegeId',
+            scopedSlots: {customRender: 'collegeId'},
             align: 'center'
           },
           {
             title: '操作',
             align: 'center',
             dataIndex: 'action',
-            scopedSlots: {customRender: 'action'},
+            scopedSlots: {customRender: 'action'}
           }
         ],
-        tableData: [
-          {
-            key: '1',
-            teacherName: '林老师',
-            teachingAge: 4,
-            collegeName: '软件学院',
-            schoolName:'福建工程学院',
-            title:'副教授'
-          },
-          {
-            key: '2',
-            teacherName: '林老师',
-            teachingAge: 2,
-            collegeName: '信息学院',
-            schoolName:'福建工程学院',
-            title:'副教授'
-          },
-          {
-            key: '3',
-            teacherName: '吴老师',
-            teachingAge: 5,
-            collegeName: '电子学院',
-            schoolName:'福建工程学院',
-            title:'副教授'
-          },
-          {
-            key: '4',
-            teacherName: '曾老师',
-            teachingAge: 10,
-            collegeName: '软件学院',
-            schoolName:'福建工程学院',
-            title:'副教授'
-          },
-        ],
+        tableData: [],
         pagination: {
           current: 1,
           showTotal: (total) => {
@@ -150,29 +160,59 @@
     },
     mounted() {
       this.queryAll()
+      this.getDirs()
     },
     methods: {
+      filterOption(input, option) {
+        return (
+          option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        )
+      },
+      getDirs() {
+        schoolAll().then(res => {
+          let school = []
+          for (let item of res.data) {
+            school.push({value: item.schoolId, text: item.schoolName})
+          }
+          this.dirs.schoolDirs = school
+        }).catch(err => {
+          this.$message.error(err.message)
+        })
+
+        collegeFindAll().then(res => {
+          let college = []
+          for (let item of res.data) {
+            college.push({value: item.collegeId, text: item.collegeName})
+          }
+          this.dirs.collegeDirs = college
+        }).catch(err => {
+          this.$message.error(err.message)
+        })
+
+        professionalFindAll().then(res => {
+          let professional = []
+          for (let item of res.data) {
+            professional.push({value: item.professionalId, text: item.professionalName})
+          }
+          this.dirs.professionalDirs = professional
+        }).catch(err => {
+          this.$message.error(err.message)
+        })
+      },
       queryAll() {
-        const queryParam = {}
         const {form: {validateFields}} = this
+        let queryParam = {page: this.pagination.current, size: this.pagination.pageSize}
         validateFields((errors, values) => {
           if (!errors) {
-            Object.assign(queryParam, values, {page: this.pagination.current, size: this.pagination.pageSize})
+            this.loading = true
+            queryParam = Object.assign(values, queryParam)
+            teacherFindPage(queryParam).then(res => {
+              this.tableData = res.data.list
+              this.loading = false
+            }).catch(err => {
+              this.$message.error(err.message)
+            })
           }
-          //api请求
-          // const pagination = { ...this.pagination }
-          // pagination.total = res.data.total
-          // const pagination = { ...this.pagination }
-          // if (!res.code) {
-          //   this.tableData = res.data.rows
-          //   pagination.total = res.data.total
-          // } else {
-          //   this.tableData = []
-          //   pagination.total = 0
-          //   this.$message.error(res.description)
-          // }
-          // this.pagination = pagination
-
         })
       },
       resetFieldsQueryAll() {
@@ -186,14 +226,32 @@
         this.pagination = pager
         this.queryAll()
       },
-      editItem(data){
-
+      editItem(data) {
+        this.$refs.teacherModule.showModule(data, 20)
       },
-      deleteItem(data){
-
-      },
-      lookItem(data){
-
+      deleteItem(teacherId) {
+        let _this = this
+        _this.loading = true
+        this.$confirm({
+          title: '提示',
+          content: '是否确定删除该数据',
+          onOk() {
+            teacherDelete({teacherId: teacherId}).then(() => {
+              _this.$message.success('删除成功！')
+              _this.queryAll()
+              _this.loading = false
+            }).catch(err => {
+              _this.$message.error(err.message)
+              _this.loading = false
+            }).finally(() => {
+              _this.loading = false
+            })
+          },
+          onCancel() {
+            _this.queryAll()
+            _this.loading = false
+          },
+        })
       }
     }
   }

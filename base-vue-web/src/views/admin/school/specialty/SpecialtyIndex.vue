@@ -27,7 +27,7 @@
         </a-col>
         <a-col :span="8">
           <a-form-item :wrapper-col="{ span: 24 }">
-            <a-button class="ml30" type="primary" @click="$refs.specialtyModule.showModule(undefined,10)">新增</a-button>
+            <a-button class="ml30" type="primary" @click="$refs.specialtyModule.showModule(lineData,10)">新增</a-button>
             <a-button class="ml30" type="primary" @click="queryAll()">查询</a-button>
             <a-button class="ml30" @click="resetFieldsQueryAll()">清空条件</a-button>
           </a-form-item>
@@ -94,6 +94,7 @@
           schoolDirs: [],
           collegeDirs: []
         },
+        lineData: {}
       }
     },
     mounted() {
@@ -107,6 +108,7 @@
       },
       showModule(data) {
         this.visible = true
+        this.lineData = {...data}
         this.$nextTick(() => {
           this.form.setFieldsValue({...data})
           this.queryAll()

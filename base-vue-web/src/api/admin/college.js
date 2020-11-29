@@ -4,7 +4,26 @@ const api = {
   collegeFindPage: '/college/collegeFindPage',
   collegeAdd:'/college/collegeAdd',
   collegeUpdate:'/college/collegeUpdate',
-  collegeDelete:'/college/collegeDelete'
+  collegeDelete:'/college/collegeDelete',
+  collegeFindAll:'/college/collegeFindAll',
+  collegeFindList:'/college/collegeFindList'
+}
+
+export function collegeFindList(parameter) {
+  return axios({
+    url: api.collegeFindList,
+    method: 'post',
+    dataType: 'json',
+    data: parameter,
+  })
+}
+
+export function collegeFindAll() {
+  return axios({
+    url: api.collegeFindAll,
+    method: 'post',
+    dataType: 'json',
+  })
 }
 
 export function collegeDelete(parameter) {

@@ -170,7 +170,7 @@
         validateFields((errors, values) => {
           if (!errors) {
             let params = Object.assign(values, {schoolPic: this.schoolPic.join(',')})
-            this.operationType === 20 && Object.assign(values, {schoolId: this.operationId})
+            this.operationType === 20 && (params = Object.assign(values, {schoolId: this.operationId}))
             api(params).then(res => {
               this.close()
               let message = this.operationId === 20 ? '学校信息修改成功' : '学校信息添加成功'
@@ -200,6 +200,7 @@
         }
         deletePic(param).then(res => {
           if (type === 1) {
+
           }
         })
       },
@@ -258,8 +259,6 @@
           file.id = res.data
           if (type === 1) {
             this.fileList1 = [...this.fileList1, file]
-            console.log(this.fileList1)
-            debugger
           } else if (type === 2) {
             this.fileList2 = [...this.fileList2, file]
           } else {

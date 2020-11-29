@@ -209,7 +209,6 @@
         })
       },
       resetPW(id) {
-        debugger
         this.loading = true
         resetPW({userId: id}).then(() => {
           this.$message.success('重置密码成功！')
