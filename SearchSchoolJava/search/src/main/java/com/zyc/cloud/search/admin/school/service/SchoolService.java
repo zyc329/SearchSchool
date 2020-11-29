@@ -25,6 +25,11 @@ public interface SchoolService {
 	void picAdd(List<PicDo> picDos);
 
 	/**
+	 * 查询所有
+	 */
+	List<SchoolDo> findAll();
+
+	/**
 	 * 条件查询
 	 */
 	List<SchoolDo> findList(SchoolDo schoolDo);

@@ -105,6 +105,12 @@ let syncRouterMap = [
             component: () => import('@/views/admin/school/fractionModules/FractionIndex'),
             meta: {title: '历年分数线管理', keepAlive: true, permission: ['dashboard']},
           },
+          // {
+          //   path: '/Specialty-Index',
+          //   name: 'SpecialtyIndex',
+          //   component: () => import('@/views/admin/school/specialty/SpecialtyIndex'),
+          //   meta: {title: '专业管理', keepAlive: true, permission: ['dashboard']},
+          // },
           {
             path: '/teacher-index',
             name: 'TeacherIndex',

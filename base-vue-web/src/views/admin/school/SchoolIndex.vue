@@ -56,9 +56,9 @@
           {{text}}
         </a>
         <span slot="action" slot-scope="text, record">
-                  <a-button type="link" @click="lookItem(record)">查看</a-button>
+<!--                  <a-button type="link" @click="lookItem(record)">查看</a-button>-->
                   <a-button type="link" @click="editItem(record)">编辑</a-button>
-                  <a-button type="link " @click="deleteItem(record)">删除</a-button>
+                  <a-button type="link " @click="deleteItem(record.schoolId)">删除</a-button>
                 </span>
       </a-table>
     </a-spin>
@@ -69,8 +69,9 @@
 <script>
   import SchoolModule from "@/views/admin/school/modules/SchoolModule"
   import moment from 'moment'
-  import {schoolFindPage} from '@/api/admin/school'
+  import {schoolFindPage,schoolDelete} from '@/api/admin/school'
   import * as utils from "@/utils/utilZengh"
+  import {Dict} from "@/utils/dict";
 
   export default {
     components: {
@@ -83,7 +84,7 @@
         form: this.$form.createForm(this),
         loading: false,
         dict:{
-          schoolType:[{text:'专科',value:0},{text:'本科',value:1}]
+          schoolType:Dict.SCHOOLTYPE
         },
         columns: [
           {
@@ -138,7 +139,7 @@
             }
           },
           {
-            key: '',
+            key: 'action',
             title: '操作',
             align: 'center',
             dataIndex: 'action',
@@ -171,7 +172,6 @@
           if (!errors) {
             this.loading = true
             values.schoolTime && (values.schoolTime = this.moment(_this.schoolTime).format('yyyy-MM-DD'))
-            debugger
             queryParam = Object.assign(values, queryParam)
             schoolFindPage(queryParam).then(res => {
               this.tableData = res.data.list
@@ -190,7 +190,6 @@
       },
       handleOpenChange(status) {
         this.pickerShow = status
-
       },
       resetFieldsQueryAll() {
         this.form.resetFields()
@@ -204,13 +203,31 @@
         this.queryAll()
       },
       editItem(data) {
-
+        this.$refs.schoolModule.showModule(data, 20)
       },
-      deleteItem(data) {
-
-      },
-      lookItem(data) {
-
+      deleteItem(schoolId) {
+        let _this = this
+        _this.loading = true
+        this.$confirm({
+          title: '提示',
+          content:'是否确定删除该数据',
+          onOk() {
+            schoolDelete({schoolId:schoolId}).then(() => {
+              _this.$message.success('删除成功！')
+              _this.queryAll()
+              _this.loading = false
+            }).catch(err => {
+              _this.$message.error(err.message)
+              _this.loading = false
+            }).finally(() => {
+              _this.loading = false
+            })
+          },
+          onCancel() {
+            _this.queryAll()
+            _this.loading = false
+          },
+        })
       }
     }
   }

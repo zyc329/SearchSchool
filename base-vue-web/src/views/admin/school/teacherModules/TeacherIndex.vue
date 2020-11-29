@@ -32,14 +32,13 @@
         </a-col>
         <a-col :span="16">
           <a-form-item>
-            <a-button class="ml30" type="primary" @click="">新增</a-button>
+            <a-button class="ml30" type="primary" @click="$refs.teacherModule.showModule(undefined,10)">新增</a-button>
             <a-button class="ml30" type="primary" @click="queryAll()">查询</a-button>
             <a-button class="ml30" @click="resetFieldsQueryAll()">清空条件</a-button>
           </a-form-item>
         </a-col>
       </a-row>
     </a-form>
-
     <a-table
       :columns="columns"
       :data-source="tableData"
@@ -52,11 +51,18 @@
         <a-button type="link " @click="deleteItem(record)">删除</a-button>
       </span>
     </a-table>
+    <teacher-module ref="teacherModule"></teacher-module>
   </div>
 </template>
 
 <script>
+  //1、引入组件
+  import TeacherModule from "@/views/admin/school/teacherModules/modules/TeacherModule"
   export default {
+    // 2、注册组件
+    components:{
+      TeacherModule
+    },
     data() {
       return {
         form: this.$form.createForm(this),

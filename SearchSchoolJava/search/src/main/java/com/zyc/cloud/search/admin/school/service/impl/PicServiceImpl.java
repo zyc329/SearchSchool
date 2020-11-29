@@ -24,4 +24,9 @@ public class PicServiceImpl implements PicService {
     public PicDo findById(String id) {
         return picMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public void delete(String id) {
+        picMapper.deleteByPrimaryKey(id);
+    }
 }

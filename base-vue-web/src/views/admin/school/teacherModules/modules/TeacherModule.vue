@@ -7,20 +7,24 @@
     :closable="false"
   >
     <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-      <a-form-item label="">
+      <a-form-item label="教师名称">
         <a-input
-          v-decorator="['',{rules:rules}]"
+          v-decorator="['note']"
         />
       </a-form-item>
-      <a-form-item label="">
-        <a-select style="width: 100%">
-          <a-select-option v-for="item in []" :key="item" :value="item" v-decorator="['',{rules:rules}]">
-            {{}}
-          </a-select-option>
-        </a-select>
+      <a-form-item label="教师简历">
+        <a-textarea
+          placeholder=""
+          :auto-size="{ minRows: 3, maxRows: 5 }"
+          v-decorator="['note']"
+        />
       </a-form-item>
-      <a-form-item label="">
-        <a-date-picker format="X" v-decorator="['',{rules:rules}]"/>
+      <a-form-item label="教师工龄">
+        <a-input
+          v-decorator="['', { rules: [
+
+          ]}]"
+        />
       </a-form-item>
     </a-form>
     <div slot="footer">

@@ -42,6 +42,15 @@ public class SchoolController {
 	}
 
 	/**
+	 * 查询所有
+	 */
+	@PostMapping("schoolAll")
+	public ResultUtil<List<SchoolDo>> userFindAll() {
+		List<SchoolDo> SchoolDos = schoolService.findAll();
+		return new ResultUtil<List<SchoolDo>>(true, StatusCode.OK, "查询成功", SchoolDos);
+	}
+
+	/**
 	 * 新增
 	 */
 	@PostMapping("picAdd")

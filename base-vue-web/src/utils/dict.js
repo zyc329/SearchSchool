@@ -4,8 +4,11 @@ const STATE = [{value:0,text:'正常'},{value:1,text:'冻结'}]
 
 const SEARCHTYPE= [{value: '10', text: '搜学校'}, {value: '20', text: '搜专业'}, {value: '30', text: '搜地址'}]
 
+const SCHOOLTYPE= [{value: '1', text: '本科'}, {value: '0', text: '专科'}]
+
 export const Dict ={
   SEX:SEX,
   STATE:STATE,
-  SEARCHTYPE:SEARCHTYPE
+  SEARCHTYPE:SEARCHTYPE,
+  SCHOOLTYPE:SCHOOLTYPE
 }

@@ -45,6 +45,11 @@ public class SchoolServiceImpl  implements SchoolService {
 	}
 
 	@Override
+	public List<SchoolDo> findAll() {
+		return schoolMapper.selectAll();
+	}
+
+	@Override
 	public Integer updateById(SchoolDo schoolDo) {
 		return schoolMapper.updateByPrimaryKey(schoolDo);
 	}

@@ -17,4 +17,6 @@ public interface PicService {
      * @return
      */
     PicDo findById(String id);
+
+    void delete(String id);
 }
