@@ -71,6 +71,12 @@ public class ScoreServiceImpl implements ScoreService {
             if (scoreDo.getSchoolId() != null) {
                 criteria.andEqualTo("schoolId", scoreDo.getSchoolId());
             }
+            if (scoreDo.getProfessionalId() != null) {
+                criteria.andEqualTo("professionalId", scoreDo.getProfessionalId());
+            }
+            if (scoreDo.getYear() != null) {
+                criteria.andEqualTo("year", scoreDo.getYear());
+            }
         }
         return example;
     }

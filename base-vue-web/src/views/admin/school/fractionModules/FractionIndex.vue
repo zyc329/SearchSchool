@@ -62,59 +62,108 @@
     </a-spin>
 
     <a-modal
-      width="40%"
-      title="操作选择"
+      width="30%"
+      title="专业选择"
       :visible="visible"
       :destroyOnClose="true"
       :closable="false"
+      :footer="null"
     >
-      <div style="width: 100%;height: 200px;">
+      <div style="width: 100%;height: 200px;position: relative;">
         <a-row>
-          <a-col span="12">
-            <a-select style="width: 100%">
-              <a-select-option v-for="item in []" :key="item.value" :value="item.value">
+          <a-col :span="6" style="text-align: right;">
+            专业选择：
+          </a-col>
+          <a-col :span="18">
+            <a-select style="width: 80%" v-model="professionalId">
+              <a-select-option v-for="item in dict.professionalDirs" :key="item.value" :value="item.value">
                 {{item.text}}
               </a-select-option>
             </a-select>
           </a-col>
-          <a-col span="12">
-            <a-form-item label="创校年份">
+        </a-row>
+        <div style="position: relative;left: 50%;transform: translate(-10%,0);margin-top: 100px;">
+          <a-button type="primary" @click="openScoreModule()" style="margin-right: 20px">查询</a-button>
+          <a-button type="primary" @click="$refs.echartsModule.showModule(schoolId,professionalId)" style="margin-right: 20px">数据对比</a-button>
+          <a-button @click="closeOper">关闭</a-button>
+        </div>
+      </div>
+    </a-modal>
+
+    <a-modal
+      width="60%"
+      title="分数查询"
+      :visible="scoreVisible"
+      :destroyOnClose="true"
+      :closable="false"
+      :footer="null"
+    >
+      <a-form :form="form1" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+        <a-row>
+          <a-col :span="8">
+            <a-form-item label="年份">
               <a-date-picker
                 mode="year"
                 format="yyyy"
-                :open="pickerShow"
-                @panelChange="handlePanelChange"
-                @openChange="handleOpenChange"/>
+                :open="pickerShow1"
+                @panelChange="handlePanelChange1"
+                @openChange="handleOpenChange1"
+                v-decorator="['year']"/>
+            </a-form-item>
+          </a-col>
+          <a-col :span="16">
+            <a-form-item>
+              <a-button  type="primary" @click="">新增</a-button>
+              <a-button class="ml20" type="primary" @click="queryScoreAll()">查询</a-button>
+              <a-button class="ml20" @click="resetFieldScoreQueryAll()">清空条件</a-button>
             </a-form-item>
           </a-col>
         </a-row>
-      </div>
+        <a-spin :spinning="loading1">
+          <a-table
+            :columns="columns1"
+            :data-source="tableData1"
+            :pagination="pagination1"
+            @change="handleTableChange1"
+          >
+          </a-table>
+        </a-spin>
+      </a-form>
       <div slot="footer">
-        <a-button type="primary" @click="">新增</a-button>
-        <a-button type="primary" @click="">修改</a-button>
-        <a-button @click="closeOper">关闭</a-button>
+        <a-button @click="">关闭</a-button>
       </div>
     </a-modal>
+
+    <echarts-module ref="echartsModule" @closeModule=""></echarts-module>
   </div>
 </template>
 
 <script>
   import moment from 'moment'
-  import {schoolFindPage, schoolDelete} from '@/api/admin/school'
+  import {schoolFindPage} from '@/api/admin/school'
+  import {scoreFindPage} from "@/api/admin/score"
   import * as utils from "@/utils/utilZengh"
   import {Dict} from "@/utils/dict";
+  import {professionalFindList} from "@/api/admin/specialty"
+  import echartsModule from "@/views/admin/school/fractionModules/modules/echartsModule"
 
   export default {
-    components: {},
+    components: {
+      echartsModule
+    },
     data() {
       return {
         moment,
         utils,
         visible: false,
+        scoreVisible: false,
         form: this.$form.createForm(this),
+        form1: this.$form.createForm(this),
         loading: false,
+        loading1:false,
         dict: {
-          schoolType: Dict.SCHOOLTYPE
+          schoolType: Dict.SCHOOLTYPE,
+          professionalDirs: []
         },
         columns: [
           {
@@ -158,7 +207,30 @@
           }
         ],
         tableData: [],
+        columns1: [
+          {
+            key: 'year',
+            title: '年份',
+            dataIndex: 'year',
+            align: 'center'
+          },
+          {
+            key: 'score',
+            title: '分数',
+            dataIndex: 'score',
+            align: 'center'
+          }
+        ],
+        tableData1: [],
         pagination: {
+          current: 1,
+          showTotal: (total) => {
+            return `共 ${total} 条`
+          },
+          showSizeChanger: true,
+          pageSize: 10
+        },
+        pagination1: {
           current: 1,
           showTotal: (total) => {
             return `共 ${total} 条`
@@ -168,7 +240,9 @@
         },
         schoolTime: null,
         pickerShow: false,
+        pickerShow1: false,
         schoolId: '',
+        professionalId: ''
       }
     },
     mounted() {
@@ -178,6 +252,23 @@
     methods: {
       closeOper() {
         this.visible = false
+      },
+      openScoreModule() {
+        this.closeOper()
+        this.scoreVisible=true
+        this.queryScoreAll()
+      },
+      getProfessional() {
+        let _this = this
+        professionalFindList({schoolId: this.schoolId}).then(res => {
+          let professional = []
+          for (let item of res.data) {
+            professional.push({value: item.professionalId, text: item.professionalName})
+          }
+          _this.dict.professionalDirs = professional
+        }).catch(err => {
+          this.$message.error(err.message)
+        })
       },
       queryAll() {
         let _this = this
@@ -197,14 +288,49 @@
           }
         })
       },
+      queryScoreAll() {
+        let _this = this
+        let queryParam = {
+          page: this.pagination1.current,
+          size: this.pagination1.pageSize,
+          schoolId: this.schoolId,
+          professionalId: this.professionalId
+        }
+        const {form1: {validateFields}} = this
+        validateFields((errors, values) => {
+          if (!errors) {
+            this.loading1 = true
+            queryParam = Object.assign(values, queryParam)
+            scoreFindPage(queryParam).then(res => {
+              this.tableData1 = res.data.list
+              this.loading1 = false
+            }).catch(err => {
+              this.$message.error(err.message)
+            })
+          }
+        })
+      },
+      resetFieldScoreQueryAll() {
+        this.form.resetFields()
+        this.queryScoreAll()
+      },
       handlePanelChange(value) {
         this.schoolTime = {...value}
         let time = moment(value).format('yyyy')
-        this.form.setFieldsValue({'schoolTime': time})
+        this.form1.setFieldsValue({'schoolTime': time})
         this.pickerShow = false
       },
       handleOpenChange(status) {
         this.pickerShow = status
+      },
+      handlePanelChange1(value) {
+        this.schoolTime = {...value}
+        let time = moment(value).format('yyyy')
+        this.form1.setFieldsValue({'schoolTime': time})
+        this.pickerShow1 = false
+      },
+      handleOpenChange1(status) {
+        this.pickerShow1 = status
       },
       resetFieldsQueryAll() {
         this.form.resetFields()
@@ -215,11 +341,21 @@
         pager.current = pagination.current
         pager.pageSize = pagination.pageSize
         this.pagination = pager
+        this.queryScoreAll()
+      },
+      handleTableChange1(pagination, filters, sorter) {
+        const pager = {...this.pagination1}
+        pager.current = pagination.current
+        pager.pageSize = pagination.pageSize
+        this.pagination1 = pager
         this.queryAll()
       },
       scoreManage(id) {
         this.visible = true
+        this.dict.professionalDirs = []
+        this.professionalId = ''
         this.schoolId = id
+        this.getProfessional()
       }
     }
   }

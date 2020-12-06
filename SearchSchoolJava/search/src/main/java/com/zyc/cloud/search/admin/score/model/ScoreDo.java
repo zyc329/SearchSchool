@@ -1,5 +1,6 @@
 package com.zyc.cloud.search.admin.score.model;
 
+import com.zyc.cloud.search.utils.base.BaseDo;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
  */
 @Data
 @Table(name = "tb_score")
-public class ScoreDo {
+public class ScoreDo  extends BaseDo {
 
     /*分数表id*/
     @Id

@@ -1,5 +1,6 @@
 package com.zyc.cloud.search.admin.professional.model;
 
+import com.zyc.cloud.search.utils.base.BaseDo;
 import lombok.Data;
 
 import javax.persistence.Column;

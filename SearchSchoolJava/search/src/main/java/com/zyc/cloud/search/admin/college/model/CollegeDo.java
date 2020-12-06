@@ -1,5 +1,6 @@
 package com.zyc.cloud.search.admin.college.model;
 
+import com.zyc.cloud.search.utils.base.BaseDo;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.Table;
  */
 @Data
 @Table(name = "tb_college")
-public class CollegeDo {
+public class CollegeDo  extends BaseDo {
 
     /*学院id*/
     @Id
