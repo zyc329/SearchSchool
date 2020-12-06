@@ -96,7 +96,6 @@
       :visible="scoreVisible"
       :destroyOnClose="true"
       :closable="false"
-      :footer="null"
     >
       <a-form :form="form1" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
         <a-row>
@@ -130,7 +129,7 @@
         </a-spin>
       </a-form>
       <div slot="footer">
-        <a-button @click="">关闭</a-button>
+        <a-button @click="scoreVisible=false">关闭</a-button>
       </div>
     </a-modal>
 
@@ -247,6 +246,7 @@
     },
     mounted() {
       this.form = this.$form.createForm(this)
+      this.form1 = this.$form.createForm(this)
       this.queryAll()
     },
     methods: {
@@ -261,6 +261,10 @@
         this.visible = false
       },
       openScoreModule() {
+        if (this.utils.isEmpty(this.professionalId)) {
+          this.$message.warn('请先选择专业！')
+          return
+        }
         this.closeOper()
         this.scoreVisible = true
         this.queryScoreAll()
@@ -318,13 +322,13 @@
         })
       },
       resetFieldScoreQueryAll() {
-        this.form.resetFields()
+        this.form1.resetFields()
         this.queryScoreAll()
       },
       handlePanelChange(value) {
         this.schoolTime = {...value}
         let time = moment(value).format('yyyy')
-        this.form1.setFieldsValue({'schoolTime': time})
+        this.form.setFieldsValue({'schoolTime': time})
         this.pickerShow = false
       },
       handleOpenChange(status) {
@@ -333,7 +337,7 @@
       handlePanelChange1(value) {
         this.schoolTime = {...value}
         let time = moment(value).format('yyyy')
-        this.form1.setFieldsValue({'schoolTime': time})
+        this.form1.setFieldsValue({'year': time})
         this.pickerShow1 = false
       },
       handleOpenChange1(status) {

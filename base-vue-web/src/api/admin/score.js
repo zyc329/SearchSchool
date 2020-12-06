@@ -1,7 +1,8 @@
 import {axios} from '@/utils/request'
 
 const api = {
-  scoreFindPage: '/score/scoreFindPage'
+  scoreFindPage: '/score/scoreFindPage',
+  scoreByColleges: '/score/scoreByColleges'
 }
 
 export function scoreFindPage(params) {
@@ -12,3 +13,12 @@ export function scoreFindPage(params) {
     data: params
   })
 }
+export function scoreByColleges(params) {
+  return axios({
+    url: api.scoreByColleges,
+    method: 'post',
+    dataType: 'json',
+    params: params
+  })
+}
+

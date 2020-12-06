@@ -14,6 +14,11 @@
           </a-select-option>
         </a-select>
       </div>
+      <div>
+        <a-spin :spinning="loading">
+          <v-chart :options="options"/>
+        </a-spin>
+      </div>
     </div>
     <div>
 
@@ -25,14 +30,22 @@
 </template>
 
 <script>
+  import ECharts from 'vue-echarts'
+  import {scoreByColleges} from "@/api/admin/score"
+
   export default {
+    components: {
+      'v-chart': ECharts
+    },
     data() {
       return {
         visible: false,
         schoolId: '',
         professionalId: '',
         // 查询近几年
-        queryYear: 10
+        queryYear: 10,
+        loading: false,
+        options: {},
       }
     },
     mounted() {
@@ -48,19 +61,26 @@
         this.visible = true
         this.schoolId = schoolId
         this.professionalId = professionalId
+        this.queryAll()
       },
-      selectQuery(){
+      selectQuery() {
 
       },
       queryAll() {
-        // let params={
-        //   schoolId:this.schoolId
-        //   专业:
-        //   近几年：this.queryYear
-        // }
-        // 接口(params).then(res=>{
-        //
-        // })
+        this.loading = true
+        let param = {
+          year: this.queryYear,
+          professionalIds: this.professionalId,
+          schoolId: this.schoolId
+        }
+        scoreByColleges(param).then(res => {
+          console.log(res)
+          debugger
+        }).catch(err=>{
+          this.$message.error(err.message)
+        }).finally(()=>{
+          this.loading = false
+        })
       }
     }
   }
