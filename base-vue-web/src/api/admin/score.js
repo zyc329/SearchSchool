@@ -2,7 +2,7 @@ import {axios} from '@/utils/request'
 
 const api = {
   scoreFindPage: '/score/scoreFindPage',
-  scoreByColleges: '/score/scoreByColleges'
+  scoreByColleges: '/score/scoreBycolleges'
 }
 
 export function scoreFindPage(params) {
