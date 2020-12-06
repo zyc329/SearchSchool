@@ -1,20 +1,22 @@
 <template>
   <a-modal
-    width="30%"
+    width="70%"
     title="历年分数线"
     :visible="visible"
     :destroyOnClose="true"
     :closable="false"
-    :footer="null"
   >
-    <div style="width: 100%;height: 200px;">
-      <div>
-        <a-select v-model="queryYear" @change="selectQuery">
+    <div style="width: 100%;height: 400px;">
+      <div style="width: 100%;">
+        <a-select style="width: 20%;" v-model="queryYear" @change="selectQuery">
           <a-select-option v-for="item in [5,10]" :key="item" :value="item">
             近{{item}}年分数线
           </a-select-option>
         </a-select>
       </div>
+    </div>
+    <div>
+
     </div>
     <div slot="footer">
       <a-button @click="close">关闭</a-button>
@@ -30,7 +32,7 @@
         schoolId: '',
         professionalId: '',
         // 查询近几年
-        queryYear: ''
+        queryYear: 10
       }
     },
     mounted() {

@@ -84,7 +84,7 @@
         </a-row>
         <div style="position: relative;left: 50%;transform: translate(-10%,0);margin-top: 100px;">
           <a-button type="primary" @click="openScoreModule()" style="margin-right: 20px">查询</a-button>
-          <a-button type="primary" @click="$refs.echartsModule.showModule(schoolId,professionalId)" style="margin-right: 20px">数据对比</a-button>
+          <a-button type="primary" @click="openEcharts()" style="margin-right: 20px">数据对比</a-button>
           <a-button @click="closeOper">关闭</a-button>
         </div>
       </div>
@@ -113,7 +113,7 @@
           </a-col>
           <a-col :span="16">
             <a-form-item>
-              <a-button  type="primary" @click="">新增</a-button>
+              <a-button type="primary" @click="">新增</a-button>
               <a-button class="ml20" type="primary" @click="queryScoreAll()">查询</a-button>
               <a-button class="ml20" @click="resetFieldScoreQueryAll()">清空条件</a-button>
             </a-form-item>
@@ -160,7 +160,7 @@
         form: this.$form.createForm(this),
         form1: this.$form.createForm(this),
         loading: false,
-        loading1:false,
+        loading1: false,
         dict: {
           schoolType: Dict.SCHOOLTYPE,
           professionalDirs: []
@@ -250,12 +250,19 @@
       this.queryAll()
     },
     methods: {
+      openEcharts() {
+        if (this.utils.isEmpty(this.professionalId)) {
+          this.$message.warn('请先选择专业！')
+          return
+        }
+        this.$refs.echartsModule.showModule(this.schoolId, this.professionalId)
+      },
       closeOper() {
         this.visible = false
       },
       openScoreModule() {
         this.closeOper()
-        this.scoreVisible=true
+        this.scoreVisible = true
         this.queryScoreAll()
       },
       getProfessional() {
