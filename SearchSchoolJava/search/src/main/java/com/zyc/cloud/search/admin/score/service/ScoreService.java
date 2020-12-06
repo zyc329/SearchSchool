@@ -50,5 +50,5 @@ public interface ScoreService {
     /**
      * 多个专业一个学校的echarts
      */
-    List<HashMap<String,Object>> scoreBycolleges(HashMap<String,Object> map);
+    List<HashMap<String,Object>> scoreByColleges(HashMap<String,Object> map);
 }

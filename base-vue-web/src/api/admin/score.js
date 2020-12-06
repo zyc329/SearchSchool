@@ -2,7 +2,25 @@ import {axios} from '@/utils/request'
 
 const api = {
   scoreFindPage: '/score/scoreFindPage',
-  scoreByColleges: '/score/scoreByColleges'
+  scoreByColleges: '/score/scoreByColleges',
+  scoreAdd:'/score/scoreAdd',
+  scoreUpdate:'/score/scoreUpdate'
+}
+export function scoreAdd(params) {
+  return axios({
+    url: api.scoreAdd,
+    method: 'post',
+    dataType: 'json',
+    data: params
+  })
+}
+export function scoreUpdate(params) {
+  return axios({
+    url: api.scoreUpdate,
+    method: 'post',
+    dataType: 'json',
+    data: params
+  })
 }
 
 export function scoreFindPage(params) {

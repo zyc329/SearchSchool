@@ -63,6 +63,7 @@
         if (type === 10) {
           this.title = '新增'
         } else {
+          this.lineData={...data}
           this.title = '修改'
           this.operationId = data.professionalId
         }
@@ -81,7 +82,7 @@
             this.operationType === 20 && (params= Object.assign(values, {professionalId: this.operationId}))
             api(params).then(res => {
               this.close()
-              let message = this.operationId === 20 ? '专业修改成功' : '专业信息添加成功'
+              let message = this.operationType === 20 ? '专业修改成功' : '专业信息添加成功'
               this.$message.success(message);
               this.loading = false
             }).catch(err => {

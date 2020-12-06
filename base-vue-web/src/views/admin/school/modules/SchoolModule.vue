@@ -173,7 +173,7 @@
             this.operationType === 20 && (params = Object.assign(values, {schoolId: this.operationId}))
             api(params).then(res => {
               this.close()
-              let message = this.operationId === 20 ? '学校信息修改成功' : '学校信息添加成功'
+              let message = this.operationType === 20 ? '学校信息修改成功' : '学校信息添加成功'
               this.$message.success(message);
               this.loading = false
             }).catch(err => {

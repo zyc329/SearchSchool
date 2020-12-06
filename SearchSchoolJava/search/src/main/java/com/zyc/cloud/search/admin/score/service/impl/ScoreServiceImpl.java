@@ -73,14 +73,21 @@ public class ScoreServiceImpl implements ScoreService {
 			if (scoreDo.getSchoolId() != null) {
 				criteria.andEqualTo("schoolId", scoreDo.getSchoolId());
 			}
+            if (scoreDo.getProfessionalId() != null) {
+                criteria.andEqualTo("professionalId", scoreDo.getProfessionalId());
+            }
+            if (scoreDo.getYear() != null) {
+                criteria.andEqualTo("year", scoreDo.getYear());
+            }
 		}
+		example.orderBy("year").desc();
 		return example;
 	}
 
 	/**
 	 * 多个专业一个学校的echarts
 	 */
-	public List<HashMap<String,Object>> scoreBycolleges(HashMap<String, Object> map) {
+	public List<HashMap<String,Object>> scoreByColleges(HashMap<String, Object> map) {
 		Example example = createExample1(map);
 		List<ScoreDo> doList = scoreMapper.selectByExample(example);
 		List<HashMap<String,Object>> res = changeList(doList,Integer.valueOf(map.get("year").toString()),
@@ -93,10 +100,10 @@ public class ScoreServiceImpl implements ScoreService {
 		Example.Criteria criteria = example.createCriteria();
 		if (ObjectUtil.isNotEmpty(map)) {
 			if (map.get("professionalIds") != null) {
-//				String[] results = map.get("professionalIds").toString().split(",");
-//				List arr = Arrays.asList(results);
-//				criteria.andIn("professionalId", arr);
-				criteria.andCondition(" professional_id in (" + map.get("professionalIds").toString() + ") ");
+				String[] results = map.get("professionalIds").toString().split(",");
+				List arr = Arrays.asList(results);
+				criteria.andIn("professionalId", arr);
+//				criteria.andCondition(" professional_id in (" + map.get("professionalIds").toString() + ") ");
 			}
 
 			if (map.get("schoolId") != null) {

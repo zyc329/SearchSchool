@@ -60,7 +60,6 @@
         </span>
       </a-table>
     </a-spin>
-
     <a-modal
       width="30%"
       title="专业选择"
@@ -89,7 +88,6 @@
         </div>
       </div>
     </a-modal>
-
     <a-modal
       width="60%"
       title="分数查询"
@@ -112,7 +110,7 @@
           </a-col>
           <a-col :span="16">
             <a-form-item>
-              <a-button type="primary" @click="">新增</a-button>
+              <a-button type="primary" @click="$refs.scoreModule.showModule(undefined,10)">新增</a-button>
               <a-button class="ml20" type="primary" @click="queryScoreAll()">查询</a-button>
               <a-button class="ml20" @click="resetFieldScoreQueryAll()">清空条件</a-button>
             </a-form-item>
@@ -125,6 +123,9 @@
             :pagination="pagination1"
             @change="handleTableChange1"
           >
+            <span slot="action" slot-scope="text, record">
+          <a-button type="primary" @click="$refs.scoreModule.showModule(record, 20)">修改</a-button>
+        </span>
           </a-table>
         </a-spin>
       </a-form>
@@ -132,8 +133,8 @@
         <a-button @click="scoreVisible=false">关闭</a-button>
       </div>
     </a-modal>
-
     <echarts-module ref="echartsModule" @closeModule=""></echarts-module>
+    <score-module ref="scoreModule" :schoolId="schoolId" :professionalId="professionalId" @closeModule="resetFieldScoreQueryAll"></score-module>
   </div>
 </template>
 
@@ -145,10 +146,12 @@
   import {Dict} from "@/utils/dict";
   import {professionalFindList} from "@/api/admin/specialty"
   import echartsModule from "@/views/admin/school/fractionModules/modules/echartsModule"
+  import ScoreModule from "@/views/admin/school/fractionModules/modules/ScoreModule"
 
   export default {
     components: {
-      echartsModule
+      echartsModule,
+      ScoreModule
     },
     data() {
       return {
@@ -218,6 +221,13 @@
             title: '分数',
             dataIndex: 'score',
             align: 'center'
+          },
+          {
+            key: 'action',
+            title: '操作',
+            align: 'center',
+            dataIndex: 'action',
+            scopedSlots: {customRender: 'action'}
           }
         ],
         tableData1: [],

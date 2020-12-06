@@ -92,15 +92,15 @@ public class ScoreController {
     /**
      * 多个专业一个学校的echarts
      */
-    @PostMapping("scoreBycolleges")
-    public ResultUtil scoreBycolleges(@RequestParam(required = false, defaultValue = "1") int year,
+    @PostMapping("scoreByColleges")
+    public ResultUtil scoreByColleges(@RequestParam(required = false, defaultValue = "1") int year,
                                   @RequestParam(required = true) String professionalIds,
                                   @RequestParam(required = true) String schoolId) {
         HashMap<String,Object> map = new HashMap<>();
         map.put("year",year);
         map.put("professionalIds",professionalIds);
         map.put("schoolId",schoolId);
-        List<HashMap<String,Object>> mapList = scoreService.scoreBycolleges(map);
+        List<HashMap<String,Object>> mapList = scoreService.scoreByColleges(map);
         return new ResultUtil(true, StatusCode.OK, "查询成功！",mapList);
     }
 

@@ -9,19 +9,18 @@
     <a-row>
       <a-col>
         <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-          <a-form-item v-show="false">
-            <a-input
-              v-decorator="['schoolId']"
-            />
+          <a-form-item label="年份">
+            <a-date-picker
+              mode="year"
+              format="yyyy"
+              :open="pickerShow"
+              @panelChange="handlePanelChange"
+              @openChange="handleOpenChange"
+              v-decorator="['year']"/>
           </a-form-item>
-          <a-form-item v-show="false">
+          <a-form-item label="分数">
             <a-input
-              v-decorator="['collegeId']"
-            />
-          </a-form-item>
-          <a-form-item label="专业名称">
-            <a-input
-              v-decorator="['professionalName',{rules:rules}]"
+              v-decorator="['score']"
             />
           </a-form-item>
         </a-form>
@@ -38,10 +37,14 @@
 </template>
 
 <script>
-  import {professionalAdd,professionalUpdate} from "@/api/admin/specialty"
+  import moment from "moment";
+  import {scoreAdd, scoreUpdate} from "@/api/admin/score";
+
   export default {
+    prop: ['professionalId', 'schoolId'],
     data() {
       return {
+        moment,
         operationId: '',
         // 10新增 20修改
         operationType: '',
@@ -51,6 +54,7 @@
         lineData: {},
         form: this.$form.createForm(this),
         rules: [],
+        pickerShow: false,
       }
     },
     mounted() {
@@ -63,8 +67,9 @@
         if (type === 10) {
           this.title = '新增'
         } else {
+          this.lineData = {...data}
           this.title = '修改'
-          this.operationId = data.professionalId
+          this.operationId = data.scoreId
         }
         this.$nextTick(() => {
           this.form.setFieldsValue({...data})
@@ -72,16 +77,19 @@
       },
       save() {
         const {form: {validateFields}} = this
-        let api = professionalAdd
-        this.operationType === 20 && (api = professionalUpdate)
+        let api = scoreAdd
+        this.operationType === 20 && (api = scoreUpdate)
         this.loading = true
         validateFields((errors, values) => {
           if (!errors) {
-            let params = values
-            this.operationType === 20 && (params= Object.assign(values, {professionalId: this.operationId}))
+            let params = Object.assign(values,
+              {schoolId: this.schoolId,
+              professionalId: this.professionalId
+              })
+            this.operationType === 20 && (params = Object.assign(values, {scoreId: this.operationId}))
             api(params).then(res => {
               this.close()
-              let message = this.operationId === 20 ? '专业修改成功' : '专业信息添加成功'
+              let message = this.operationType === 20 ? '专业分数修改成功' : '专业分数添加成功'
               this.$message.success(message);
               this.loading = false
             }).catch(err => {
@@ -100,7 +108,16 @@
         this.operationType = ''
         this.$emit('closeModule')
         this.visible = false
-      }
+      },
+      handlePanelChange(value) {
+        this.schoolTime = {...value}
+        let time = moment(value).format('yyyy')
+        this.form.setFieldsValue({'year': time})
+        this.pickerShow = false
+      },
+      handleOpenChange(status) {
+        this.pickerShow = status
+      },
     }
   }
 </script>
