@@ -80,5 +80,4 @@ public class CollegeServiceImpl implements CollegeService {
         }
         return example;
     }
-
 }

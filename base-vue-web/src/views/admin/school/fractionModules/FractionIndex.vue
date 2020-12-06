@@ -3,104 +3,161 @@
     <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
       <a-row>
         <a-col :span="8">
-          <a-form-item label="年份">
+          <a-form-item label="学校名称">
             <a-input
-              v-decorator="['']"
+              v-decorator="['schoolName']"
             />
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label="大于多少分">
-            <a-input
-              v-decorator="['']"
-            />
+          <a-form-item label="学校类型">
+            <a-select v-decorator="['schoolType']">
+              <a-select-option value="0">
+                专科
+              </a-select-option>
+              <a-select-option value="1">
+                本科
+              </a-select-option>
+            </a-select>
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label="专业">
-            <a-input
-              v-decorator="['']"
-            />
+          <a-form-item label="创校年份">
+            <a-date-picker
+              mode="year"
+              format="yyyy"
+              :open="pickerShow"
+              @panelChange="handlePanelChange"
+              @openChange="handleOpenChange"
+              v-decorator="['schoolTime']"/>
           </a-form-item>
         </a-col>
         <a-col :span="16">
           <a-form-item>
-            <a-button class="ml30" type="primary" @click="">新增</a-button>
+            <a-button class="ml30" type="primary" @click="$refs.schoolModule.showModule(undefined,10)">新增
+            </a-button>
             <a-button class="ml30" type="primary" @click="queryAll()">查询</a-button>
             <a-button class="ml30" @click="resetFieldsQueryAll()">清空条件</a-button>
           </a-form-item>
         </a-col>
       </a-row>
     </a-form>
+    <a-spin :spinning="loading">
+      <a-table
+        :columns="columns"
+        :data-source="tableData"
+        :pagination="pagination"
+        @change="handleTableChange"
+      >
+        <span slot="schoolType" slot-scope="text,record">
+          {{utils.parse_str(text,dict.schoolType)}}
+        </span>
+        <a slot="schoolUrl" slot-scope="text,record">
+          {{text}}
+        </a>
+        <span slot="action" slot-scope="text, record">
+          <a-button type="primary" @click="scoreManage(record.schoolId)">分数管理</a-button>
+        </span>
+      </a-table>
+    </a-spin>
 
-    <a-table
-      :columns="columns"
-      :data-source="tableData"
-      :pagination="pagination"
-      @change="handleTableChange"
+    <a-modal
+      width="40%"
+      title="操作选择"
+      :visible="visible"
+      :destroyOnClose="true"
+      :closable="false"
     >
-      <span slot="action" slot-scope="text, record">
-        <a-button type="link" @click="editItem(record)">编辑</a-button>
-        <a-button type="link " @click="deleteItem(record)">删除</a-button>
-      </span>
-    </a-table>
+      <div style="width: 100%;height: 200px;">
+        <a-row>
+          <a-col span="12">
+            <a-select style="width: 100%">
+              <a-select-option v-for="item in []" :key="item.value" :value="item.value">
+                {{item.text}}
+              </a-select-option>
+            </a-select>
+          </a-col>
+          <a-col span="12">
+            <a-form-item label="创校年份">
+              <a-date-picker
+                mode="year"
+                format="yyyy"
+                :open="pickerShow"
+                @panelChange="handlePanelChange"
+                @openChange="handleOpenChange"/>
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </div>
+      <div slot="footer">
+        <a-button type="primary" @click="">新增</a-button>
+        <a-button type="primary" @click="">修改</a-button>
+        <a-button @click="closeOper">关闭</a-button>
+      </div>
+    </a-modal>
   </div>
 </template>
 
 <script>
-  // 分数
+  import moment from 'moment'
+  import {schoolFindPage, schoolDelete} from '@/api/admin/school'
+  import * as utils from "@/utils/utilZengh"
+  import {Dict} from "@/utils/dict";
+
   export default {
+    components: {},
     data() {
       return {
+        moment,
+        utils,
+        visible: false,
         form: this.$form.createForm(this),
+        loading: false,
+        dict: {
+          schoolType: Dict.SCHOOLTYPE
+        },
         columns: [
           {
-            title: 'name',
-            dataIndex: 'name',
+            key: 'schoolName',
+            title: '学校名称',
+            dataIndex: 'schoolName',
             align: 'center'
           },
           {
-            title: 'Age',
-            dataIndex: 'age',
+            key: 'schoolSrc',
+            title: '学校具体地址',
+            dataIndex: 'schoolSrc',
             align: 'center'
           },
           {
-            title: 'Address',
-            dataIndex: 'address',
-            align: 'center'
+            key: 'schoolType',
+            title: '学校类型',
+            dataIndex: 'schoolType',
+            align: 'center',
+            scopedSlots: {customRender: 'schoolType'}
           },
           {
-            title: 'Tags',
-            dataIndex: 'tags',
-            align: 'center'
+            key: 'schoolTime',
+            title: '创校时间',
+            dataIndex: 'schoolTime',
+            align: 'center',
+            customRender: function (text, record, index) {
+              if (!text) {
+                return '-'
+              } else {
+                return moment(text).format('YYYY-MM-DD')
+              }
+            }
           },
           {
+            key: 'action',
             title: '操作',
             align: 'center',
             dataIndex: 'action',
-            scopedSlots: {customRender: 'action'},
+            scopedSlots: {customRender: 'action'}
           }
         ],
-        tableData: [
-          {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park, New York No. 1 Lake Park',
-          },
-          {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 2 Lake Park, London No. 2 Lake Park',
-          },
-          {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park, Sidney No. 1 Lake Park',
-          },
-        ],
+        tableData: [],
         pagination: {
           current: 1,
           showTotal: (total) => {
@@ -109,34 +166,45 @@
           showSizeChanger: true,
           pageSize: 10
         },
+        schoolTime: null,
+        pickerShow: false,
+        schoolId: '',
       }
     },
     mounted() {
+      this.form = this.$form.createForm(this)
       this.queryAll()
     },
     methods: {
+      closeOper() {
+        this.visible = false
+      },
       queryAll() {
-        const queryParam = {}
+        let _this = this
+        let queryParam = {page: this.pagination.current, size: this.pagination.pageSize}
         const {form: {validateFields}} = this
         validateFields((errors, values) => {
           if (!errors) {
-            Object.assign(queryParam, values, {page: this.pagination.current, size: this.pagination.pageSize})
+            this.loading = true
+            values.schoolTime && (values.schoolTime = this.moment(_this.schoolTime).format('yyyy-MM-DD'))
+            queryParam = Object.assign(values, queryParam)
+            schoolFindPage(queryParam).then(res => {
+              this.tableData = res.data.list
+              this.loading = false
+            }).catch(err => {
+              this.$message.error(err.message)
+            })
           }
-          //api请求
-          // const pagination = { ...this.pagination }
-          // pagination.total = res.data.total
-          // const pagination = { ...this.pagination }
-          // if (!res.code) {
-          //   this.tableData = res.data.rows
-          //   pagination.total = res.data.total
-          // } else {
-          //   this.tableData = []
-          //   pagination.total = 0
-          //   this.$message.error(res.description)
-          // }
-          // this.pagination = pagination
-
         })
+      },
+      handlePanelChange(value) {
+        this.schoolTime = {...value}
+        let time = moment(value).format('yyyy')
+        this.form.setFieldsValue({'schoolTime': time})
+        this.pickerShow = false
+      },
+      handleOpenChange(status) {
+        this.pickerShow = status
       },
       resetFieldsQueryAll() {
         this.form.resetFields()
@@ -149,11 +217,9 @@
         this.pagination = pager
         this.queryAll()
       },
-      editItem(data){
-
-      },
-      deleteItem(data){
-
+      scoreManage(id) {
+        this.visible = true
+        this.schoolId = id
       }
     }
   }

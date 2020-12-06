@@ -1,0 +1,48 @@
+package com.zyc.cloud.search.admin.score.service;
+
+import com.zyc.cloud.search.admin.score.model.ScoreDo;
+import com.zyc.cloud.search.utils.PageResult;
+
+import java.util.List;
+
+/**
+ * @author ZengYc
+ * @Date 2020/11/5 21:39
+ */
+public interface ScoreService {
+    /**
+     * 新增
+     */
+    void add(ScoreDo scoreDo);
+
+    /**
+     * 根据id修改
+     */
+    void updateById(ScoreDo scoreDo);
+
+    /**
+     * 根据ID查询
+     */
+    ScoreDo findById(String id);
+
+    /**
+     * 查询所有
+     */
+    List<ScoreDo> findAll();
+
+    /**
+     * 条件查询
+     */
+    List<ScoreDo> findList(ScoreDo scoreDo);
+
+    /**
+     * 根据ID删除
+     */
+    void delete(String id);
+
+    /**
+     * 分页+条件搜索
+     */
+    PageResult<ScoreDo> findPage(ScoreDo scoreDo, int page, int size);
+
+}
