@@ -80,6 +80,10 @@ public class ProfessServiceImpl implements ProfessService {
             if (professDo.getCollegeId() != null) {
                 criteria.andEqualTo("collegeId", professDo.getCollegeId());
             }
+
+            if (professDo.getSchoolId() != null) {
+                criteria.andEqualTo("schoolId", professDo.getSchoolId());
+            }
         }
         return example;
     }

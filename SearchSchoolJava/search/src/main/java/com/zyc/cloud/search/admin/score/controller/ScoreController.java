@@ -8,6 +8,7 @@ import com.zyc.cloud.search.utils.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -86,6 +87,21 @@ public class ScoreController {
                                                            @RequestParam(required = false, defaultValue = "10") int size){
         PageResult<ScoreDo> pageResult = scoreService.findPage(scoreDo,page,size);
         return new ResultUtil<PageResult<ScoreDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
+    }
+
+    /**
+     * 多个专业一个学校的echarts
+     */
+    @PostMapping("scoreBycolleges")
+    public ResultUtil scoreBycolleges(@RequestParam(required = false, defaultValue = "1") int year,
+                                  @RequestParam(required = true) String professionalIds,
+                                  @RequestParam(required = true) String schoolId) {
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("year",year);
+        map.put("professionalIds",professionalIds);
+        map.put("schoolId",schoolId);
+        List<HashMap<String,Object>> mapList = scoreService.scoreBycolleges(map);
+        return new ResultUtil(true, StatusCode.OK, "查询成功！",mapList);
     }
 
 }

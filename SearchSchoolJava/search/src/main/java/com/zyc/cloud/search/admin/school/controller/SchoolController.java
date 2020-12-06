@@ -1,10 +1,15 @@
 package com.zyc.cloud.search.admin.school.controller;
 
+import com.zyc.cloud.search.admin.college.model.CollegeDo;
+import com.zyc.cloud.search.admin.college.service.CollegeService;
+import com.zyc.cloud.search.admin.professional.model.ProfessDo;
+import com.zyc.cloud.search.admin.professional.service.ProfessService;
 import com.zyc.cloud.search.admin.school.model.PicDo;
 import com.zyc.cloud.search.admin.school.model.SchoolDo;
 import com.zyc.cloud.search.admin.school.service.SchoolService;
+import com.zyc.cloud.search.admin.teacher.model.TeacherDo;
+import com.zyc.cloud.search.admin.teacher.service.TeacherService;
 import com.zyc.cloud.search.admin.user.model.UserDo;
-import com.zyc.cloud.search.text.model.Text;
 import com.zyc.cloud.search.utils.PageResult;
 import com.zyc.cloud.search.utils.ResultUtil;
 import com.zyc.cloud.search.utils.StatusCode;
@@ -26,6 +31,15 @@ public class SchoolController {
 
 	@Autowired
 	private SchoolService schoolService;
+
+	@Autowired
+	private CollegeService collegeService;
+
+	@Autowired
+	private ProfessService professService;
+
+	@Autowired
+	private TeacherService teacherService;
 
 	/**
 	 * 新增学校
@@ -129,5 +143,36 @@ public class SchoolController {
 													   @RequestParam(required = false) String seach){
 		PageResult<SchoolDo> pageResult =schoolService.findPage(schoolDo,page,size,ranking,seach);
 		return new ResultUtil<PageResult<UserDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
+	}
+
+	/**
+	 * 根据主键ID查询详细
+	 */
+	@PostMapping("detailFindId")
+	public ResultUtil<Map> detailFindId(@RequestParam(value = "schoolId") String schoolId) {
+		Map<String,Object> item = new HashMap<>();
+		// 调用Service实现查询
+		SchoolDo school = schoolService.findById(schoolId);
+		item.put("school",school);
+		List<PicDo> pics = schoolService.findPicsById(school.getSchoolPic());
+		item.put("pic",pics);
+
+		//专业
+		CollegeDo collegeDo = new CollegeDo();
+		collegeDo.setSchoolId(schoolId);
+		List<CollegeDo> colleges = collegeService.findList(collegeDo);
+		item.put("colleges",colleges);
+		//学院
+		ProfessDo professDo = new ProfessDo();
+		professDo.setSchoolId(schoolId);
+		List<ProfessDo> profess = professService.findList(professDo);
+		item.put("profess",profess);
+
+		//教师
+		TeacherDo teacherDo = new TeacherDo();
+		teacherDo.setSchoolId(schoolId);
+		List<TeacherDo> teachers = teacherService.findList(teacherDo);
+		item.put("teachers",teachers);
+		return ResultUtil.success("查询成功", item);
 	}
 }

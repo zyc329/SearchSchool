@@ -3,6 +3,8 @@ package com.zyc.cloud.search.admin.score.service;
 import com.zyc.cloud.search.admin.score.model.ScoreDo;
 import com.zyc.cloud.search.utils.PageResult;
 
+import javax.xml.transform.Result;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -45,4 +47,8 @@ public interface ScoreService {
      */
     PageResult<ScoreDo> findPage(ScoreDo scoreDo, int page, int size);
 
+    /**
+     * 多个专业一个学校的echarts
+     */
+    List<HashMap<String,Object>> scoreBycolleges(HashMap<String,Object> map);
 }
