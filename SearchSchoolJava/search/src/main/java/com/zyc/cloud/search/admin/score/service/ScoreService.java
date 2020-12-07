@@ -15,12 +15,12 @@ public interface ScoreService {
     /**
      * 新增
      */
-    void add(ScoreDo scoreDo);
+    boolean add(ScoreDo scoreDo);
 
     /**
      * 根据id修改
      */
-    void updateById(ScoreDo scoreDo);
+    boolean updateById(ScoreDo scoreDo);
 
     /**
      * 根据ID查询

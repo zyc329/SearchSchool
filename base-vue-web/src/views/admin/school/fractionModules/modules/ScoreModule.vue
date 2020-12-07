@@ -41,7 +41,7 @@
   import {scoreAdd, scoreUpdate} from "@/api/admin/score";
 
   export default {
-    prop: ['professionalId', 'schoolId'],
+    props: ['professionalId', 'schoolId'],
     data() {
       return {
         moment,
@@ -83,10 +83,11 @@
         validateFields((errors, values) => {
           if (!errors) {
             let params = Object.assign(values,
-              {schoolId: this.schoolId,
-              professionalId: this.professionalId
+              {
+                schoolId: this.schoolId,
+                professionalId: this.professionalId
               })
-            this.operationType === 20 && (params = Object.assign(values, {scoreId: this.operationId}))
+            this.operationType === 20 && (params.scoreId = this.operationId)
             api(params).then(res => {
               this.close()
               let message = this.operationType === 20 ? '专业分数修改成功' : '专业分数添加成功'

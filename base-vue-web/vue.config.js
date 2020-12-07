@@ -104,6 +104,11 @@ const vueConfig = {
       }
     }
   },
+  // babel-loader no-ignore node_modules/*
+  transpileDependencies: [
+    'vue-echarts',
+    'resize-detector'
+  ]
 }
 
 if (globalConfig.prodShowSettingDrawer || process.env.NODE_ENV !== 'production') {

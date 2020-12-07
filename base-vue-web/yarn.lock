@@ -2928,11 +2928,6 @@ core-js@^2.4.0:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
   integrity sha512-5wjnpaT/3dV+XB4borEsnAYQchn00XSgTAWKDkEqv+K8KevjbzmofK6hfJ9TZIlpj2N0xQpazy7PiRQiWHqzWg==
 
-core-js@^3.4.4:
-  version "3.8.0"
-  resolved "https://registry.npm.taobao.org/core-js/download/core-js-3.8.0.tgz?cache=0&sync_timestamp=1606326889335&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcore-js%2Fdownload%2Fcore-js-3.8.0.tgz#0fc2d4941cadf80538b030648bb64d230b4da0ce"
-  integrity sha1-D8LUlByt+AU4sDBki7ZNIwtNoM4=
-
 core-js@^3.6.5:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
@@ -8735,12 +8730,11 @@ vue-clipboard2@^0.3.1:
   dependencies:
     clipboard "^2.0.0"
 
-vue-echarts@^5.0.0-beta.0:
-  version "5.0.0-beta.0"
-  resolved "https://registry.npm.taobao.org/vue-echarts/download/vue-echarts-5.0.0-beta.0.tgz#438dd4b0fc5ccea281709c1f7c6321b05352bdf4"
-  integrity sha1-Q43UsPxczqKBcJwffGMhsFNSvfQ=
+vue-echarts@^4.0.3:
+  version "4.1.0"
+  resolved "https://registry.npm.taobao.org/vue-echarts/download/vue-echarts-4.1.0.tgz#ff4828aaa599e7aaaac95e35297d964192a3af0d"
+  integrity sha1-/0goqqWZ56qqyV41KX2WQZKjrw0=
   dependencies:
-    core-js "^3.4.4"
     lodash "^4.17.15"
     resize-detector "^0.1.10"
 

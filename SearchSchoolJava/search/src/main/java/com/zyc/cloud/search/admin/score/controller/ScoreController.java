@@ -56,8 +56,12 @@ public class ScoreController {
     @PostMapping("scoreAdd")
     public ResultUtil scoreAdd(@RequestBody ScoreDo scoreDo) {
         ScoreDo item = new ScoreDo();
-        scoreService.add(scoreDo);
-        return new ResultUtil(true, StatusCode.OK, "新增成功！");
+        boolean flag = scoreService.add(scoreDo);
+        if (flag){
+            return new ResultUtil(true, StatusCode.OK, "新增成功！");
+        }else{
+            return new ResultUtil(false, StatusCode.REPERROR, "该年份已存在记录！");
+        }
     }
 
     /**
@@ -65,8 +69,13 @@ public class ScoreController {
      */
     @PostMapping("scoreUpdate")
     public ResultUtil scoreUpdate(@RequestBody ScoreDo scoreDo) {
-        scoreService.updateById(scoreDo);
-        return new ResultUtil(true, StatusCode.OK, "修改成功！");
+        boolean flag = scoreService.updateById(scoreDo);
+        if (flag){
+            return new ResultUtil(true, StatusCode.OK, "修改成功！");
+
+        }else{
+            return new ResultUtil(false, StatusCode.REPERROR, "该年份已存在记录！");
+        }
     }
 
     /**

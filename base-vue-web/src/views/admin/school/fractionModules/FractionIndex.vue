@@ -82,8 +82,8 @@
           </a-col>
         </a-row>
         <div style="position: relative;left: 50%;transform: translate(-10%,0);margin-top: 100px;">
-          <a-button type="primary" @click="openScoreModule()" style="margin-right: 20px">查询</a-button>
-          <a-button type="primary" @click="openEcharts()" style="margin-right: 20px">数据对比</a-button>
+          <a-button type="primary" @click="openScoreModule()" style="margin-right: 20px">管理</a-button>
+          <a-button type="primary" @click="openEcharts()" style="margin-right: 20px">查询</a-button>
           <a-button @click="closeOper">关闭</a-button>
         </div>
       </div>

@@ -7,6 +7,7 @@ import App from '@/App.vue'
 import router from '@/router'
 import store from '@/store/'
 import { VueAxios } from '@/utils/request'
+import ECharts from 'vue-echarts'
 
 // --- 注意 ---- mockjs不支持IE，正式项目中请不要在 production ENV中使用
 import '@/mock'
@@ -17,6 +18,12 @@ import '@/permission' // permission control
 import '@/utils/filter' // global filter
 import '@/style/global.less'
 import '@/assets/styles/index.css'
+
+import 'echarts/lib/chart/line'
+import 'echarts/lib/chart/bar'
+import 'echarts/lib/component/title'
+import 'echarts/lib/component/legend'
+import 'echarts/lib/component/tooltip'
 
 
 // 给 axios Promise 扩展 finally
