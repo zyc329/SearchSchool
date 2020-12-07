@@ -11,7 +11,7 @@
  Target Server Version : 50730
  File Encoding         : 65001
 
- Date: 06/12/2020 09:03:18
+ Date: 08/12/2020 01:36:33
 */
 
 SET NAMES utf8mb4;
@@ -37,9 +37,6 @@ CREATE TABLE `tb_college`  (
 -- Records of tb_college
 -- ----------------------------
 INSERT INTO `tb_college` VALUES ('1', '5fc3b8e7f100db4e740103e4', '3', '4', '5', NULL, NULL, NULL);
-INSERT INTO `tb_college` VALUES ('5fc3ce8ef100c8f866f81a77', '5fc3b8e7f100db4e740103e4', '2222', '111', '333', NULL, NULL, NULL);
-INSERT INTO `tb_college` VALUES ('5fc3cec5f100c8f866f81a79', '5fa74dc67b8fe077b8185879', NULL, '123123', '123123', NULL, NULL, NULL);
-INSERT INTO `tb_college` VALUES ('5fc3cf69f100c8f866f81a7a', '5fa74dc67b8fe077b8185879', '123123', '111', '11', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_comments
@@ -134,7 +131,7 @@ CREATE TABLE `tb_professional`  (
 -- Records of tb_professional
 -- ----------------------------
 INSERT INTO `tb_professional` VALUES ('121', '5fc3b8e7f100db4e740103e4', '专业1', '1', NULL, NULL, NULL);
-INSERT INTO `tb_professional` VALUES ('5fc3e5c5f1000289792a0874', '5fc3b8e7f100db4e740103e4', '222', '1', NULL, NULL, NULL);
+INSERT INTO `tb_professional` VALUES ('5fc3e5c5f1000289792a0874', '5fc3b8e7f100db4e740103e4', '测试分数数据专业', '1', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_school
@@ -164,7 +161,6 @@ CREATE TABLE `tb_school`  (
 -- ----------------------------
 -- Records of tb_school
 -- ----------------------------
-INSERT INTO `tb_school` VALUES ('5fa74dc67b8fe077b8185879', '野鸡大学3', '地球上', '1', '3333', '22223', NULL, '3', '21212', '2020-11-04 12:54:15', NULL, NULL, NULL, NULL, NULL, NULL, '');
 INSERT INTO `tb_school` VALUES ('5fc3b8e7f100db4e740103e4', '测试学校', '我的学校想在哪里就在哪里', '0', '我的学校就是牛逼', 'http://www.baidu.com', NULL, '13788541254', '测试小哥', '2020-11-12 15:05:28', NULL, NULL, NULL, NULL, NULL, '', '5fc3b8cdf100db4e740103db,5fc3b8d0f100db4e740103dd,5fc3b8d9f100db4e740103df,5fc3b8dcf100db4e740103e1,5fc3b8e4f100db4e740103e3');
 
 -- ----------------------------
@@ -176,12 +172,29 @@ CREATE TABLE `tb_score`  (
   `school_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '学校id',
   `year` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '年份',
   `score` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '分数',
-  `professional_id` varchar(0) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '专业id',
+  `professional_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '专业id',
   `create_time` datetime(0) NULL DEFAULT NULL,
   `update_time` datetime(0) NULL DEFAULT NULL,
   `operator` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`score_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_score
+-- ----------------------------
+INSERT INTO `tb_score` VALUES ('1', '5fc3b8e7f100db4e740103e4', '2020', '550', '121', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('2', '5fc3b8e7f100db4e740103e4', '2019', '211', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('3', '5fc3b8e7f100db4e740103e4', '2020', '540', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce4361f1006b30ed78015b', '5fc3b8e7f100db4e740103e4', '2021', '2222', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce651cf1006b30ed78015c', '5fc3b8e7f100db4e740103e4', '2010', '11', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce6527f1006b30ed78015d', '5fc3b8e7f100db4e740103e4', '2011', '2011', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce6530f1006b30ed78015e', '5fc3b8e7f100db4e740103e4', '2012', '123', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce6539f1006b30ed78015f', '5fc3b8e7f100db4e740103e4', '2013', '22', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce6540f1006b30ed780160', '5fc3b8e7f100db4e740103e4', '2014', '441', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce654bf1006b30ed780161', '5fc3b8e7f100db4e740103e4', '2015', '551', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce6556f1006b30ed780162', '5fc3b8e7f100db4e740103e4', '2016', '664', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce6564f1006b30ed780163', '5fc3b8e7f100db4e740103e4', '2017', '171', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce656ef1006b30ed780164', '5fc3b8e7f100db4e740103e4', '2018', '181', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_teacher
@@ -207,7 +220,6 @@ CREATE TABLE `tb_teacher`  (
 -- Records of tb_teacher
 -- ----------------------------
 INSERT INTO `tb_teacher` VALUES ('5fc3f638f1002002b9f4960c', '5fc3b8e7f100db4e740103e4', '12222', '5fc3f621f1002002b9f4960a', '1111', '22', '11', '1', '121', NULL, NULL, NULL);
-INSERT INTO `tb_teacher` VALUES ('5fc3f7e7f100e908244635a8', '5fa74dc67b8fe077b8185879', '傻强太傻', '5fc3f7d5f100e908244635a6', '12312312', '12', '31231', '5fc3ce8ef100c8f866f81a77', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_text
