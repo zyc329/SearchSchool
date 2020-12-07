@@ -3,7 +3,7 @@
     <div style="width: 100%; height: 400px">
       <div style="width: 100%">
         <a-select style="width: 20%" v-model="queryYear" @change="selectQuery">
-          <a-select-option v-for="item in [5, 10]" :key="item" :value="item"> 近{{ item }}年分数线 </a-select-option>
+          <a-select-option v-for="item in [5, 10]" :key="item" :value="item"> 近{{ item }}年分数线</a-select-option>
         </a-select>
       </div>
       <div>
@@ -61,7 +61,6 @@ export default {
       // 查询近几年
       queryYear: 10,
       loading: false,
-      options: {},
     }
   },
   mounted() {},
@@ -87,14 +86,14 @@ export default {
       }
       scoreByColleges(param)
         .then((res) => {
-          if(res.data) {
+          if (res.data) {
             debugger
-// {
-//             name: '专业一',
-//             type: 'line',
-//             stack: '分数',
-//             data: [120, 132, 101, 134, 90],
-//           }
+            // {
+            //             name: '专业一',
+            //             type: 'line',
+            //             stack: '分数',
+            //             data: [120, 132, 101, 134, 90],
+            //           }
           }
         })
         .catch((err) => {
@@ -108,5 +107,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

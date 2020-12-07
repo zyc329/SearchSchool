@@ -69,24 +69,24 @@ let syncRouterMap = [
     name: 'index',
     component: BasicLayout,
     meta: {title: '首页'},
-    redirect: `${defaultRootRoutePath}/analysis`,
+    // redirect: `${defaultRootRoutePath}/analysis`,
     children: [
-      // 默认页
-      {
-        path: defaultRootRoutePath,
-        name: 'dashboard',
-        redirect: `${defaultRootRoutePath}/analysis`,
-        component: RouteLayout,
-        meta: {title: '工作台', keepAlive: true, icon: 'dashboard', permission: ['dashboard']},
-        children: [
-          {
-            path: `${defaultRootRoutePath}/analysis`,
-            name: 'analysis',
-            component: () => import('@/views/dashboard/Analysis'),
-            meta: {title: 'hello', keepAlive: true, permission: ['dashboard']},
-          },
-        ],
-      },
+      // // 默认页
+      // {
+      //   path: defaultRootRoutePath,
+      //   name: 'dashboard',
+      //   redirect: `${defaultRootRoutePath}/analysis`,
+      //   component: RouteLayout,
+      //   meta: {title: '工作台', keepAlive: true, icon: 'dashboard', permission: ['dashboard']},
+      //   children: [
+      //     {
+      //       path: `${defaultRootRoutePath}/analysis`,
+      //       name: 'analysis',
+      //       component: () => import('@/views/dashboard/Analysis'),
+      //       meta: {title: 'hello', keepAlive: true, permission: ['dashboard']},
+      //     },
+      //   ],
+      // },
       {
         path: '/admin-school',
         name: 'school',
