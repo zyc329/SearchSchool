@@ -22,7 +22,6 @@ export function scoreUpdate(params) {
     data: params
   })
 }
-
 export function scoreFindPage(params) {
   return axios({
     url: api.scoreFindPage,
