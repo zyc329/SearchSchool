@@ -9,7 +9,7 @@
           <span>{{ nickname }}</span>
         </span>
         <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
-          <a-menu-item key="2" disabled>
+          <a-menu-item key="2">
             <a-icon type="setting" />
             <span>修改密码</span>
           </a-menu-item>
@@ -23,6 +23,9 @@
         </a-menu>
       </a-dropdown>
     </div>
+    <a-model>
+
+    </a-model>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import {UserLayout, BasicLayout, RouteLayout, ZycLayout} from '@/layouts'
-import {openPermission} from '@/config/index'
+import { openPermission } from '@/config/index'
 
 import exampleModule from '@/router/modules/example'
 
@@ -32,7 +32,7 @@ export const constantRouterMap = [
         path: 'login',
         name: 'login',
         component: () => import(/* webpackChunkName: "user" */ '@/views/user/Login'),
-        meta: {title: '登录', keepAlive: true},
+        meta: { title: '登录', keepAlive: true },
       },
     ],
   },
@@ -54,13 +54,13 @@ let syncRouterMap = [
         path: '/homeIndex',
         name: 'homeIndex',
         component: () => import('@/views/user/home/homeIndex'),
-        meta: {title: '首页', keepAlive: true},
+        meta: { title: '首页', keepAlive: true },
       },
       {
         path: '/searchIndex',
         name: 'searchIndex',
         component: () => import('@/views/user/page/searchIndex'),
-        meta: {title: '高级搜索', keepAlive: true},
+        meta: { title: '高级搜索', keepAlive: true },
       },
     ],
   },
@@ -68,7 +68,7 @@ let syncRouterMap = [
     path: '/',
     name: 'index',
     component: BasicLayout,
-    meta: {title: '首页'},
+    meta: { title: '首页' },
     // redirect: `${defaultRootRoutePath}/analysis`,
     children: [
       // // 默认页
@@ -91,19 +91,19 @@ let syncRouterMap = [
         path: '/admin-school',
         name: 'school',
         component: RouteLayout,
-        meta: {title: '学校资料管理', keepAlive: true, icon: 'thunderbolt'},
+        meta: { title: '学校资料管理', keepAlive: true, icon: 'thunderbolt' },
         children: [
           {
             path: '/school-index',
             name: 'SchoolIndex',
             component: () => import('@/views/admin/school/SchoolIndex'),
-            meta: {title: '学校列表', keepAlive: true, permission: ['dashboard']},
+            meta: { title: '学校列表', keepAlive: true, permission: ['dashboard'] },
           },
           {
             path: '/fractionModules-index',
             name: 'FractionIndex',
             component: () => import('@/views/admin/school/fractionModules/FractionIndex'),
-            meta: {title: '历年分数线管理', keepAlive: true, permission: ['dashboard']},
+            meta: { title: '历年分数线管理', keepAlive: true, permission: ['dashboard'] },
           },
           // {
           //   path: '/Specialty-Index',
@@ -115,49 +115,48 @@ let syncRouterMap = [
             path: '/teacher-index',
             name: 'TeacherIndex',
             component: () => import('@/views/admin/school/teacherModules/TeacherIndex'),
-            meta: {title: '学校老师信息管理', keepAlive: true, permission: ['dashboard']},
-          }
-          ,
+            meta: { title: '学校老师信息管理', keepAlive: true, permission: ['dashboard'] },
+          },
           {
             path: '/college-index',
             name: 'CollegeIndex',
             component: () => import('@/views/admin/school/college/CollegeIndex'),
-            meta: {title: '学院管理', keepAlive: true, permission: ['dashboard']},
-          }
+            meta: { title: '学院管理', keepAlive: true, permission: ['dashboard'] },
+          },
         ],
       },
       {
         path: '/admin-user',
         name: 'user',
         component: RouteLayout,
-        meta: {title: '用户管理', keepAlive: true, icon: 'thunderbolt'},
+        meta: { title: '用户管理', keepAlive: true, icon: 'thunderbolt' },
         children: [
           {
             path: '/user-manage',
             name: 'UserManage',
             component: () => import('@/views/admin/user/UserManage'),
-            meta: {title: '用户列表', keepAlive: true, permission: ['dashboard']},
+            meta: { title: '用户列表', keepAlive: true, permission: ['dashboard'] },
           },
           {
             path: '/admin-manage',
             name: 'AdminManage',
             component: () => import('@/views/admin/user/AdminManage'),
-            meta: {title: '管理员列表', keepAlive: true, permission: ['dashboard']},
-          }
+            meta: { title: '管理员列表', keepAlive: true, permission: ['dashboard'] },
+          },
         ],
       },
       {
         path: '/message-index',
         name: 'message',
         component: RouteLayout,
-        meta: {title: '消息通知', keepAlive: true, icon: 'thunderbolt'},
+        meta: { title: '消息通知', keepAlive: true, icon: 'thunderbolt' },
         children: [
           {
             path: '/message-index',
             name: 'MessageIndex',
             component: () => import('@/views/admin/message/MessageIndex'),
-            meta: {title: '举报处理', keepAlive: true, permission: ['dashboard']},
-          }
+            meta: { title: '举报处理', keepAlive: true, permission: ['dashboard'] },
+          },
         ],
       },
     ],
@@ -168,4 +167,4 @@ if (!openPermission) {
   syncRouterMap.push(notFoundRouter)
 }
 
-export {syncRouterMap}
+export { syncRouterMap }

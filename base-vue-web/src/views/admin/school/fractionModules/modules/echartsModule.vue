@@ -121,7 +121,6 @@
           },
           series: series
         }
-        console.log(options)
         return options
       },
       queryAll() {
