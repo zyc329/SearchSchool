@@ -4,7 +4,16 @@ const api = {
   scoreFindPage: '/score/scoreFindPage',
   scoreByColleges: '/score/scoreByColleges',
   scoreAdd:'/score/scoreAdd',
-  scoreUpdate:'/score/scoreUpdate'
+  scoreUpdate:'/score/scoreUpdate',
+  scoreDelete:'/score/scoreDelete'
+}
+export function scoreDelete(params) {
+  return axios({
+    url: api.scoreDelete,
+    method: 'post',
+    dataType: 'json',
+    params: params
+  })
 }
 export function scoreAdd(params) {
   return axios({

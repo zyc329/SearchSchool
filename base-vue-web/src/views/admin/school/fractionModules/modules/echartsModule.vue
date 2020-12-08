@@ -2,7 +2,7 @@
   <a-modal width="70%" title="历年分数线" :visible="visible" :destroyOnClose="true" :closable="false">
     <div style="width: 100%; height: 400px">
       <div style="width: 100%">
-        <a-select style="width: 20%" v-model="queryYear" @change="selectQuery">
+        <a-select style="width: 20%" v-model="queryYear" @change="queryAll">
           <a-select-option v-for="item in [5, 10]" :key="item" :value="item"> 近{{ item }}年分数线</a-select-option>
         </a-select>
       </div>
@@ -123,8 +123,6 @@
         }
         console.log(options)
         return options
-      },
-      selectQuery() {
       },
       queryAll() {
         this.loading = true

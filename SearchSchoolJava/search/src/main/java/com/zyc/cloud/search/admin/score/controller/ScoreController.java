@@ -8,6 +8,7 @@ import com.zyc.cloud.search.utils.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,11 +56,15 @@ public class ScoreController {
      */
     @PostMapping("scoreAdd")
     public ResultUtil scoreAdd(@RequestBody ScoreDo scoreDo) {
-        ScoreDo item = new ScoreDo();
-        boolean flag = scoreService.add(scoreDo);
-        if (flag){
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        if (Integer.valueOf(scoreDo.getYear()) > year){
+            return new ResultUtil(false, StatusCode.REPERROR, "选择年份不能大于当前年！");
+        }
+            boolean flag = scoreService.add(scoreDo);
+        if (flag) {
             return new ResultUtil(true, StatusCode.OK, "新增成功！");
-        }else{
+        } else {
             return new ResultUtil(false, StatusCode.REPERROR, "该年份已存在记录！");
         }
     }
@@ -69,11 +74,16 @@ public class ScoreController {
      */
     @PostMapping("scoreUpdate")
     public ResultUtil scoreUpdate(@RequestBody ScoreDo scoreDo) {
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        if (Integer.valueOf(scoreDo.getYear()) > year){
+            return new ResultUtil(false, StatusCode.REPERROR, "选择年份不能大于当前年！");
+        }
         boolean flag = scoreService.updateById(scoreDo);
-        if (flag){
+        if (flag) {
             return new ResultUtil(true, StatusCode.OK, "修改成功！");
 
-        }else{
+        } else {
             return new ResultUtil(false, StatusCode.REPERROR, "该年份已存在记录！");
         }
     }
@@ -92,10 +102,10 @@ public class ScoreController {
      */
     @PostMapping("/scoreFindPage")
     public ResultUtil<PageResult<ScoreDo>> scoreFindPage(@RequestBody(required = false) ScoreDo scoreDo,
-                                                           @RequestParam(required = false, defaultValue = "1") int page,
-                                                           @RequestParam(required = false, defaultValue = "10") int size){
-        PageResult<ScoreDo> pageResult = scoreService.findPage(scoreDo,page,size);
-        return new ResultUtil<PageResult<ScoreDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
+                                                         @RequestParam(required = false, defaultValue = "1") int page,
+                                                         @RequestParam(required = false, defaultValue = "10") int size) {
+        PageResult<ScoreDo> pageResult = scoreService.findPage(scoreDo, page, size);
+        return new ResultUtil<PageResult<ScoreDo>>(true, StatusCode.OK, "分页查询成功", pageResult);
     }
 
     /**
@@ -103,14 +113,14 @@ public class ScoreController {
      */
     @PostMapping("scoreByColleges")
     public ResultUtil scoreByColleges(@RequestParam(required = false, defaultValue = "1") int year,
-                                  @RequestParam(required = true) String professionalIds,
-                                  @RequestParam(required = true) String schoolId) {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("year",year);
-        map.put("professionalIds",professionalIds);
-        map.put("schoolId",schoolId);
-        List<HashMap<String,Object>> mapList = scoreService.scoreByColleges(map);
-        return new ResultUtil(true, StatusCode.OK, "查询成功！",mapList);
+                                      @RequestParam(required = true) String professionalIds,
+                                      @RequestParam(required = true) String schoolId) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("year", year);
+        map.put("professionalIds", professionalIds);
+        map.put("schoolId", schoolId);
+        List<HashMap<String, Object>> mapList = scoreService.scoreByColleges(map);
+        return new ResultUtil(true, StatusCode.OK, "查询成功！", mapList);
     }
 
 }

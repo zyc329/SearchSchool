@@ -124,7 +124,8 @@
             @change="handleTableChange1"
           >
             <span slot="action" slot-scope="text, record">
-          <a-button type="primary" @click="$refs.scoreModule.showModule(record, 20)">修改</a-button>
+          <a-button type="link" @click="$refs.scoreModule.showModule(record, 20)">修改</a-button>
+              <a-button type="link " @click="deleteItem(record.scoreId)">删除</a-button>
         </span>
           </a-table>
         </a-spin>
@@ -141,7 +142,7 @@
 <script>
   import moment from 'moment'
   import {schoolFindPage} from '@/api/admin/school'
-  import {scoreFindPage} from "@/api/admin/score"
+  import {scoreFindPage,scoreDelete} from "@/api/admin/score"
   import * as utils from "@/utils/utilZengh"
   import {Dict} from "@/utils/dict";
   import {professionalFindList} from "@/api/admin/specialty"
@@ -260,6 +261,30 @@
       this.queryAll()
     },
     methods: {
+      deleteItem(scoreId){
+        let _this = this
+        _this.loading = true
+        this.$confirm({
+          title: '提示',
+          content: '是否确定删除该数据',
+          onOk() {
+            scoreDelete({scoreId: scoreId}).then(() => {
+              _this.$message.success('删除成功！')
+              _this.queryScoreAll()
+              _this.loading = false
+            }).catch(err => {
+              _this.$message.error(err.message)
+              _this.loading = false
+            }).finally(() => {
+              _this.loading = false
+            })
+          },
+          onCancel() {
+            _this.queryScoreAll()
+            _this.loading = false
+          },
+        })
+      },
       openEcharts() {
         if (this.utils.isEmpty(this.professionalId)) {
           this.$message.warn('请先选择专业！')

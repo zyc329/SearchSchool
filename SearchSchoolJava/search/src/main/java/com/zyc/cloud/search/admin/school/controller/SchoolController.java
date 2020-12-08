@@ -87,7 +87,6 @@ public class SchoolController {
 	 */
 	@PostMapping("schoolUpdate")
 	public ResultUtil schoolUpdate(@RequestBody SchoolDo schoolDo) {
-
 		Integer flag = schoolService.updateById(schoolDo);
 		String message = "";
 		Integer code = StatusCode.OK;
