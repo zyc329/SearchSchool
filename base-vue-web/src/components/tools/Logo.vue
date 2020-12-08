@@ -2,7 +2,7 @@
   <div class="logo">
     <router-link :to="{ path: defaultRootRoutePath }">
       <LogoSvg alt="logo" />
-      <h1 v-if="showTitle">{{ title }}</h1>
+      <h1 v-if="showTitle" style="letter-spacing:30px;">{{ title }}</h1>
     </router-link>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Ant Design Pro',
+      default: '榕城查',
       required: false,
     },
     showTitle: {

@@ -52,7 +52,7 @@
         <span slot="schoolType" slot-scope="text,record">
           {{utils.parse_str(text,dict.schoolType)}}
         </span>
-        <a slot="schoolUrl" slot-scope="text,record">
+        <a :href="text" target="_blank" slot="schoolUrl" slot-scope="text,record">
           {{text}}
         </a>
         <span slot="action" slot-scope="text, record">
