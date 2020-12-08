@@ -9,7 +9,7 @@
           <span>{{ nickname }}</span>
         </span>
         <a-menu slot="overlay" class="user-dropdown-menu-wrapper">
-          <a-menu-item key="2">
+          <a-menu-item key="2" @click="visible = true">
             <a-icon type="setting" />
             <span>修改密码</span>
           </a-menu-item>
@@ -23,9 +23,13 @@
         </a-menu>
       </a-dropdown>
     </div>
-    <a-model>
-
-    </a-model>
+    <a-modal title="修改密码" width="30%" :visible="visible" :destroyOnClose="true" :closable="false">
+      <a-form> </a-form>
+      <div slot="footer">
+        <a-button type="primary" @click="save">保存</a-button>
+        <a-button @click="close()">关闭</a-button>
+      </div>
+    </a-modal>
   </div>
 </template>
 
@@ -41,8 +45,15 @@ export default {
   computed: {
     ...mapGetters(['nickname', 'avatar']),
   },
+  data() {
+    return {
+      visible: false,
+    }
+  },
   methods: {
     ...mapActions(['Logout']),
+    save() {},
+    close() {},
     handleLogout() {
       this.$confirm({
         title: '提示',

@@ -36,16 +36,16 @@ router.beforeEach((to, from, next) => {
           .dispatch('GetInfo')
           .then((res) => {
             if (res.userInfo.role==='user'){
-              if (to.path){
-                next()
-              }else{
+              if (to.path==='/'){
                 next({path:'/homeIndex'})
+              }else{
+                next()
               }
             }else{
-              if (to.path){
-                next()
-              }else{
+              if (to.path==='/'){
                 next({path:'/user-manage'})
+              }else{
+                next()
               }
             }
           })
