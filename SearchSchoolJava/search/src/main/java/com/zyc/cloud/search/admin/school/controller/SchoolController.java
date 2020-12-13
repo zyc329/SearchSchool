@@ -6,6 +6,7 @@ import com.zyc.cloud.search.admin.professional.model.ProfessDo;
 import com.zyc.cloud.search.admin.professional.service.ProfessService;
 import com.zyc.cloud.search.admin.school.model.PicDo;
 import com.zyc.cloud.search.admin.school.model.SchoolDo;
+import com.zyc.cloud.search.admin.school.model.SchoolItemVo;
 import com.zyc.cloud.search.admin.school.service.SchoolService;
 import com.zyc.cloud.search.admin.teacher.model.TeacherDo;
 import com.zyc.cloud.search.admin.teacher.service.TeacherService;
@@ -16,6 +17,7 @@ import com.zyc.cloud.search.utils.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -173,5 +175,16 @@ public class SchoolController {
 		List<TeacherDo> teachers = teacherService.findList(teacherDo);
 		item.put("teachers",teachers);
 		return ResultUtil.success("查询成功", item);
+	}
+
+	/**
+	 * 查询
+	 */
+	@PostMapping("selectItem")
+	public ResultUtil<List<SchoolItemVo>> selectItem(@RequestBody HashMap<String,Object> map) {
+		HashMap<String,String> example = (HashMap<String,String>)map.get("example");
+		ArrayList<String> roleNameList = (ArrayList<String>)map.get("roleNameList");
+		List<SchoolItemVo> SchoolItemVos = schoolService.selectItem(example,roleNameList);
+		return new ResultUtil<List<SchoolItemVo>>(true, StatusCode.OK, "条件查询成功",SchoolItemVos);
 	}
 }

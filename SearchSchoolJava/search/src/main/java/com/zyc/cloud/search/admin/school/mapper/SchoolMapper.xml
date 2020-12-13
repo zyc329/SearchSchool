@@ -6,5 +6,51 @@
 		TB_SCHOOL
 	</sql>
 
+
+	<select  id="selectItem" parameterType="java.util.Map" resultType="com.zyc.cloud.search.admin.school.model.SchoolItemVo">
+		select s.school_id schoolId,s.school_name schoolName,
+		s.school_src schoolSrc,s.school_type schoolType,
+		s.school_introduction schoolIntroduction,
+		s.school_url schoolUrl,s.school_img_src schoolImgSrc,
+		s.school_tel schoolTel,s.school_head schoolHead,
+		s.school_time schoolTime,s.school_ranking_size schoolRankingSize,
+		s.school_seach_size schoolSeachSize,s.is_ranking isRanking,
+		s.school_pic schoolPic,p.professional_id professionalId,
+		p.professional_name professionalName,p.college_id collegeId
+		from tb_school s left join
+		tb_professional p on s.school_id = p.school_id where 1=1
+		<if test="example.schoolName != null and example.schoolName != ''" >
+			and s.school_name like CONCAT(CONCAT('%', #{example.schoolName}), '%')
+		</if>
+		<if test="example.schoolSrc != null and example.schoolSrc != ''" >
+			and s.school_src like CONCAT(CONCAT('%', #{example.schoolSrc}), '%')
+		</if>
+		<if test="example.professionalName != null and example.professionalName != ''" >
+			and p.professional_name like CONCAT(CONCAT('%', #{example.professionalName}), '%')
+		</if>
+		<if test="example.schoolType != null and example.schoolType != ''" >
+			and s.school_type = #{example.schoolType}
+		</if>
+
+		<if test="roleNameList!=null and roleNameList.size() &gt; 0">
+			<foreach collection="roleNameList" item="rolename" separator=" or " open="and ( 1=1 " close=")">
+				or p.professional_name like CONCAT(CONCAT('%', #{rolename,jdbcType=VARCHAR}), '%')
+			</foreach>
+		</if>
+
+		<choose>
+			<when test="example.order == 0">
+				order by s.school_time
+			</when>
+			<when test="example.order == 1">
+				order by s.school_seach_size desc
+			</when>
+			<otherwise>
+				order by s.school_ranking_size desc
+			</otherwise>
+		</choose>
+
+
+	</select>
 </mapper>
 

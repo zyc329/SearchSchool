@@ -2,10 +2,11 @@ package com.zyc.cloud.search.admin.school.service;
 
 import com.zyc.cloud.search.admin.school.model.PicDo;
 import com.zyc.cloud.search.admin.school.model.SchoolDo;
-import com.zyc.cloud.search.admin.school.model.SchoolDo;
-import com.zyc.cloud.search.admin.user.model.UserDo;
+import com.zyc.cloud.search.admin.school.model.SchoolItemVo;
 import com.zyc.cloud.search.utils.PageResult;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -64,4 +65,9 @@ public interface SchoolService {
 	 * 分页+条件搜索
 	 */
 	PageResult<SchoolDo> findPage(SchoolDo schoolDo, int page, int size,String ranking,String seach);
+
+	/**
+	 * 分页+条件搜索
+	 */
+	List<SchoolItemVo> selectItem(HashMap<String,String> example, ArrayList<String> roleNameList);
 }

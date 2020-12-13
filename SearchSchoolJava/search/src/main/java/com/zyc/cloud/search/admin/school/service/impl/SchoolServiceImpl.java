@@ -8,6 +8,7 @@ import com.zyc.cloud.search.admin.school.mapper.PicMapper;
 import com.zyc.cloud.search.admin.school.mapper.SchoolMapper;
 import com.zyc.cloud.search.admin.school.model.PicDo;
 import com.zyc.cloud.search.admin.school.model.SchoolDo;
+import com.zyc.cloud.search.admin.school.model.SchoolItemVo;
 import com.zyc.cloud.search.admin.school.service.SchoolService;
 import com.zyc.cloud.search.admin.user.model.UserDo;
 import com.zyc.cloud.search.utils.PageResult;
@@ -18,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -137,5 +139,10 @@ public class SchoolServiceImpl  implements SchoolService {
 //			criteria.andCondition("pic_id in "+ids);
 		}
 		return example;
+	}
+
+	public List<SchoolItemVo> selectItem(HashMap<String,String> example, ArrayList<String> roleNameList) {
+		List<SchoolItemVo> SchoolItemVos = schoolMapper.selectItem(example,roleNameList);
+		return SchoolItemVos;
 	}
 }
