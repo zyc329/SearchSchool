@@ -46,6 +46,7 @@ import {
   Progress,
   Skeleton,
   Popconfirm,
+  Empty,
   message,
   notification
 } from 'ant-design-vue'
@@ -53,6 +54,7 @@ import {
 Vue.use(ConfigProvider)
 Vue.use(Layout)
 Vue.use(Input)
+Vue.use(Empty)
 Vue.use(InputNumber)
 Vue.use(Button)
 Vue.use(Switch)

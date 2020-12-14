@@ -1,7 +1,10 @@
 package com.zyc.cloud.search.admin.school.model;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class SchoolItemVo{
 
 	private String schoolId;

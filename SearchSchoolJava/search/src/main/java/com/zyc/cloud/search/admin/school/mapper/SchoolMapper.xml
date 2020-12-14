@@ -49,8 +49,10 @@
 				order by s.school_ranking_size desc
 			</otherwise>
 		</choose>
-
-
 	</select>
+
+	<update id="addCount">
+		update tb_school set school_seach_size=school_seach_size+1 where school_id=#{id}
+	</update>
 </mapper>
 

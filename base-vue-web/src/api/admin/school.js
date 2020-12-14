@@ -5,7 +5,35 @@ const api = {
   schoolAdd: '/school/schoolAdd',
   schoolDelete:'/school/schoolDelete',
   schoolUpdate:'/school/schoolUpdate',
-  schoolAll:'school/schoolAll'
+  schoolAll:'school/schoolAll',
+  selectItem:'school/selectItem',
+  addCount:'school/addCount',
+  detailFindId:'school/detailFindId'
+}
+
+
+export function detailFindId(parameter) {
+  return axios({
+    url: api.detailFindId,
+    method: 'post',
+    params: parameter,
+  })
+}
+
+export function addCount(parameter) {
+  return axios({
+    url: api.addCount,
+    method: 'put',
+    params: parameter,
+  })
+}
+
+export function selectItem(parameter) {
+  return axios({
+    url: api.selectItem,
+    method: 'post',
+    data: parameter,
+  })
 }
 
 export function schoolAll() {

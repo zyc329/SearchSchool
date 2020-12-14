@@ -38,6 +38,7 @@ public class SchoolServiceImpl  implements SchoolService {
 	@Override
 	public void add(SchoolDo schoolDo) {
 		schoolDo.setSchoolId(IdUtil.objectId());
+		schoolDo.setSchoolSeachSize("0");
 		schoolMapper.insertSelective(schoolDo);
 	}
 
@@ -144,5 +145,10 @@ public class SchoolServiceImpl  implements SchoolService {
 	public List<SchoolItemVo> selectItem(HashMap<String,String> example, ArrayList<String> roleNameList) {
 		List<SchoolItemVo> SchoolItemVos = schoolMapper.selectItem(example,roleNameList);
 		return SchoolItemVos;
+	}
+
+	@Override
+	public void addCount(String schoolId) {
+		schoolMapper.addCount(schoolId);
 	}
 }

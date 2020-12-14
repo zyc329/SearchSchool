@@ -70,4 +70,6 @@ public interface SchoolService {
 	 * 分页+条件搜索
 	 */
 	List<SchoolItemVo> selectItem(HashMap<String,String> example, ArrayList<String> roleNameList);
+
+	void addCount(String schoolId);
 }

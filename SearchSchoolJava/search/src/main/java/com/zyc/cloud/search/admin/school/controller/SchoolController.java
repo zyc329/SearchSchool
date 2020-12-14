@@ -187,4 +187,9 @@ public class SchoolController {
 		List<SchoolItemVo> SchoolItemVos = schoolService.selectItem(example,roleNameList);
 		return new ResultUtil<List<SchoolItemVo>>(true, StatusCode.OK, "条件查询成功",SchoolItemVos);
 	}
+
+	@PutMapping("addCount")
+	public void addCount(@RequestParam String schoolId){
+		schoolService.addCount(schoolId);
+	}
 }

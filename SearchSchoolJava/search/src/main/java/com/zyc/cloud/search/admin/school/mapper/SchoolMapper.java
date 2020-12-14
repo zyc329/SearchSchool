@@ -26,4 +26,6 @@ public interface SchoolMapper extends MyBaseMapper<SchoolDo> {
 	 */
 	List<SchoolItemVo> selectItem(@Param("example") HashMap<String,String> example,
 								  @Param("roleNameList") ArrayList<String> roleNameList);
+
+	void addCount(@Param("id") String schoolId);
 }
