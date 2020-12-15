@@ -11,7 +11,7 @@
  Target Server Version : 50730
  File Encoding         : 65001
 
- Date: 08/12/2020 01:36:33
+ Date: 15/12/2020 09:10:57
 */
 
 SET NAMES utf8mb4;
@@ -111,6 +111,7 @@ INSERT INTO `tb_pic` VALUES ('5fc3f594f1002002b9f49604', 'a.jpg', 'profilePictur
 INSERT INTO `tb_pic` VALUES ('5fc3f5def1002002b9f49607', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f5def1002002b9f49606.jpg', NULL, NULL, NULL);
 INSERT INTO `tb_pic` VALUES ('5fc3f621f1002002b9f4960a', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f621f1002002b9f49609.jpg', NULL, NULL, NULL);
 INSERT INTO `tb_pic` VALUES ('5fc3f7d5f100e908244635a6', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f7d5f100e908244635a5.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fd479abf10051fa1617494c', 'bj.jpg', 'schoolTitle', 'E:\\tmp\\upload\\bj5fd479abf10051fa1617494b.jpg', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_professional
@@ -152,7 +153,7 @@ CREATE TABLE `tb_school`  (
   `update_time` datetime(0) NULL DEFAULT NULL,
   `operator` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `school_ranking_size` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '推荐排名',
-  `school_seach_size` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '查看次数',
+  `school_seach_size` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '查看次数',
   `is_ranking` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '是否推荐 0否，1是',
   `school_pic` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '图片表',
   PRIMARY KEY (`school_id`) USING BTREE
@@ -161,7 +162,8 @@ CREATE TABLE `tb_school`  (
 -- ----------------------------
 -- Records of tb_school
 -- ----------------------------
-INSERT INTO `tb_school` VALUES ('5fc3b8e7f100db4e740103e4', '测试学校', '我的学校想在哪里就在哪里', '0', '我的学校就是牛逼', 'http://www.baidu.com', NULL, '13788541254', '测试小哥', '2020-11-12 15:05:28', NULL, NULL, NULL, NULL, NULL, '', '5fc3b8cdf100db4e740103db,5fc3b8d0f100db4e740103dd,5fc3b8d9f100db4e740103df,5fc3b8dcf100db4e740103e1,5fc3b8e4f100db4e740103e3');
+INSERT INTO `tb_school` VALUES ('5fc3b8e7f100db4e740103e4', '测试学校', '我的学校想在哪里就在哪里', '0', '我的学校就是牛逼', 'http://www.baidu.com', NULL, '13788541254', '测试小哥', '2020-11-12 15:05:28', NULL, NULL, NULL, NULL, '15', '', '5fc3b8cdf100db4e740103db,5fc3b8d0f100db4e740103dd,5fc3b8d9f100db4e740103df,5fc3b8dcf100db4e740103e1,5fc3b8e4f100db4e740103e3');
+INSERT INTO `tb_school` VALUES ('5fd479dcf10051fa1617494f', '测试学校二', '测试学校二的具体地址', '1', '测试学校二的学校简介', 'www.taobao.com', NULL, '13788541254', '测试学校二', '2020-12-10 08:03:37', NULL, NULL, NULL, NULL, '1', '', '5fd479abf10051fa1617494c');
 
 -- ----------------------------
 -- Table structure for tb_score
@@ -185,7 +187,6 @@ CREATE TABLE `tb_score`  (
 INSERT INTO `tb_score` VALUES ('1', '5fc3b8e7f100db4e740103e4', '2020', '550', '121', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('2', '5fc3b8e7f100db4e740103e4', '2019', '211', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('3', '5fc3b8e7f100db4e740103e4', '2020', '540', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
-INSERT INTO `tb_score` VALUES ('5fce4361f1006b30ed78015b', '5fc3b8e7f100db4e740103e4', '2021', '2222', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('5fce651cf1006b30ed78015c', '5fc3b8e7f100db4e740103e4', '2010', '11', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('5fce6527f1006b30ed78015d', '5fc3b8e7f100db4e740103e4', '2011', '2011', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('5fce6530f1006b30ed78015e', '5fc3b8e7f100db4e740103e4', '2012', '123', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
