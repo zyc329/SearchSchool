@@ -5,10 +5,20 @@ const api = {
   schoolAdd: '/school/schoolAdd',
   schoolDelete:'/school/schoolDelete',
   schoolUpdate:'/school/schoolUpdate',
-  schoolAll:'school/schoolAll',
-  selectItem:'school/selectItem',
-  addCount:'school/addCount',
-  detailFindId:'school/detailFindId'
+  schoolAll:'/school/schoolAll',
+  selectItem:'/school/selectItem',
+  addCount:'/school/addCount',
+  detailFindId:'/school/detailFindId',
+  picList:'/school/picList'
+}
+
+export function picList(parameter) {
+  return axios({
+    url: api.picList,
+    method: 'post',
+    dataType: 'json',
+    params: parameter
+  })
 }
 
 

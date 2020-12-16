@@ -1,5 +1,6 @@
 <template>
-  <div class="TableList">
+  <div style="padding: 0 10%;width: 100%;height: 100px;">
+    <a-empty />
   </div>
 </template>
 

@@ -188,6 +188,14 @@ public class SchoolController {
 		return new ResultUtil<List<SchoolItemVo>>(true, StatusCode.OK, "条件查询成功",SchoolItemVos);
 	}
 
+	@PostMapping("picList")
+	public ResultUtil<List<PicDo>> picList(@RequestParam String schoolPic) {
+		List<PicDo> pics = schoolService.findPicsById(schoolPic);
+		return new ResultUtil<List<PicDo>>(true, StatusCode.OK, "条件查询成功",pics);
+	}
+
+
+
 	@PutMapping("addCount")
 	public void addCount(@RequestParam String schoolId){
 		schoolService.addCount(schoolId);

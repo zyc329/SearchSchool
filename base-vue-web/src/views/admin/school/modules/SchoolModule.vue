@@ -5,7 +5,7 @@
         <span>基础信息</span>
         <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
           <a-form-item label="学校名称">
-            <a-input v-decorator="['schoolName', { rules: rules }]" />
+            <a-input v-decorator="['schoolName', { rules: rules }]"/>
           </a-form-item>
           <a-form-item label="学校类型">
             <a-select style="width: 100%" v-decorator="['schoolType', { rules: rules }]">
@@ -15,26 +15,26 @@
             </a-select>
           </a-form-item>
           <a-form-item label="学校官网网址">
-            <a-input v-decorator="['schoolUrl', { rules: rules }]" />
+            <a-input v-decorator="['schoolUrl', { rules: rules }]"/>
           </a-form-item>
           <a-form-item label="招生热线">
-            <a-input v-decorator="['schoolTel', { rules: rules }]" />
+            <a-input v-decorator="['schoolTel', { rules: rules }]"/>
           </a-form-item>
           <a-form-item label="招生办负责人">
-            <a-input v-decorator="['schoolHead', { rules: rules }]" />
+            <a-input v-decorator="['schoolHead', { rules: rules }]"/>
           </a-form-item>
           <a-form-item label="创校时间">
-            <a-date-picker format="yyyy-MM-DD" v-decorator="['schoolTime', { rules: rules }]" />
+            <a-date-picker format="yyyy-MM-DD" v-decorator="['schoolTime', { rules: rules }]"/>
           </a-form-item>
           <a-form-item label="学校具体地址">
-            <a-textarea :auto-size="{ minRows: 3, maxRows: 5 }" v-decorator="['schoolSrc', { rules: rules }]" />
+            <a-textarea :auto-size="{ minRows: 3, maxRows: 5 }" v-decorator="['schoolSrc', { rules: rules }]"/>
           </a-form-item>
           <a-form-item label="学校简介">
-            <a-textarea :auto-size="{ minRows: 3, maxRows: 5 }" v-decorator="['schoolIntroduction', { rules: rules }]" />
+            <a-textarea :auto-size="{ minRows: 3, maxRows: 5 }" v-decorator="['schoolIntroduction', { rules: rules }]"/>
           </a-form-item>
         </a-form>
       </a-col>
-      <a-col :span="12" v-if="operationType === 10">
+      <a-col :span="12" v-if="isShowPic">
         图片信息
         <a-form :form="form1" :label-col="{ span: 8 }" :wrapper-col="{ span: 12 }">
           <a-form-item label="学校校标">
@@ -53,7 +53,7 @@
               "
             >
               <a-button>
-                <a-icon type="upload" />
+                <a-icon type="upload"/>
                 上传学校校标
               </a-button>
             </a-upload>
@@ -74,7 +74,7 @@
               "
             >
               <a-button>
-                <a-icon type="upload" />
+                <a-icon type="upload"/>
                 上传学校详情页
               </a-button>
             </a-upload>
@@ -95,7 +95,7 @@
               "
             >
               <a-button>
-                <a-icon type="upload" />
+                <a-icon type="upload"/>
                 上传学校照片墙
               </a-button>
             </a-upload>
@@ -105,200 +105,260 @@
     </a-row>
 
     <div slot="footer">
-      <a-button type="primary" :loading="loading" @click="save"> 保存 </a-button>
+      <a-button type="primary" :loading="loading" @click="save"> 保存</a-button>
       <a-button @click="close" :loading="loading">关闭</a-button>
     </div>
   </a-modal>
 </template>
 
 <script>
-import { upload, deletePic, schoolAdd, schoolUpdate } from '@/api/admin/school'
-import _ from 'lodash'
-import { Dict } from '@/utils/dict'
-import { userAdd, userUpdate } from '@/api/admin/user'
+  import {upload, deletePic, schoolAdd, schoolUpdate, picList} from '@/api/admin/school'
+  import _ from 'lodash'
+  import {Dict} from '@/utils/dict'
+  import {userAdd, userUpdate} from '@/api/admin/user'
 
-export default {
-  data() {
-    return {
-      operationId: '',
-      // 0查看 10新增 20修改
-      operationType: '',
-      title: '新增',
-      width: '80%',
-      visible: false,
-      loading: false,
-      lineData: {},
-      form: this.$form.createForm(this, { name: 'schoolBase' }),
-      form1: this.$form.createForm(this, { name: 'schoolPic' }),
-      rules: [],
-      upload: {
-        text: '上传文件',
-      },
-      fileList1: [],
-      fileList2: [],
-      fileList3: [],
-      schoolPic: [],
-      dirs: {
-        schoolType: Dict.SCHOOLTYPE,
-      },
-    }
-  },
-  mounted() {},
-  methods: {
-    showModule(data, type) {
-      this.visible = true
-      if (type === 10) {
-        this.title = '新增'
-        this.operationType = type
-        this.width = '80%'
-      } else {
-        this.title = '修改'
-        this.width = '40%'
-        this.lineData = { ...data }
-        this.operationType = type
-        this.operationId = data.schoolId
-        this.$nextTick(() => {
-          this.form.setFieldsValue({ ...data })
-        })
+  export default {
+    data() {
+      return {
+        operationId: '',
+        // 0查看 10新增 20修改
+        operationType: '',
+        title: '新增',
+        width: '80%',
+        visible: false,
+        loading: false,
+        lineData: {},
+        form: this.$form.createForm(this, {name: 'schoolBase'}),
+        form1: this.$form.createForm(this, {name: 'schoolPic'}),
+        rules: [],
+        upload: {
+          text: '上传文件',
+        },
+        fileList1: [],
+        fileList2: [],
+        fileList3: [],
+        schoolPic: [],
+        dirs: {
+          schoolType: Dict.SCHOOLTYPE
+        },
+        isShowPic: false
       }
     },
-    save() {
-      const {
-        form: { validateFields },
-      } = this
-      let api = schoolAdd
-      this.operationType === 20 && (api = schoolUpdate)
-      this.loading = true
-      validateFields((errors, values) => {
-        if (!errors) {
-          let params = Object.assign(values, { schoolPic: this.schoolPic.join(',') })
-          this.operationType === 20 && (params = Object.assign(values, { schoolId: this.operationId }))
-          api(params)
-            .then((res) => {
-              this.close()
-              let message = this.operationType === 20 ? '学校信息修改成功' : '学校信息添加成功'
-              this.$message.success(message)
-              this.loading = false
-            })
-            .catch((err) => {
-              this.$message.error(err.message)
-              this.loading = false
-            })
+    mounted() {
+    },
+    methods: {
+      showModule(data, type) {
+        this.visible = true
+        if (type === 10) {
+          this.title = '新增'
+          this.operationType = type
+          this.width = '80%'
+          this.isShowPic = true
         } else {
-          this.loading = false
+          this.title = '修改'
+          this.width = '80%'
+          this.lineData = {...data}
+          this.operationType = type
+          this.operationId = data.schoolId
+          this.getPic()
+          this.$nextTick(() => {
+            this.form.setFieldsValue({...data})
+          })
         }
-      })
-    },
-    close() {
-      this.form.resetFields()
-      this.form1.resetFields()
-      this.lineData = {}
-      this.operationId = ''
-      this.operationType = ''
-      this.$emit('closeModule')
-      this.visible = false
-    },
-    handleRemove(data, type) {
-      let param = {
-        deletePicId: data.id,
-      }
-      deletePic(param).then((res) => {
-        if (type === 1) {
-        }
-      })
-    },
-    customRequest(data, picType, type) {
-      let file = data.file
-      let fileType = file.type
-      if (fileType.indexOf('image') < 0) {
-        this.$message.warn('请上传图片！')
-        return false
-      }
-      if (file.size / 1024 / 1024 > 50) {
-        this.$message.warn('文件大小不能超过50M！')
-        return false
-      }
-      if (type === 1) {
-        if (this.fileList1.length >= 1) {
-          this.$message.warn('只能上传一个文件')
-          return false
-        }
-        let idx = _.findIndex(this.fileList1, (o) => {
-          return o.name == file.name
-        })
-
-        if (idx > -1) {
-          this.$message.warn(file.name + '已存在，请重新选择', 1)
-          return false
-        }
-      } else if (type === 2) {
-        if (this.fileList2.length >= 5) {
-          this.$message.warn('只能上传五个文件')
-          return false
-        }
-        let idx = _.findIndex(this.fileList2, (o) => {
-          return o.name == file.name
-        })
-
-        if (idx > -1) {
-          this.$message.warn(file.name + '已存在，请重新选择', 1)
-          return false
-        }
-      } else {
-        let idx = _.findIndex(this.fileList3, (o) => {
-          return o.name == file.name
-        })
-
-        if (idx > -1) {
-          this.$message.warn(file.name + '已存在，请重新选择', 1)
-          return false
-        }
-      }
-
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('type', picType)
-      upload(formData)
-        .then((res) => {
-          file.id = res.data
-          if (type === 1) {
-            this.fileList1 = [...this.fileList1, file]
-          } else if (type === 2) {
-            this.fileList2 = [...this.fileList2, file]
-          } else {
-            this.fileList3 = [...this.fileList3, file]
+      },
+      getPic() {
+        picList({schoolPic: this.lineData.schoolPic}).then(res => {
+          for (let item of res.data) {
+            let param={
+              id:item.picId,
+              uid:item.picId,
+              name: item.picName,
+              status: 'done',
+              url:`/download?picId=${item.picId}`
+            }
+            switch (item.picType) {
+              case 'schoolTitle':
+                this.fileList1.push(param)
+                break
+              case 'schoolDetail':
+                this.fileList2.push(param)
+                break
+              case 'schoolPhoto':
+                this.fileList3.push(param)
+                break
+            }
+            this.schoolPic.push(item.picId)
           }
-          this.schoolPic.push(res.data)
-          this.$message.success('上传成功！')
+          this.isShowPic = true
+        }).catch(err => {
+          this.$message.error(err.message)
         })
-        .catch((err) => {
-          this.$message.error('上传失败！')
+      },
+      save() {
+        const {
+          form: {validateFields},
+        } = this
+        let api = schoolAdd
+        this.operationType === 20 && (api = schoolUpdate)
+        this.loading = true
+        validateFields((errors, values) => {
+          if (!errors) {
+            let params = Object.assign(values, {schoolPic: this.schoolPic.join(',')})
+            this.operationType === 20 && (params = Object.assign(values, {schoolId: this.operationId}))
+            api(params)
+              .then((res) => {
+                this.close()
+                let message = this.operationType === 20 ? '学校信息修改成功' : '学校信息添加成功'
+                this.$message.success(message)
+                this.loading = false
+              })
+              .catch((err) => {
+                this.$message.error(err.message)
+                this.loading = false
+              })
+          } else {
+            this.loading = false
+          }
         })
+      },
+      close() {
+        this.form.resetFields()
+        this.form1.resetFields()
+        this.lineData = {}
+        this.operationId = ''
+        this.operationType = ''
+        this.fileList1=[]
+        this.fileList2=[]
+        this.fileList3=[]
+        this.schoolPic=[]
+        this.isShowPic = false
+        this.$emit('closeModule')
+        this.visible = false
+      },
+      handleRemove(data, type) {
+        let operatorPicId = data.id
+        let param = {
+          deletePicId: data.id,
+        }
+        deletePic(param).then((res) => {
+          if (type === 1) {
+            for (let index in this.fileList1){
+              if (this.fileList1[index].id ===operatorPicId){
+                this.fileList1.splice(index,1)
+              }
+            }
+          }else if (type === 2){
+            for (let index in this.fileList2){
+              if (this.fileList2[index].id ===operatorPicId){
+                this.fileList2.splice(index,1)
+              }
+            }
+          }else{
+            for (let index in this.fileList3){
+              if (this.fileList3[index].id ===operatorPicId){
+                this.fileList3.splice(index,1)
+              }
+            }
+          }
+          for (let index in this.schoolPic){
+            if (this.schoolPic[index] ===operatorPicId){
+              this.schoolPic.splice(index,1)
+            }
+          }
+        })
+      },
+      customRequest(data, picType, type) {
+        let file = data.file
+        let fileType = file.type
+        if (fileType.indexOf('image') < 0) {
+          this.$message.warn('请上传图片！')
+          return false
+        }
+        if (file.size / 1024 / 1024 > 50) {
+          this.$message.warn('文件大小不能超过50M！')
+          return false
+        }
+        if (type === 1) {
+          if (this.fileList1.length >= 1) {
+            this.$message.warn('只能上传一个文件')
+            return false
+          }
+          let idx = _.findIndex(this.fileList1, (o) => {
+            return o.name == file.name
+          })
+
+          if (idx > -1) {
+            this.$message.warn(file.name + '已存在，请重新选择', 1)
+            return false
+          }
+        } else if (type === 2) {
+          if (this.fileList2.length >= 5) {
+            this.$message.warn('只能上传五个文件')
+            return false
+          }
+          let idx = _.findIndex(this.fileList2, (o) => {
+            return o.name == file.name
+          })
+
+          if (idx > -1) {
+            this.$message.warn(file.name + '已存在，请重新选择', 1)
+            return false
+          }
+        } else {
+          let idx = _.findIndex(this.fileList3, (o) => {
+            return o.name == file.name
+          })
+
+          if (idx > -1) {
+            this.$message.warn(file.name + '已存在，请重新选择', 1)
+            return false
+          }
+        }
+
+        const formData = new FormData()
+        formData.append('file', file)
+        formData.append('type', picType)
+        upload(formData)
+          .then((res) => {
+            file.id = res.data
+            if (type === 1) {
+              this.fileList1 = [...this.fileList1, file]
+            } else if (type === 2) {
+              this.fileList2 = [...this.fileList2, file]
+            } else {
+              this.fileList3 = [...this.fileList3, file]
+            }
+            this.schoolPic.push(res.data)
+            this.$message.success('上传成功！')
+          })
+          .catch((err) => {
+            this.$message.error('上传失败！')
+          })
+      },
     },
-  },
-}
+  }
 </script>
 
 <style scoped>
-/deep/ .ant-modal-body {
-  max-height: 650px;
-  overflow-y: auto;
-}
+  /deep/ .ant-modal-body {
+    max-height: 650px;
+    overflow-y: auto;
+  }
 
-/* 设置滚动条的样式 */
-/deep/ .ant-modal-body::-webkit-scrollbar {
-  width: 5px;
-  background-color: #8e8e8e;
-}
+  /* 设置滚动条的样式 */
+  /deep/ .ant-modal-body::-webkit-scrollbar {
+    width: 5px;
+    background-color: #8e8e8e;
+  }
 
-/* 滚动槽 */
-/deep/ .ant-modal-body::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
+  /* 滚动槽 */
+  /deep/ .ant-modal-body::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
 
-/* 滚动条滑块 */
-/deep/ .ant-modal-body::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background: #3283d5;
-}
+  /* 滚动条滑块 */
+  /deep/ .ant-modal-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #3283d5;
+  }
 </style>
