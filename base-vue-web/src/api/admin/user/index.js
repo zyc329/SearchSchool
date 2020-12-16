@@ -6,7 +6,17 @@ const api = {
 	userUpdateStatus:'/user/userUpdateStatus',
 	resetPW:'/user/resetPW',
 	userDelete:'/user/userDelete',
-	userUpdate:'/user/userUpdate'
+	userUpdate:'/user/userUpdate',
+  updatePW:'/user/updatePW'
+}
+
+export function updatePW(parameter) {
+  return axios({
+    url: api.updatePW,
+    method: 'post',
+    dataType: 'json',
+    params: parameter,
+  })
 }
 
 export function userUpdate(parameter) {

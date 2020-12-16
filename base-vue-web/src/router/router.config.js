@@ -59,7 +59,7 @@ let syncRouterMap = [
       {
         path: '/searchIndex',
         name: 'searchIndex',
-        component: () => import('@/views/user/page/searchIndex'),
+        component: () => import('@/views/user/page/SearchIndex'),
         meta: { title: '高级搜索', keepAlive: true }
       },
       {

@@ -1,9 +1,8 @@
 package com.zyc.cloud.search.utils.jwt.controller;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.zyc.cloud.search.admin.user.service.UserService;
 import com.zyc.cloud.search.utils.jwt.JwtUtils;
-import com.zyc.cloud.search.utils.jwt.model.UserLoginModel;
+import com.zyc.cloud.search.utils.jwt.model.UserLoginVO;
 import com.zyc.cloud.search.utils.jwt.service.UserLoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,9 @@ public class UserLoginController {
     private UserLoginService userLoginService;
 
     @PostMapping("login")
-    public Map<String,Object> login(@RequestBody UserLoginModel userLoginModel){
+    public Map<String,Object> login(@RequestBody UserLoginVO userLoginVO){
         Map<String,Object> map = new HashMap<>();
-        UserLoginModel userDB = userLoginService.login(userLoginModel);
+        UserLoginVO userDB = userLoginService.login(userLoginVO);
         if(userDB!=null ){
             //认证成功后，生成JWT令牌
             if(userDB.getState() ==0){
@@ -54,8 +53,8 @@ public class UserLoginController {
         try{
             DecodedJWT verify = JwtUtils.verify(token);
             String account = verify.getClaim("account").asString();
-            UserLoginModel userLoginModel = userLoginService.gerUserInfo(account);
-            map.put("userInfo",userLoginModel);
+            UserLoginVO userLoginVO = userLoginService.gerUserInfo(account);
+            map.put("userInfo", userLoginVO);
             map.put("flag",true);
             map.put("message","请求成功");
             return map;

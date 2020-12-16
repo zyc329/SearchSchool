@@ -8,7 +8,11 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class UserLoginModel extends BaseDo {
+public class UserLoginVO extends BaseDo {
+
+    /*用户ID*/
+    @Column(name = "user_id")
+    private String userId;
 
     /*用户账号*/
     @Column(name = "account")

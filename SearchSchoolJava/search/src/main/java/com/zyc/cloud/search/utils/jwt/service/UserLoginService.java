@@ -1,9 +1,9 @@
 package com.zyc.cloud.search.utils.jwt.service;
 
-import com.zyc.cloud.search.utils.jwt.model.UserLoginModel;
+import com.zyc.cloud.search.utils.jwt.model.UserLoginVO;
 
 public interface UserLoginService {
-    UserLoginModel login(UserLoginModel userLoginModel);
+    UserLoginVO login(UserLoginVO userLoginVO);
 
-    UserLoginModel gerUserInfo(String account);
+    UserLoginVO gerUserInfo(String account);
 }

@@ -1,7 +1,7 @@
 package com.zyc.cloud.search.utils.jwt.service.impl;
 
 import com.zyc.cloud.search.utils.jwt.mapper.UserLoginMapper;
-import com.zyc.cloud.search.utils.jwt.model.UserLoginModel;
+import com.zyc.cloud.search.utils.jwt.model.UserLoginVO;
 import com.zyc.cloud.search.utils.jwt.service.UserLoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,12 +12,12 @@ public class UserLoginServiceImpl implements UserLoginService {
     private UserLoginMapper userLoginMapper;
 
     @Override
-    public UserLoginModel login(UserLoginModel userLoginModel) {
-        return userLoginMapper.login(userLoginModel);
+    public UserLoginVO login(UserLoginVO userLoginVO) {
+        return userLoginMapper.login(userLoginVO);
     }
 
     @Override
-    public UserLoginModel gerUserInfo(String account) {
+    public UserLoginVO gerUserInfo(String account) {
         return userLoginMapper.getUserInfo(account);
     }
 }

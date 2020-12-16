@@ -1,5 +1,5 @@
 <template>
-  <div class="w100">
+  <div class="content100">
     <a-carousel :autoplay="true" dots-class="slick-dots slick-thumb">
       <div v-for="index in 3" :key="index" style="width: 100%; height: 100%;">
         <img style="width: 100%;height: 900px;" :src="getImgUrl(index)" class="w100" alt="" />
@@ -24,7 +24,7 @@
       </a-row>
     </div>
 
-    <div class="footer">管理员联系方式：(tel/vx:15477845214;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QQ:1154274698)</div>
+<!--    <div class="footer">管理员联系方式：(tel/vx:15477845214;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QQ:1154274698)</div>-->
   </div>
 </template>
 
@@ -93,11 +93,13 @@ export default {
 }
 
 .footer {
+  margin-top: 20px;
   position: fixed;
   bottom: 0;
   font-size: 16px;
   font-family: 黑体;
   width: 100%;
+  height: 30px;
   text-align: center;
 }
 

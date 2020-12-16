@@ -1,6 +1,6 @@
 package com.zyc.cloud.search.utils.jwt.mapper;
 
-import com.zyc.cloud.search.utils.jwt.model.UserLoginModel;
+import com.zyc.cloud.search.utils.jwt.model.UserLoginVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 @Component
 public interface UserLoginMapper{
 
-    UserLoginModel login(UserLoginModel userLoginModel);
+    UserLoginVO login(UserLoginVO userLoginVO);
 
-    UserLoginModel getUserInfo(@Param("account") String userId);
+    UserLoginVO getUserInfo(@Param("account") String userId);
 
 }
