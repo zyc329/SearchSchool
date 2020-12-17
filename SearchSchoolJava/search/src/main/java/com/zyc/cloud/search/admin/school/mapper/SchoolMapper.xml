@@ -15,8 +15,8 @@
 		s.school_tel schoolTel,s.school_head schoolHead,
 		s.school_time schoolTime,s.school_ranking_size schoolRankingSize,
 		s.school_seach_size schoolSeachSize,s.is_ranking isRanking,
-		s.school_pic schoolPic,p.professional_id professionalId,
-		p.professional_name professionalName,p.college_id collegeId
+		s.school_pic schoolPic,GROUP_CONCAT(p.professional_id) as professionalId,
+		GROUP_CONCAT(p.professional_name) as professionalName,p.college_id collegeId
 		from tb_school s left join
 		tb_professional p on s.school_id = p.school_id where 1=1
 		<if test="example.schoolName != null and example.schoolName != ''" >
@@ -37,7 +37,7 @@
 				p.professional_name like CONCAT(CONCAT('%', #{rolename,jdbcType=VARCHAR}), '%')
 			</foreach>
 		</if>
-
+		group by s.school_id = p.school_id
 		<choose>
 			<when test="example.order == 0">
 				order by s.school_time

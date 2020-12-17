@@ -1,7 +1,7 @@
 <template>
   <div class="div-background mh w100">
     <div class="mh w100 div-content" v-if="isShow">
-      <a-carousel :autoplay="true" dots-class="slick-dots slick-thumb">
+      <a-carousel :autoplay="true" dots-class="slick-dots slick-thumb" v-if="schoolDetail.length>0">
         <div v-for="item in schoolDetail" :key="item.picId">
           <img style="height: 300px; width: 100%" :src="`/download?picId=${item.picId}`" />
         </div>
@@ -10,7 +10,7 @@
         <h1>{{ school.schoolName }}</h1>
       </div>
       <div class="w100 clear plr50 mb30">
-        <div style="width: 400px; height: 400px; float: left">
+        <div style="width: 400px; height: 400px; float: left" v-if="schoolTitle.length>0">
           <p style="color: #1890ff; font-size: 22px; font-family: 楷体; margin-bottom: 0; font-weight: bolder">校标</p>
           <img style="width: 350px; height: 350px" :src="`/download?picId=${schoolTitle[0].picId}`" />
         </div>
@@ -89,7 +89,7 @@
           <a-tab-pane key="4" tab="照片墙">
             <div class="w100 clear">
               <div v-for="pic in schoolPhoto" style="float: left; width: 300px;height: 300px; padding: 25px;">
-                <img style="height: 250px;height: 250px;" :src="`/download?picId=${pic.picId}`" />
+                <img style="width: 250px;height: 250px;" :src="`/download?picId=${pic.picId}`" />
               </div>
             </div>
           </a-tab-pane>
@@ -229,7 +229,6 @@ export default {
         let seriesData = {
           name: name,
           type: 'line',
-          stack: '分数',
           data: [],
         }
         for (let item of arr) {
@@ -237,6 +236,10 @@ export default {
         }
         series.push(seriesData)
       }
+      console.log(xAxis)
+      console.log(specialtyName)
+      console.log(series)
+
 
       let options = {
         title: {
