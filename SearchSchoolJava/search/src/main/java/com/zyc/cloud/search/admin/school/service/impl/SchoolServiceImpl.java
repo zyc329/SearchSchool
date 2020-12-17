@@ -27,128 +27,131 @@ import java.util.List;
  * @Date 2020/11/5 21:39
  */
 @Service
-public class SchoolServiceImpl  implements SchoolService {
+public class SchoolServiceImpl implements SchoolService {
 
-	@Autowired
-	private SchoolMapper schoolMapper;
+    @Autowired
+    private SchoolMapper schoolMapper;
 
-	@Autowired
-	private PicMapper picMapper;
+    @Autowired
+    private PicMapper picMapper;
 
-	@Override
-	public void add(SchoolDo schoolDo) {
-		schoolDo.setSchoolId(IdUtil.objectId());
-		schoolDo.setSchoolSeachSize("0");
-		schoolMapper.insertSelective(schoolDo);
-	}
+    @Override
+    public void add(SchoolDo schoolDo) {
+        schoolDo.setSchoolId(IdUtil.objectId());
+        schoolDo.setSchoolSeachSize("0");
+        schoolMapper.insertSelective(schoolDo);
+    }
 
-	@Override
-	public void picAdd(List<PicDo> picDos) {
-		picMapper.insertList(picDos);
-	}
+    @Override
+    public void picAdd(List<PicDo> picDos) {
+        picMapper.insertList(picDos);
+    }
 
-	@Override
-	public List<SchoolDo> findAll() {
-		return schoolMapper.selectAll();
-	}
+    @Override
+    public List<SchoolDo> findAll() {
+        return schoolMapper.selectAll();
+    }
 
-	@Override
-	public Integer updateById(SchoolDo schoolDo) {
-		return schoolMapper.updateByPrimaryKey(schoolDo);
-	}
+    @Override
+    public Integer updateById(SchoolDo schoolDo) {
+        return schoolMapper.updateByPrimaryKey(schoolDo);
+    }
 
-	@Override
-	public void delete(String id) {
-		schoolMapper.deleteByPrimaryKey(id);
-	}
+    @Override
+    public void delete(String id) {
+        schoolMapper.deleteByPrimaryKey(id);
+    }
 
-	@Override
-	public List<SchoolDo> findList(SchoolDo schoolDo) {
-		Example example = createExample(schoolDo);
-		return schoolMapper.selectByExample(example);
-	}
+    @Override
+    public List<SchoolDo> findList(SchoolDo schoolDo) {
+        Example example = createExample(schoolDo);
+        return schoolMapper.selectByExample(example);
+    }
 
-	@Override
-	public SchoolDo findById(String id) {
-		return schoolMapper.selectByPrimaryKey(id);
-	}
-	@Override
-	public void addSchoolSearch(String schoolId) {
-		SchoolDo item = schoolMapper.selectByPrimaryKey(schoolId);
-		Integer num = 1;
-		String seach = item.getSchoolSeachSize();
-	    if (ObjectUtil.isNotEmpty(seach)){
-			num = Integer.valueOf(seach);
-			num += 1;
-		}
-		item.setSchoolSeachSize(num.toString());
-		schoolMapper.updateByPrimaryKey(item);
-	}
+    @Override
+    public SchoolDo findById(String id) {
+        return schoolMapper.selectByPrimaryKey(id);
+    }
 
-	@Override
-	public List<PicDo> findPicsById(String pics) {
-		List<PicDo> picList = new ArrayList<>();
-		if (ObjectUtil.isNotEmpty(pics)){
-			Example example = selectPicByExample(pics);
-			picList = picMapper.selectByExample(example);
-		}
-		return picList;
-	};
+    @Override
+    public void addSchoolSearch(String schoolId) {
+        SchoolDo item = schoolMapper.selectByPrimaryKey(schoolId);
+        Integer num = 1;
+        String seach = item.getSchoolSeachSize();
+        if (ObjectUtil.isNotEmpty(seach)) {
+            num = Integer.valueOf(seach);
+            num += 1;
+        }
+        item.setSchoolSeachSize(num.toString());
+        schoolMapper.updateByPrimaryKey(item);
+    }
 
-	@Override
-	public PageResult<SchoolDo> findPage(SchoolDo schoolDo, int page, int size, String ranking, String seach) {
-		PageHelper.startPage(page, size);
-		Example example = createExample(schoolDo);
+    @Override
+    public List<PicDo> findPicsById(String pics) {
+        List<PicDo> picList = new ArrayList<>();
+        if (ObjectUtil.isNotEmpty(pics)) {
+            Example example = selectPicByExample(pics);
+            picList = picMapper.selectByExample(example);
+        }
+        return picList;
+    }
 
-		if (StrUtil.isNotEmpty(ranking) && StrUtil.isEmpty(seach)){
-			example.setOrderByClause("school_ranking_size+0");
-		}
+    ;
 
-		if (StrUtil.isNotEmpty(seach)  && StrUtil.isEmpty(ranking)){
-			example.setOrderByClause("school_seach_size+0 desc");
-		}
+    @Override
+    public PageResult<SchoolDo> findPage(SchoolDo schoolDo, int page, int size, String ranking, String seach) {
+        PageHelper.startPage(page, size);
+        Example example = createExample(schoolDo);
 
-		List<SchoolDo> schoolDos = schoolMapper.selectByExample(example);
-		return new PageResult<SchoolDo>(schoolDos);
-	}
+        if (StrUtil.isNotEmpty(ranking) && StrUtil.isEmpty(seach)) {
+            example.setOrderByClause("school_ranking_size+0");
+        }
 
-	public Example createExample(SchoolDo schoolDo) {
-		Example example = new Example(SchoolDo.class);
-		Example.Criteria criteria = example.createCriteria();
-		if (ObjectUtil.isNotEmpty(schoolDo)) {
-			if (StrUtil.isNotEmpty(schoolDo.getSchoolName())) {
-				criteria.andLike("schoolName","%"+schoolDo.getSchoolName()+"%");
-			}
-			if (StrUtil.isNotEmpty(schoolDo.getSchoolType())) {
-				criteria.andEqualTo("schoolType", schoolDo.getSchoolType());
-			}
-			if (null != schoolDo.getSchoolTime()){
-				Date date = schoolDo.getSchoolTime();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				criteria.andCondition("date_format('" + sdf.format(date) + "','%Y') = date_format(school_time,'%Y')");
-			}
-		}
+        if (StrUtil.isNotEmpty(seach) && StrUtil.isEmpty(ranking)) {
+            example.setOrderByClause("school_seach_size+0 desc");
+        }
 
-		return example;
-	}
+        List<SchoolDo> schoolDos = schoolMapper.selectByExample(example);
+        return new PageResult<SchoolDo>(schoolDos);
+    }
 
-	public Example selectPicByExample(String ids) {
-		Example example = new Example(PicDo.class);
-		Example.Criteria criteria = example.createCriteria();
-		if (ObjectUtil.isNotEmpty(ids)) {
-			criteria.setAndOr("pic_id in "+ids);
-//			criteria.andCondition("pic_id in "+ids);
-		}
-		return example;
-	}
+    public Example createExample(SchoolDo schoolDo) {
+        Example example = new Example(SchoolDo.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (ObjectUtil.isNotEmpty(schoolDo)) {
+            if (StrUtil.isNotEmpty(schoolDo.getSchoolName())) {
+                criteria.andLike("schoolName", "%" + schoolDo.getSchoolName() + "%");
+            }
+            if (StrUtil.isNotEmpty(schoolDo.getSchoolType())) {
+                criteria.andEqualTo("schoolType", schoolDo.getSchoolType());
+            }
+            if (null != schoolDo.getSchoolTime()) {
+                Date date = schoolDo.getSchoolTime();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                criteria.andCondition("date_format('" + sdf.format(date) + "','%Y') = date_format(school_time,'%Y')");
+            }
+        }
 
-	public List<SchoolItemVo> selectItem(HashMap<String,String> example, ArrayList<String> roleNameList) {
-		List<SchoolItemVo> SchoolItemVos = schoolMapper.selectItem(example,roleNameList);
-		return SchoolItemVos;
-	}
+        return example;
+    }
 
-	@Override
-	public void addCount(String schoolId) {
-		schoolMapper.addCount(schoolId);
-	}
+    public Example selectPicByExample(String ids) {
+        Example example = new Example(PicDo.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (ObjectUtil.isNotEmpty(ids)) {
+//			criteria.setAndOr("pic_id in "+ids);
+            criteria.andCondition("pic_id in ('" + ids.replace(",","','") + "')");
+        }
+        return example;
+    }
+
+    public List<SchoolItemVo> selectItem(HashMap<String, String> example, ArrayList<String> roleNameList) {
+        List<SchoolItemVo> SchoolItemVos = schoolMapper.selectItem(example, roleNameList);
+        return SchoolItemVos;
+    }
+
+    @Override
+    public void addCount(String schoolId) {
+        schoolMapper.addCount(schoolId);
+    }
 }

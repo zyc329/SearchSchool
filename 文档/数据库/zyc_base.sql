@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : zyc
+ Source Server         : 本地
  Source Server Type    : MySQL
- Source Server Version : 50730
+ Source Server Version : 50731
  Source Host           : 127.0.0.1:3306
  Source Schema         : zyc_base
 
  Target Server Type    : MySQL
- Target Server Version : 50730
+ Target Server Version : 50731
  File Encoding         : 65001
 
- Date: 15/12/2020 09:10:57
+ Date: 17/12/2020 13:50:19
 */
 
 SET NAMES utf8mb4;
@@ -61,6 +61,10 @@ CREATE TABLE `tb_comments`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of tb_comments
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for tb_notice
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_notice`;
@@ -74,6 +78,10 @@ CREATE TABLE `tb_notice`  (
   `operator` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`notification_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_notice
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tb_pic
@@ -93,14 +101,6 @@ CREATE TABLE `tb_pic`  (
 -- ----------------------------
 -- Records of tb_pic
 -- ----------------------------
-INSERT INTO `tb_pic` VALUES ('5fc3b199f100db4e740103d4', 'a.jpg', 'schoolTitle', 'E:\\tmp\\upload\\a5fc3b199f100db4e740103d3.jpg', NULL, NULL, NULL);
-INSERT INTO `tb_pic` VALUES ('5fc3b19df100db4e740103d6', 'bj.jpg', 'schoolDetail', 'E:\\tmp\\upload\\bj5fc3b19df100db4e740103d5.jpg', NULL, NULL, NULL);
-INSERT INTO `tb_pic` VALUES ('5fc3b1a0f100db4e740103d8', 'a.jpg', 'schoolPhoto', 'E:\\tmp\\upload\\a5fc3b19ff100db4e740103d7.jpg', NULL, NULL, NULL);
-INSERT INTO `tb_pic` VALUES ('5fc3b8cdf100db4e740103db', 'a.jpg', 'schoolTitle', 'E:\\tmp\\upload\\a5fc3b8cdf100db4e740103da.jpg', NULL, NULL, NULL);
-INSERT INTO `tb_pic` VALUES ('5fc3b8d0f100db4e740103dd', 'bj.jpg', 'schoolDetail', 'E:\\tmp\\upload\\bj5fc3b8d0f100db4e740103dc.jpg', NULL, NULL, NULL);
-INSERT INTO `tb_pic` VALUES ('5fc3b8d9f100db4e740103df', 'bj.jpg', 'schoolPhoto', 'E:\\tmp\\upload\\bj5fc3b8d9f100db4e740103de.jpg', NULL, NULL, NULL);
-INSERT INTO `tb_pic` VALUES ('5fc3b8dcf100db4e740103e1', 'a.jpg', 'schoolPhoto', 'E:\\tmp\\upload\\a5fc3b8dcf100db4e740103e0.jpg', NULL, NULL, NULL);
-INSERT INTO `tb_pic` VALUES ('5fc3b8e4f100db4e740103e3', 'a.jpg', 'schoolDetail', 'E:\\tmp\\upload\\a5fc3b8e4f100db4e740103e2.jpg', NULL, NULL, NULL);
 INSERT INTO `tb_pic` VALUES ('5fc3f160f1002002b9f495f6', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f160f1002002b9f495f5.jpg', NULL, NULL, NULL);
 INSERT INTO `tb_pic` VALUES ('5fc3f1a1f1002002b9f495f8', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f1a1f1002002b9f495f7.jpg', NULL, NULL, NULL);
 INSERT INTO `tb_pic` VALUES ('5fc3f22cf1002002b9f495fa', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f22cf1002002b9f495f9.jpg', NULL, NULL, NULL);
@@ -111,7 +111,18 @@ INSERT INTO `tb_pic` VALUES ('5fc3f594f1002002b9f49604', 'a.jpg', 'profilePictur
 INSERT INTO `tb_pic` VALUES ('5fc3f5def1002002b9f49607', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f5def1002002b9f49606.jpg', NULL, NULL, NULL);
 INSERT INTO `tb_pic` VALUES ('5fc3f621f1002002b9f4960a', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f621f1002002b9f49609.jpg', NULL, NULL, NULL);
 INSERT INTO `tb_pic` VALUES ('5fc3f7d5f100e908244635a6', 'a.jpg', 'profilePicture', 'E:\\tmp\\upload\\a5fc3f7d5f100e908244635a5.jpg', NULL, NULL, NULL);
-INSERT INTO `tb_pic` VALUES ('5fd479abf10051fa1617494c', 'bj.jpg', 'schoolTitle', 'E:\\tmp\\upload\\bj5fd479abf10051fa1617494b.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa99e60f7c072cdce0518', '1 - 副本 (2).jpg', 'schoolTitle', 'E:\\tmp\\upload\\1 - 副本 (2)5fdaa99e60f7c072cdce0517.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9a160f7c072cdce051a', '1 - 副本 (2).jpg', 'schoolDetail', 'E:\\tmp\\upload\\1 - 副本 (2)5fdaa9a160f7c072cdce0519.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9a460f7c072cdce051c', '1.jpg', 'schoolDetail', 'E:\\tmp\\upload\\15fdaa9a460f7c072cdce051b.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9a660f7c072cdce051e', '1 - 副本 (3).jpg', 'schoolDetail', 'E:\\tmp\\upload\\1 - 副本 (3)5fdaa9a660f7c072cdce051d.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9a960f7c072cdce0520', '1 - 副本 (4).jpg', 'schoolDetail', 'E:\\tmp\\upload\\1 - 副本 (4)5fdaa9a960f7c072cdce051f.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9ad60f7c072cdce0522', '1 - 副本.jpg', 'schoolPhoto', 'E:\\tmp\\upload\\1 - 副本5fdaa9ad60f7c072cdce0521.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9b360f7c072cdce0524', 'QQ图片20200910201852.png', 'schoolPhoto', 'E:\\tmp\\upload\\QQ图片202009102018525fdaa9b360f7c072cdce0523.png', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9b460f7c072cdce0526', '1.jpg', 'schoolPhoto', 'E:\\tmp\\upload\\15fdaa9b460f7c072cdce0525.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9b760f7c072cdce0528', '1 - 副本 (4).jpg', 'schoolPhoto', 'E:\\tmp\\upload\\1 - 副本 (4)5fdaa9b760f7c072cdce0527.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9b960f7c072cdce052a', '1 - 副本 (3).jpg', 'schoolPhoto', 'E:\\tmp\\upload\\1 - 副本 (3)5fdaa9b960f7c072cdce0529.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9bc60f7c072cdce052c', '1 - 副本 (2).jpg', 'schoolPhoto', 'E:\\tmp\\upload\\1 - 副本 (2)5fdaa9bc60f7c072cdce052b.jpg', NULL, NULL, NULL);
+INSERT INTO `tb_pic` VALUES ('5fdaa9fa60f7c072cdce052e', 'QQ图片20200910201852.png', 'schoolTitle', 'E:\\tmp\\upload\\QQ图片202009102018525fdaa9fa60f7c072cdce052d.png', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tb_professional
@@ -153,7 +164,7 @@ CREATE TABLE `tb_school`  (
   `update_time` datetime(0) NULL DEFAULT NULL,
   `operator` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `school_ranking_size` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '推荐排名',
-  `school_seach_size` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '查看次数',
+  `school_seach_size` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL COMMENT '查看次数',
   `is_ranking` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '是否推荐 0否，1是',
   `school_pic` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL COMMENT '图片表',
   PRIMARY KEY (`school_id`) USING BTREE
@@ -162,8 +173,8 @@ CREATE TABLE `tb_school`  (
 -- ----------------------------
 -- Records of tb_school
 -- ----------------------------
-INSERT INTO `tb_school` VALUES ('5fc3b8e7f100db4e740103e4', '测试学校', '我的学校想在哪里就在哪里', '0', '我的学校就是牛逼', 'http://www.baidu.com', NULL, '13788541254', '测试小哥', '2020-11-12 15:05:28', NULL, NULL, NULL, NULL, '15', '', '5fc3b8cdf100db4e740103db,5fc3b8d0f100db4e740103dd,5fc3b8d9f100db4e740103df,5fc3b8dcf100db4e740103e1,5fc3b8e4f100db4e740103e3');
-INSERT INTO `tb_school` VALUES ('5fd479dcf10051fa1617494f', '测试学校二', '测试学校二的具体地址', '1', '测试学校二的学校简介', 'www.taobao.com', NULL, '13788541254', '测试学校二', '2020-12-10 08:03:37', NULL, NULL, NULL, NULL, '1', '', '5fd479abf10051fa1617494c');
+INSERT INTO `tb_school` VALUES ('5fc3b8e7f100db4e740103e4', '测试学校', '我的学校想在哪里就在哪里', '0', '我的学校就是牛逼', 'http://www.baidu.com', NULL, '13788541254', '测试小哥', '2020-11-12 15:05:28', NULL, NULL, NULL, NULL, NULL, NULL, '5fc3f160f1002002b9f495f6,5fc3f1a1f1002002b9f495f8,5fc3f22cf1002002b9f495fa,5fc3f297f1002002b9f495fc,5fc3f453f1002002b9f495fe,5fc3f540f1002002b9f49601,5fc3f594f1002002b9f49604,5fc3f5def1002002b9f49607,5fc3f621f1002002b9f4960a,5fc3f7d5f100e908244635a6,5fdaa99e60f7c072cdce0518,5fdaa9a160f7c072cdce051a,5fdaa9a460f7c072cdce051c,5fdaa9a660f7c072cdce051e,5fdaa9a960f7c072cdce0520,5fdaa9ad60f7c072cdce0522,5fdaa9b360f7c072cdce0524,5fdaa9b460f7c072cdce0526,5fdaa9b760f7c072cdce0528,5fdaa9b960f7c072cdce052a,5fdaa9bc60f7c072cdce052c');
+INSERT INTO `tb_school` VALUES ('5fdaa9fe60f7c072cdce052f', '测试学校二', '在很远的地方', '0', '有一天我和妈妈图书馆买书，我正在挑我要看什么好，有一本叫《爱丽丝梦游奇镜》的书出现在我的眼里，我非常好奇这本书为什么叫梦游奇镜，我就把它买回家，一到家我就坐在沙发上看，明知道自己的学校作业，课外班作业都没有写完，还是看了好长时间，妈妈让我快去写作业，我只好去写了，写了一会儿我又偷偷地把书拿出来津津有味的读起来，这时，我突然听到外面有脚步声传来，我就又把书放在作业下面，妈妈来了生气的对我说：“作业写完了吗？就在那看课外书，过了半个小时了才写了两页，再过半个小时，我来检查。”我只好把作业写完再看，要不然还要被妈妈吵。我等到妈妈来检查的时候说：“作业写完了”，妈妈说：“这么多空的也能叫写完了，给我补。”我还是坐在那里，我想了一办法，把书先放在床上，然后以最快的速度把作业补完了，然后去告诉妈妈：“我的作业补完了，我早上没睡好，能不能再去睡一会儿？”妈妈同意了，我就躺在床上，又看了起来，30分钟、50分钟、一个半小时，不知不觉我已看了好长时间，直到妈妈来叫我的时候，我才停止。', 'www.taobao.com', NULL, '13855412541', '负责人二', '2020-12-17 00:44:12', NULL, NULL, NULL, NULL, '3', '', '5fdaa9fa60f7c072cdce052e');
 
 -- ----------------------------
 -- Table structure for tb_score
@@ -187,6 +198,7 @@ CREATE TABLE `tb_score`  (
 INSERT INTO `tb_score` VALUES ('1', '5fc3b8e7f100db4e740103e4', '2020', '550', '121', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('2', '5fc3b8e7f100db4e740103e4', '2019', '211', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('3', '5fc3b8e7f100db4e740103e4', '2020', '540', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
+INSERT INTO `tb_score` VALUES ('5fce4361f1006b30ed78015b', '5fc3b8e7f100db4e740103e4', '2021', '2222', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('5fce651cf1006b30ed78015c', '5fc3b8e7f100db4e740103e4', '2010', '11', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('5fce6527f1006b30ed78015d', '5fc3b8e7f100db4e740103e4', '2011', '2011', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
 INSERT INTO `tb_score` VALUES ('5fce6530f1006b30ed78015e', '5fc3b8e7f100db4e740103e4', '2012', '123', '5fc3e5c5f1000289792a0874', NULL, NULL, NULL);
