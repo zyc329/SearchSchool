@@ -88,8 +88,8 @@
           </a-tab-pane>
           <a-tab-pane key="4" tab="照片墙">
             <div class="w100 clear">
-              <div v-for="pic in schoolPhoto" style="float: left; width: 300px;height: 300px; padding: 25px;border: #b8bbc1 1px solid">
-                <img style="height: 250px" :src="`/download?picId=${pic.picId}`" />
+              <div v-for="pic in schoolPhoto" style="float: left; width: 300px;height: 300px; padding: 25px;">
+                <img style="height: 250px;height: 250px;" :src="`/download?picId=${pic.picId}`" />
               </div>
             </div>
           </a-tab-pane>
