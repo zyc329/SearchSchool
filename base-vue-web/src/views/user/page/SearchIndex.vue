@@ -65,6 +65,7 @@
           <a-row>
             <a-col :span="18">
               <p>学校简介：{{item.schoolIntroduction}}</p>
+              <p>学校专业：{{isEmpty(item.professionalName)?'暂无专业':item.professionalName.split(',').slice(0,7).join(',')}}</p>
             </a-col>
             <a-col :span="6">
               <div class="w100" style="text-align: right">
