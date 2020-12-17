@@ -151,20 +151,20 @@ let syncRouterMap = [
           },
         ],
       },
-      {
-        path: '/message-index',
-        name: 'message',
-        component: RouteLayout,
-        meta: { title: '消息通知', keepAlive: true, icon: 'thunderbolt' },
-        children: [
-          {
-            path: '/message-index',
-            name: 'MessageIndex',
-            component: () => import('@/views/admin/message/MessageIndex'),
-            meta: { title: '举报处理', keepAlive: true, permission: ['dashboard'] }
-          },
-        ],
-      },
+      // {
+      //   path: '/message-index',
+      //   name: 'message',
+      //   component: RouteLayout,
+      //   meta: { title: '消息通知', keepAlive: true, icon: 'thunderbolt' },
+      //   children: [
+      //     {
+      //       path: '/message-index',
+      //       name: 'MessageIndex',
+      //       component: () => import('@/views/admin/message/MessageIndex'),
+      //       meta: { title: '举报处理', keepAlive: true, permission: ['dashboard'] }
+      //     },
+      //   ],
+      // },
     ],
   },
 ]
