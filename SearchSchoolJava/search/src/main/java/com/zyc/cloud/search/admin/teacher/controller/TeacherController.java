@@ -81,10 +81,8 @@ public class TeacherController {
      * 条件+分页查询实现
      */
     @PostMapping("/teacherFindPage")
-    public ResultUtil<PageResult<TeacherDo>> teacherFindPage(@RequestBody(required = false) TeacherDo teacherDo,
-                                                                  @RequestParam(required = false, defaultValue = "1") int page,
-                                                                  @RequestParam(required = false, defaultValue = "10") int size){
-        PageResult<TeacherDo> pageResult = teacherService.findPage(teacherDo,page,size);
+    public ResultUtil<PageResult<TeacherDo>> teacherFindPage(@RequestBody(required = false) TeacherDo teacherDo){
+        PageResult<TeacherDo> pageResult = teacherService.findPage(teacherDo,teacherDo.getPage(),teacherDo.getSize());
         return new ResultUtil<PageResult<TeacherDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
     }
 

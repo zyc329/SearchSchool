@@ -101,10 +101,8 @@ public class ScoreController {
      * 条件+分页查询实现
      */
     @PostMapping("/scoreFindPage")
-    public ResultUtil<PageResult<ScoreDo>> scoreFindPage(@RequestBody(required = false) ScoreDo scoreDo,
-                                                         @RequestParam(required = false, defaultValue = "1") int page,
-                                                         @RequestParam(required = false, defaultValue = "10") int size) {
-        PageResult<ScoreDo> pageResult = scoreService.findPage(scoreDo, page, size);
+    public ResultUtil<PageResult<ScoreDo>> scoreFindPage(@RequestBody(required = false) ScoreDo scoreDo) {
+        PageResult<ScoreDo> pageResult = scoreService.findPage(scoreDo, scoreDo.getPage(), scoreDo.getSize());
         return new ResultUtil<PageResult<ScoreDo>>(true, StatusCode.OK, "分页查询成功", pageResult);
     }
 

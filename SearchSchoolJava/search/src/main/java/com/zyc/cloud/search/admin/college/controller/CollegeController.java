@@ -81,10 +81,8 @@ public class CollegeController {
      * 条件+分页查询实现
      */
     @PostMapping("/collegeFindPage")
-    public ResultUtil<PageResult<CollegeDo>> collegeFindPage(@RequestBody(required = false) CollegeDo collegeDo,
-                                                          @RequestParam(required = false, defaultValue = "1") int page,
-                                                          @RequestParam(required = false, defaultValue = "10") int size){
-        PageResult<CollegeDo> pageResult = collegeService.findPage(collegeDo,page,size);
+    public ResultUtil<PageResult<CollegeDo>> collegeFindPage(@RequestBody(required = false) CollegeDo collegeDo){
+        PageResult<CollegeDo> pageResult = collegeService.findPage(collegeDo,collegeDo.getPage(),collegeDo.getSize());
         return new ResultUtil<PageResult<CollegeDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
     }
 

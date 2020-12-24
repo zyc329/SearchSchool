@@ -81,10 +81,8 @@ public class ProfessController {
      * 条件+分页查询实现
      */
     @PostMapping("/professionalFindPage")
-    public ResultUtil<PageResult<ProfessDo>> professionalFindPage(@RequestBody(required = false) ProfessDo professDo,
-                                                             @RequestParam(required = false, defaultValue = "1") int page,
-                                                             @RequestParam(required = false, defaultValue = "10") int size){
-        PageResult<ProfessDo> pageResult = professService.findPage(professDo,page,size);
+    public ResultUtil<PageResult<ProfessDo>> professionalFindPage(@RequestBody(required = false) ProfessDo professDo){
+        PageResult<ProfessDo> pageResult = professService.findPage(professDo,professDo.getPage(),professDo.getSize());
         return new ResultUtil<PageResult<ProfessDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
     }
 
