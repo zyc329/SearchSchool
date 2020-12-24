@@ -23,4 +23,8 @@ public class BaseDo {
     @Column(name="operator")
     private String operator;
 
+    private int page;
+
+    private int size;
+
 }

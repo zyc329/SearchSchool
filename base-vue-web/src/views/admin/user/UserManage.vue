@@ -136,7 +136,8 @@
             return `共 ${total} 条`
           },
           showSizeChanger: true,
-          pageSize: 10
+          pageSize: 10,
+          total:0
         },
       }
     },
@@ -154,6 +155,7 @@
             params = Object.assign(values, {role:'user',page: this.pagination.current, size: this.pagination.pageSize})
             userFindPage(params).then(res => {
               this.tableData = res.data.list
+              this.pagination.total=res.data.total
               this.loading = false
             })
           }

@@ -138,11 +138,9 @@ public class SchoolController {
 	 */
 	@PostMapping("/schoolFindPage")
 	public ResultUtil<PageResult<UserDo>> userFindPage(@RequestBody(required = false) SchoolDo schoolDo,
-													   @RequestParam(required = false, defaultValue = "1") int page,
-													   @RequestParam(required = false, defaultValue = "10") int size,
 													   @RequestParam(required = false) String ranking,
 													   @RequestParam(required = false) String seach){
-		PageResult<SchoolDo> pageResult =schoolService.findPage(schoolDo,page,size,ranking,seach);
+		PageResult<SchoolDo> pageResult =schoolService.findPage(schoolDo,schoolDo.getPage(),schoolDo.getSize(),ranking,seach);
 		return new ResultUtil<PageResult<UserDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
 	}
 

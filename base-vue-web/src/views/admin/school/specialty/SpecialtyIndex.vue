@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import SpecialtyModule from "@/views/admin/school/specialty/module/module/SpecialtyModule"
+  import SpecialtyModule from "@/views/admin/school/specialty/module/SpecialtyModule"
   import {professionalFindPage,professionalDelete} from "@/api/admin/specialty"
   import * as utils from '@/utils/utilZengh'
   // 专业
@@ -88,7 +88,8 @@
             return `共 ${total} 条`
           },
           showSizeChanger: true,
-          pageSize: 10
+          pageSize: 10,
+          total:0
         },
         dirs: {
           schoolDirs: [],
@@ -123,6 +124,7 @@
             queryParam = Object.assign(values, queryParam)
             professionalFindPage(queryParam).then(res => {
               this.tableData = res.data.list
+              this.pagination.total=res.data.total
               this.loading = false
             }).catch(err => {
               this.$message.error(err.message)

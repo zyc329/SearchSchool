@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 @Data
 @Table(name = "tb_user")
-public class UserDo {
+public class UserDo extends BaseDo{
 
     /*用户id*/
     @Id

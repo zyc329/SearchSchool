@@ -104,7 +104,8 @@
             return `共 ${total} 条`
           },
           showSizeChanger: true,
-          pageSize: 10
+          pageSize: 10,
+          total:0
         },
         dirs: {
           schoolDirs: []
@@ -136,6 +137,7 @@
             queryParam = Object.assign(values, queryParam)
             collegeFindPage(queryParam).then(res => {
               this.tableData = res.data.list
+              this.pagination.total=res.data.total
               this.loading = false
             }).catch(err => {
               this.$message.error(err.message)

@@ -209,6 +209,7 @@ export default {
         },
         showSizeChanger: true,
         pageSize: 10,
+        total:0
       },
       pagination1: {
         current: 1,
@@ -217,6 +218,7 @@ export default {
         },
         showSizeChanger: true,
         pageSize: 5,
+        total:0
       },
       schoolTime: null,
       pickerShow: false,
@@ -305,6 +307,7 @@ export default {
           schoolFindPage(queryParam)
             .then((res) => {
               this.tableData = res.data.list
+              this.pagination.total=res.data.total
               this.loading = false
             })
             .catch((err) => {
@@ -331,6 +334,7 @@ export default {
           scoreFindPage(queryParam)
             .then((res) => {
               this.tableData1 = res.data.list
+              this.pagination1.total=res.data.total
               this.loading1 = false
             })
             .catch((err) => {

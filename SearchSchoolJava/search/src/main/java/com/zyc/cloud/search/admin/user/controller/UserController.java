@@ -101,13 +101,19 @@ public class UserController {
     /**
      * 条件+分页查询实现
      */
+//    @PostMapping("/userFindPage")
+//    public ResultUtil<PageResult<UserDo>> userFindPage(@RequestBody(required = false) UserDo userDo,
+//                                                       @RequestParam(required = false, defaultValue = "1") Integer page,
+//                                                       @RequestParam(required = false, defaultValue = "10") Integer size){
+//        PageResult<UserDo> pageResult =userService.findPage(userDo,page,size);
+//        return new ResultUtil<PageResult<UserDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
+//    }
     @PostMapping("/userFindPage")
-    public ResultUtil<PageResult<UserDo>> userFindPage(@RequestBody(required = false) UserDo userDo,
-                                                       @RequestParam(required = false, defaultValue = "1") int page,
-                                                       @RequestParam(required = false, defaultValue = "10") int size){
-        PageResult<UserDo> pageResult =userService.findPage(userDo,page,size);
+    public ResultUtil<PageResult<UserDo>> userFindPage(@RequestBody(required = false) UserDo userDo){
+        PageResult<UserDo> pageResult =userService.findPage(userDo,userDo.getPage(),userDo.getSize());
         return new ResultUtil<PageResult<UserDo>>(true, StatusCode.OK, "分页查询成功",pageResult);
     }
+
 
     /**
      * 重置密码
