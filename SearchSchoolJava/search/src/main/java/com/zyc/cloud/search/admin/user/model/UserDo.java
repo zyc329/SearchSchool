@@ -54,4 +54,13 @@ public class UserDo extends BaseDo{
 
     @Column(name="state")
     private Integer state;
+
+    @Column(name="m_one")
+    private String miOne;
+
+    @Column(name="m_two")
+    private String miTwo;
+
+    @Column(name="m_three")
+    private String miThree;
 }

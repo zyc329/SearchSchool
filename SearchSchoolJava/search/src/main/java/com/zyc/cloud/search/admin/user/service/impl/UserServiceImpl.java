@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    private static final  String PW  = "123456" ;
+    private static final String PW = "123456";
 
     @Override
     public void add(UserDo userDo) {
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PageResult<UserDo> findPage(UserDo userDo,int page,int size) {
+    public PageResult<UserDo> findPage(UserDo userDo, int page, int size) {
         PageHelper.startPage(page, size);
         Example example = createExample(userDo);
         List<UserDo> userDos = userMapper.selectByExample(example);
@@ -90,22 +90,45 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 重置密码
-     *
      */
     @Override
     public Integer resetPW(String userId) {
 
         String restPw = PW;
-        return userMapper.resetPW(userId,restPw);
+        return userMapper.resetPW(userId, restPw);
     }
 
     /**
      * 修改密码
-     *
      */
     @Override
-    public Integer updatePW(String userId,String newPw) {
-        return userMapper.resetPW(userId,newPw);
+    public Integer updatePW(String userId, String newPw) {
+        return userMapper.resetPW(userId, newPw);
+    }
+
+    @Override
+    public Integer forgetPW(UserDo userDo) {
+        Example example = new Example(UserDo.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (ObjectUtil.isNotEmpty(userDo)) {
+            if (StrUtil.isNotEmpty(userDo.getAccount())) {
+                criteria.andEqualTo("account", userDo.getAccount());
+            }
+        }
+        List<UserDo> userList = userMapper.selectByExample(example);
+        if (userList.size() == 0) {
+            return 4;
+        }
+        UserDo user = userList.get(0);
+        if (!userDo.getMiOne().equals(user.getMiOne())) {
+            return 1;
+        } else if (!userDo.getMiTwo().equals(user.getMiTwo())) {
+            return 2;
+        } else if (!userDo.getMiThree().equals(user.getMiThree())) {
+            return 3;
+        }
+        resetPW(user.getUserId());
+        return 5;
     }
 
     public Example createExample(UserDo userDo) {

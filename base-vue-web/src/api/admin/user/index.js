@@ -7,7 +7,17 @@ const api = {
 	resetPW:'/user/resetPW',
 	userDelete:'/user/userDelete',
 	userUpdate:'/user/userUpdate',
-  updatePW:'/user/updatePW'
+  updatePW:'/user/updatePW',
+  forgetPW:'/user/forgetPW'
+}
+
+export function forgetPW(parameter) {
+  return axios({
+    url: api.forgetPW,
+    method: 'post',
+    dataType: 'json',
+    data: parameter,
+  })
 }
 
 export function updatePW(parameter) {

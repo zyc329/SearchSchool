@@ -146,5 +146,23 @@ public class UserController {
         return new ResultUtil(true, StatusCode.OK, message);
     }
 
+    @PostMapping("forgetPW")
+    public ResultUtil forgetPW(@RequestBody(required = false) UserDo userDo) {
+        Integer flag = userService.forgetPW(userDo);
+        String message = "";
+        if (flag == 1){
+            message="密保1错误！";
+        }else if(flag==2){
+            message="密保2错误！";
+        }else if(flag==3){
+            message="密保3错误！";
+        }else if(flag==4){
+            message="没有该账号！";
+        }else if (flag==5){
+            message="新密码为123456！";
+        }
+        return new ResultUtil(true, flag, message);
+    }
+
 
 }

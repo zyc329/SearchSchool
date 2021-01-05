@@ -11,7 +11,7 @@ import exampleModule from '@/router/modules/example'
 export const defaultRootRoutePath = '/dashboard'
 
 // 不跳转白名单路由名
-export const whiteList = ['login', 'register', 'registerResult']
+export const whiteList = ['login', 'register', 'registerResult','homeIndex','searchIndex', 'SchoolDetail']
 
 // 前端未找到页面路由（固定不用改）
 export const notFoundRouter = {

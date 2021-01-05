@@ -3,6 +3,7 @@ package com.zyc.cloud.search.admin.user.service;
 import com.zyc.cloud.search.admin.user.model.UserDo;
 import com.zyc.cloud.search.text.model.Text;
 import com.zyc.cloud.search.utils.PageResult;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -61,4 +62,6 @@ public interface UserService {
      * 密码修改
      */
     Integer updatePW(String userId,String newPw);
+
+    Integer forgetPW(UserDo userDo);
 }
