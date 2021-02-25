@@ -43,9 +43,9 @@ public class CommentsServiceImpl implements CommentsService {
         Example example = new Example(CommentsDo.class);
         Example.Criteria criteria = example.createCriteria();
         if (ObjectUtil.isNotEmpty(commentsDo)) {
-            if (StrUtil.isNotEmpty(commentsDo.getCommentsStatus())) {
+//            if (StrUtil.isNotEmpty(commentsDo.getCommentsStatus())) {
                 criteria.andEqualTo("schoolId",commentsDo.getSchoolId());
-            }
+//            }
         }
         return example;
     }

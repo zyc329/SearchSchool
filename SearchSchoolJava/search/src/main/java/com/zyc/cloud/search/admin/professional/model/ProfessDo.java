@@ -24,6 +24,10 @@ public class ProfessDo extends BaseDo {
     @Column(name = "professional_name")
     private String professionalName;
 
+    /*专业名称*/
+    @Column(name = "professional_introduction")
+    private String professionalIntroduction;
+
     /*学校id*/
     @Column(name="school_id")
     private String schoolId;
