@@ -24,6 +24,9 @@
               v-decorator="['professionalName',{rules:rules}]"
             />
           </a-form-item>
+          <a-form-item label="专业介绍">
+            <a-textarea :auto-size="{ minRows: 3, maxRows: 5 }" v-decorator="['professionalIntroduction', { rules: rules }]" />
+          </a-form-item>
         </a-form>
       </a-col>
     </a-row>

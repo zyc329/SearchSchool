@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div style="width: 100%; height: 60px; background: rgba(255, 255, 255, 0.8); position: absolute">
+  <div class="aa">
+    <div style="width: 100%; height: 60px; background: rgba(255, 255, 255, 0.8); position: relative">
       <div class="header-index-left">
         <span>榕城查只为您找到心仪的学府</span>
       </div>
@@ -52,4 +52,11 @@ export default {
   transform: translate(-50%, -50%);
   position: absolute;
 }
+  .aa{
+    width: 100%;
+    height: 100%;
+    background: url(~@/assets/img/b4.jpg);
+    background-size: 100% 100%;
+    overflow: auto;
+  }
 </style>

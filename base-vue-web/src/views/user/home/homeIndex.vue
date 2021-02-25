@@ -23,7 +23,6 @@
         </a-col>
       </a-row>
     </div>
-
 <!--    <div class="footer">管理员联系方式：(tel/vx:15477845214;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QQ:1154274698)</div>-->
   </div>
 </template>

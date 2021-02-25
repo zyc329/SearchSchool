@@ -3,6 +3,8 @@
     <div class="content-box">
       <!-- notice：信息通知组件 -->
       <!-- <notice-icon class="action" /> -->
+      <a v-if="$store.getters.userInfo.role==='user'" style="margin-right: 20px" @click="goToComment">讨论区</a>
+      <a v-if="$store.getters.userInfo.role==='user'" style="margin-right: 20px" href="http://gaokao.neea.edu.cn/" target="_blank">相关资讯</a>
       <a-dropdown>
         <span class="action ant-dropdown-link user-dropdown-menu">
           <a-avatar class="avatar" size="small" :src="avatar"/>
@@ -103,6 +105,9 @@
       close() {
         this.newPw=''
         this.visible=false
+      },
+      goToComment(){
+        this.$router.push({name:'PublicComment'})
       },
       handleLogout() {
         this.$confirm({

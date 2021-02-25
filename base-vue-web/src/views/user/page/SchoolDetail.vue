@@ -1,11 +1,11 @@
 <template>
   <div class="div-background mh w100">
+    <a-carousel :autoplay="true" dots-class="slick-dots slick-thumb" v-if="schoolDetail.length>0">
+      <div v-for="item in schoolDetail" :key="item.picId">
+        <img style="height: 300px; width: 100%" :src="`/download?picId=${item.picId}`"/>
+      </div>
+    </a-carousel>
     <div class="mh w100 div-content" v-if="isShow">
-      <a-carousel :autoplay="true" dots-class="slick-dots slick-thumb" v-if="schoolDetail.length>0">
-        <div v-for="item in schoolDetail" :key="item.picId">
-          <img style="height: 300px; width: 100%" :src="`/download?picId=${item.picId}`"/>
-        </div>
-      </a-carousel>
       <div class="title w100">
         <h1>{{ school.schoolName }}</h1>
       </div>
@@ -70,7 +70,23 @@
               </a-card-meta>
             </a-card>
           </a-tab-pane>
-          <a-tab-pane key="3" tab="专业信息">
+          <a-tab-pane key="6" tab="专业信息">
+            <div style="width: 100%">
+              <a-input style="width: 20%" v-model="professionalName"></a-input>
+              <a-button type="primary" @click="getProfessional" style="margin-right: 20px;margin-left: 20px;">搜索专业</a-button>
+              <a-button type="primary" @click="allProfessional">显示专业</a-button>
+            </div>
+            <div class="w100 clear">
+              <a-card v-for="(item,index) in professionalData"
+                      style="margin-top: 20px;background: rgba(255,255,255,0.8)">
+                <div style="width: 100%;text-align: center;" slot="title">{{item.professionalName}}</div>
+                <div>
+                  {{item.professionalIntroduction}}
+                </div>
+              </a-card>
+            </div>
+          </a-tab-pane>
+          <a-tab-pane key="3" tab="分数线对比">
             <a-checkbox-group v-model="professionalSelect" name="checkboxgroup" :options="professionalOption"/>
             <a-button type="primary" @click="seeEcheats">查询</a-button>
             <div style="width: 100%; margin-top: 60px">
@@ -150,12 +166,13 @@
 <script>
   import {detailFindId} from '@/api/admin/school'
   import moment from 'moment'
-  import * as utils from '@/utils/utilZengh'
   import {professionalFindList} from '@/api/admin/specialty'
   import ECharts from 'vue-echarts'
   import {scoreByColleges} from '@/api/admin/score'
   import {parse_str} from '@/utils/utilZengh'
+  import * as utils from '@/utils/utilZengh'
   import {commentsFindList, commentsAdd, commentsDelete} from '@/api/admin/comment'
+  import {sensitiveWords} from '@/utils/sensitiveWords'
 
   export default {
     components: {
@@ -165,6 +182,7 @@
       return {
         moment,
         utils,
+        sensitiveWords,
         isShow: false,
         loading: false,
         schoolId: '',
@@ -190,7 +208,9 @@
         replyContent: '',
         selectRow: {},
         selectRow1: {},
-        replyType:''
+        replyType: '',
+        professionalData: [],
+        professionalName: ''
       }
     },
     mounted() {
@@ -218,20 +238,20 @@
         this.isShow = true
       },
       replyModal(item) {
-        this.replyType=0
+        this.replyType = 0
         this.selectRow = item
         this.title = '回复' + item.criticsName
         this.visible = true
       },
-      replyModal1(item,reply) {
-        this.replyType=1
+      replyModal1(item, reply) {
+        this.replyType = 1
         this.selectRow = item
         this.selectRow1 = reply
         this.title = '回复' + item.criticsName
         this.visible = true
       },
-      delectComment(id){
-        commentsDelete({commentsId:id}).then(res=>{
+      delectComment(id) {
+        commentsDelete({commentsId: id}).then(res => {
           this.$message.success('删除成功！')
           this.getComments()
         }).catch((err) => {
@@ -242,6 +262,9 @@
         if (this.comment.length <= 0) {
           this.$message.error('评论不能为空！')
           return
+        }
+        for(let i=0;i<this.sensitiveWords.length;i++){
+          this.comment = this.comment.replace(this.sensitiveWords[i],"*");
         }
         let params = {
           schoolId: this.schoolId,
@@ -261,7 +284,7 @@
       closeModal() {
         this.replyContent = ''
         this.selectRow = {}
-        this.selectRow1={}
+        this.selectRow1 = {}
         this.visible = false
       },
       reply() {
@@ -269,9 +292,12 @@
           this.$message.error('回复不能为空！')
           return
         }
+        for(let i=0;i<this.sensitiveWords.length;i++){
+          this.replyContent = this.replyContent.replace(this.sensitiveWords[i],"*");
+        }
         let params = {}
-        if (this.replyType===0){
-          params={
+        if (this.replyType === 0) {
+          params = {
             schoolId: this.schoolId,
             isComments: 0,
             comments: this.replyContent,
@@ -281,8 +307,8 @@
             toCriticsName: this.selectRow.criticsName,
             toCriticsId: this.selectRow.criticsId
           }
-        }else{
-          params={
+        } else {
+          params = {
             schoolId: this.schoolId,
             isComments: 0,
             comments: this.replyContent,
@@ -348,11 +374,16 @@
           }
         })
       },
+      allProfessional() {
+        this.professionalName = ''
+        this.getProfessional()
+      },
       getProfessional() {
-        professionalFindList({schoolId: this.schoolId})
+        professionalFindList({schoolId: this.schoolId, professionalName: this.professionalName})
           .then((res) => {
             let professional = []
             let professionalOption = []
+            this.professionalData = res.data
             for (let item of res.data) {
               professional.push({value: item.professionalId, text: item.professionalName})
               professionalOption.push({label: item.professionalName, value: item.professionalId})
@@ -457,7 +488,7 @@
   }
 
   .div-content {
-    background: white;
+    background: rgba(219, 218, 212, 0.8);
   }
 
   .title {

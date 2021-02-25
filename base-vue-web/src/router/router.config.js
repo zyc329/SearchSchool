@@ -68,6 +68,12 @@ let syncRouterMap = [
         component: () => import('@/views/user/page/SchoolDetail'),
         meta: { title: '学校详情', keepAlive: true }
       },
+      {
+        path: '/publicComment',
+        name: 'PublicComment',
+        component: () => import('@/views/user/page/PublicComment'),
+        meta: { title: '讨论区', keepAlive: true }
+      },
     ],
   },
   {
